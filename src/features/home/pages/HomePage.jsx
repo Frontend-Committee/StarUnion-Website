@@ -1,3 +1,10 @@
+import HeroSection from "../components/HeroSection";
+
 export default function HomePage() {
-  return <div>Home Page</div>;
+  return (
+    <div className="h-lvh">
+      Home Page
+      <HeroSection />
+    </div>
+  );
 }
