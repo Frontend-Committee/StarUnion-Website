@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="mt-10 bg-white border-t">
-      <div className="grid max-w-6xl gap-6 px-4 py-8 mx-auto text-sm md:grid-cols-3">
+      <div className="grid  gap-6 container text-sm md:grid-cols-3">
         
         <div>
           <h2 className="mb-2 text-lg font-bold">Star Union</h2>

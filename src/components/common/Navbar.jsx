@@ -4,8 +4,8 @@
 export default function Navbar() {
   return (
     <nav className="bg-white border-b">
-      <div className="flex items-center justify-between max-w-6xl px-4 py-3 mx-auto">
-        <h1 className="text-lg font-bold">Star Union</h1>
+      <div className="flex items-center justify-between container">
+        <h1 className="text-lg font-bold  " >Star Union</h1>
 
         <div className="items-center hidden gap-2 text-sm font-medium md:flex">
           <span className="cursor-pointer hover:text-gray-600">Home</span>
