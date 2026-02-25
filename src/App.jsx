@@ -1,16 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/router";
 import "./App.css";
 
-import MainLayout from "./layouts/MainLayout";
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<MainLayout />}></Route>
-      </Routes>
-    </BrowserRouter>
-  );
+const App =() => {
+  return <RouterProvider router={router} />;
 }
-
 export default App;
