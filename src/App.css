@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.primary-btn{
+    @apply bg-gradient-to-r font-semibold text-base py-3 px-5 rounded shadow-md;
+}
+.secondary-btn{
+    @apply border font-medium text-base py-3 px-5 rounded
+}
+.tertiary-btn{
+    @apply text-sm font-normal py-3 px-5
+}
