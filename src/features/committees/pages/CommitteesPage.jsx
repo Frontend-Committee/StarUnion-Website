@@ -29,11 +29,11 @@ export default function CommitteesPage() {
   }, [searchQuery, activeFilter]);
 
   return (
-    <section className="min-h-screen bg-gradientBg3 py-10 px-4 md:px-8">
+    <section className="min-h-screen px-4 py-10 bg-gradientBg3 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">
-          <h1 className="text-h2 text-tertiary font-semibold mb-8">
+          <h1 className="mb-8 font-semibold text-h2 text-tertiary">
             Star Committees
           </h1>
         </ScrollAnimation>
@@ -41,7 +41,7 @@ export default function CommitteesPage() {
         {/* Search Bar */}
         <ScrollAnimation variant="fade-up" delay={100}>
           <div className="relative mb-5">
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 flex items-center pointer-events-none left-4">
               <svg
                 className="w-5 h-5 text-gray-400"
                 fill="none"
@@ -90,7 +90,7 @@ export default function CommitteesPage() {
         {/* Committees Grid */}
         <Motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           <AnimatePresence mode="popLayout">
             {filteredCommittees.map((committee, index) => (
@@ -114,9 +114,9 @@ export default function CommitteesPage() {
         {/* Empty state */}
         {filteredCommittees.length === 0 && (
           <ScrollAnimation variant="fade-up">
-            <div className="text-center py-20">
+            <div className="py-20 text-center">
               <p className="text-gray-400 text-h4">No committees found</p>
-              <p className="text-gray-500 mt-2 text-body font-normal">
+              <p className="mt-2 font-normal text-gray-500 text-body">
                 Try adjusting your search or filter
               </p>
             </div>

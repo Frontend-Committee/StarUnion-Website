@@ -30,12 +30,12 @@ const TeamCard = ({ member, delay = 0 }) => (
           <img
             src={member.photo}
             alt={member.name}
-            className="w-full h-full object-cover object-top"
+            className="object-cover object-top w-full h-full"
           />
         ) : (
           /* DSC-style placeholder matching the Figma banner */
           <div
-            className="w-full h-full flex flex-col justify-end p-3"
+            className="flex flex-col justify-end w-full h-full p-3"
             style={{
               background:
                 "linear-gradient(170deg, #122112 0%, #0a1f0a 35%, #1a1030 100%)",
@@ -55,7 +55,7 @@ const TeamCard = ({ member, delay = 0 }) => (
       </div>
 
       {/* ── Info section ── */}
-      <div className="bg-white px-3 pt-3 pb-4 flex flex-col">
+      <div className="flex flex-col px-3 pt-3 pb-4 bg-white">
         <h4 className="text-primary font-semibold text-[14px] leading-tight">
           {member.name}
         </h4>
@@ -156,7 +156,7 @@ const ProjectCard = ({ project, delay = 0 }) => (
   />
 
   {/* ── Title on top centered ── */}
-  <div className="px-3 pt-3 pb-2 text-center relative z-10"> {/* ← z-10 */}
+  <div className="relative z-10 px-3 pt-3 pb-2 text-center"> {/* ← z-10 */}
     <p className="text-white/50 text-[8px] font-semibold tracking-[0.08em] uppercase mb-[2px]">
       {project.subtitle}
     </p>
@@ -166,9 +166,9 @@ const ProjectCard = ({ project, delay = 0 }) => (
   </div>
 
   {/* ── Screenshot preview area ── */}
-  <div className="relative w-full overflow-hidden z-10" style={{ height: 200 }}>
+  <div className="relative z-10 w-full overflow-hidden" style={{ height: 200 }}>
     {/* Decorative star top-right */}
-    <div className="absolute top-2 right-2 opacity-50">
+    <div className="absolute opacity-50 top-2 right-2">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path
           d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
@@ -184,7 +184,7 @@ const ProjectCard = ({ project, delay = 0 }) => (
 
   {/* ── Bottom bar ── */}
   <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
-    <div className="px-3 pb-4 pt-1 mx-auto">
+    <div className="px-3 pt-1 pb-4 mx-auto">
       <button className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
         View Details
       </button>
@@ -203,24 +203,24 @@ export default function CommitteeDetailsPage() {
 
   if (!committee) {
     return (
-      <div className="min-h-screen bg-gradientBg3 flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen bg-gradientBg3">
         <p className="text-white text-h3">Committee not found</p>
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gradientBg3 py-8 px-4 md:px-8">
+    <section className="min-h-screen px-4 py-8 bg-gradientBg3 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Back button */}
         <ScrollAnimation variant="fade-right">
           <button
             onClick={() => navigate("/committees")}
-            className="text-white hover:text-secondary transition-colors mb-8 flex items-center gap-2 group cursor-pointer"
+            className="flex items-center gap-2 mb-8 text-white transition-colors cursor-pointer hover:text-secondary group"
             id="back-to-committees"
           >
             <svg
-              className="w-8 h-8 group-hover:-translate-x-1 transition-transform"
+              className="w-8 h-8 transition-transform group-hover:-translate-x-1"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -238,10 +238,10 @@ export default function CommitteeDetailsPage() {
         {/* Section: Meet the team */}
         <ScrollAnimation variant="fade-up" delay={100}>
           <div className="mb-10">
-            <h1 className="text-tertiary text-h2 font-semibold leading-tight">
+            <h1 className="font-semibold leading-tight text-tertiary text-h2">
               Meet the talented team
             </h1>
-            <h2 className="text-tertiary text-h2 font-semibold leading-tight mt-1">
+            <h2 className="mt-1 font-semibold leading-tight text-tertiary text-h2">
               Who make all this happen
             </h2>
           </div>
@@ -249,7 +249,7 @@ export default function CommitteeDetailsPage() {
 
         {/* Team members row */}
         <ScrollAnimation variant="fade-up" delay={200}>
-          <div className="flex gap-4 overflow-x-auto pb-4 mb-14 scrollbar-hide">
+          <div className="flex gap-4 pb-4 overflow-x-auto mb-14 scrollbar-hide">
             {MOCK_TEAM_MEMBERS.map((member, i) => (
               <TeamCard
                 key={member.id + "-" + i}
@@ -263,10 +263,10 @@ export default function CommitteeDetailsPage() {
         {/* Section: Looking for talented people */}
         <ScrollAnimation variant="fade-up" delay={300}>
           <div className="mb-14">
-            <h3 className="text-tertiary text-h3 font-semibold mb-3">
+            <h3 className="mb-3 font-semibold text-tertiary text-h3">
               We're looking for talented people
             </h3>
-            <p className="text-white text-body font-normal max-w-xl leading-relaxed">
+            <p className="max-w-xl font-normal leading-relaxed text-white text-body">
               Members collaborate to create wireframes, prototypes, and final UI
               designs for different projects.
             </p>
@@ -276,11 +276,11 @@ export default function CommitteeDetailsPage() {
         {/* Section: Recent Projects */}
         <ScrollAnimation variant="fade-up" delay={400}>
           <div>
-            <h3 className="text-tertiary text-h3 font-semibold mb-6">
+            <h3 className="mb-6 font-semibold text-tertiary text-h3">
               Recent Projects
             </h3>
 
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+            <div className="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
               {MOCK_PROJECTS.map((project, i) => (
                 <ProjectCard
                   key={project.id + "-" + i}
