@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { PATHS } from "../../routes/paths";
 import facebook from "../../assets/icons/facebook.png";
 import insta from "../../assets/icons/insta.png";
@@ -8,8 +7,9 @@ import linkedin from "../../assets/icons/linkedin.png";
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#0B0B12]">
-      <div className="container py-10 px-36">
-        <div className="grid md:grid-cols-4">
+      <div className="container px-4 py-10 mx-auto sm:px-6 lg:px-24 xl:px-36">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-8">
+          {/* Brand */}
           <div className="space-y-3">
             <h2 className="text-lg font-semibold">
               <span className="bg-[linear-gradient(90deg,#7441FF_0%,#11EDA4_55%,#EFD830_100%)] bg-clip-text text-transparent">
@@ -23,20 +23,19 @@ export default function Footer() {
               help you reach your dreams.
             </p>
 
-            <button className="text-sm font-medium text-[#B9A6FF] hover:text-[#E1D6FF] transition">
-              <NavLink
-                to={`/${PATHS.PUBLIC.ABOUT}`}
-                className="hover:text-[#E1D6FF] transition"
-              >
-                read more →
-              </NavLink>
-            </button>
+            <NavLink
+              to={`/${PATHS.PUBLIC.ABOUT}`}
+              className="inline-flex text-sm font-medium text-[#B9A6FF] hover:text-[#E1D6FF] transition"
+            >
+              read more →
+            </NavLink>
 
             <p className="pt-2 text-[10px] text-white/35">
               © 2026 Star Union - All Rights Reserved
             </p>
           </div>
 
+          {/* Company */}
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">
               <span className="bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent">
@@ -72,6 +71,7 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* More Info */}
           <div className="space-y-3">
             <h3 className="text-sm font-semibold">
               <span className="bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent">
@@ -123,18 +123,21 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-3 md:justify-self-end">
+          {/* Social */}
+          <div className="space-y-3 md:justify-self-end md:text-right">
             <h3 className="text-sm font-semibold">
               <span className="bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent">
                 Social Media
               </span>
             </h3>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 md:justify-end">
               <a
                 href="https://www.facebook.com/profile.php?id=61551413932501"
                 aria-label="Facebook"
                 className="grid overflow-hidden transition rounded place-items-center w-7 h-7 hover:brightness-110"
+                target="_blank"
+                rel="noreferrer"
               >
                 <img
                   src={facebook}
@@ -147,6 +150,8 @@ export default function Footer() {
                 href="https://www.instagram.com/star_unionn/"
                 aria-label="Instagram"
                 className="grid overflow-hidden transition rounded place-items-center w-7 h-7 hover:brightness-110"
+                target="_blank"
+                rel="noreferrer"
               >
                 <img
                   src={insta}
@@ -159,6 +164,8 @@ export default function Footer() {
                 href="https://www.linkedin.com/company/star-union2024/posts/?feedView=all"
                 aria-label="LinkedIn"
                 className="grid overflow-hidden transition rounded place-items-center w-7 h-7 hover:brightness-110"
+                target="_blank"
+                rel="noreferrer"
               >
                 <img
                   src={linkedin}
