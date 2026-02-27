@@ -4,19 +4,19 @@ import { eventsData, servicesData, storiesData, workshopsData } from "../data";
 
 export default function UpcomingSection() {
   return (
-    <div className="w-full px-4 md:px-20 py-10 flex flex-col gap-5">
+    <div className="flex flex-col w-full gap-5 px-4 py-10 md:px-20">
       {/* events */}
       <section>
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
             Upcoming Events
           </h2>
-          <p className="hover:underline hover:text-blue-400 cursor-pointer text-black transition-colors">
+          <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
             See More
           </p>
         </div>
 
-        <div className="flex gap-4 overflow-x-auto pb-6 snap-x">
+        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
           {eventsData.map((event) => (
             <MediaCard
               key={event.id}
@@ -31,16 +31,16 @@ export default function UpcomingSection() {
 
       {/* workshops */}
       <section>
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
             Upcoming Workshops
           </h2>
-          <p className="hover:underline hover:text-blue-400 cursor-pointer text-black transition-colors">
+          <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
             See More
           </p>
         </div>
 
-        <div className="flex gap-4 overflow-x-auto pb-6 snap-x">
+        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
           {workshopsData.map((workshop) => (
             <MediaCard
               key={workshop.id}
@@ -55,16 +55,16 @@ export default function UpcomingSection() {
 
       {/* services */}
       <section>
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
             Services We Offer
           </h2>
-          <p className="hover:underline hover:text-blue-400 cursor-pointer text-black transition-colors">
+          <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
             See More
           </p>
         </div>
 
-        <div className="flex gap-4 overflow-x-auto pb-6 snap-x">
+        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
           {servicesData.map((service) => (
             <MediaCard
               key={service.id}
@@ -78,16 +78,16 @@ export default function UpcomingSection() {
 
       {/* stories */}
       <section>
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
             See Our Success Stories
           </h2>
-          <p className="hover:underline hover:text-blue-400 cursor-pointer text-blacktransition-colors">
+          <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
             See More
           </p>
         </div>
 
-        <div className="flex gap-4 overflow-x-auto pb-6 snap-x">
+        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
           {storiesData.map((story) => (
             <MediaCard
               key={story.id}

@@ -13,10 +13,10 @@ const statsData = [
 
 export default function AboutSection() {
   return (
-    <div className="w-full flex flex-col items-center px-4 md:px-20 my-10 gap-8">
-      <div className="flex flex-col items-center text-center bg-[#7A4BFF] rounded-2xl p-8 md:p-12 shadow-lg w-full">
+    <div className="flex flex-col items-center w-full gap-8 px-4 my-10 md:px-20 bg-gradient3">
+      <div className="flex flex-col items-center w-full p-8 text-center shadow-lg rounded-2xl md:p-12">
         <h2 className="text-[#EFD830] font-bold text-3xl mb-6">About Us</h2>
-        <p className="w-full md:w-2/3 text-white text-base md:text-xl leading-relaxed">
+        <p className="w-full text-base leading-relaxed text-white md:w-2/3 md:text-xl">
           S.T.A.R Union is a student activity founded on September 9, 2023, with
           a specific focus on helping students in the field of technology,
           particularly computer science. Its primary goals include spreading
@@ -26,11 +26,11 @@ export default function AboutSection() {
         </p>
       </div>
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {statsData.map((stat) => (
           <div
             key={stat.id}
-            className="flex flex-row justify-center items-center gap-4 bg-[#7A4BFF] text-white px-6 py-5 rounded-lg shadow-md hover:scale-105 transition-transform"
+            className="flex flex-row items-center justify-center gap-4 px-6 py-5 text-white transition-transform rounded-lg shadow-md hover:scale-105"
           >
             <div className="logo shrink-0">
               <img

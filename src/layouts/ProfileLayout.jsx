@@ -1,15 +1,21 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/common/Navbar";
-import Footer from "../components/common/Footer";
+import ScrollTop from "../components/common/ScrollTop";
 
 export default function ProfileLayout() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 50% 35%, rgba(77,51,152,0.25) 0%, rgba(77,51,152,0) 60%), linear-gradient(to bottom, #1E1A2B 0%, #241352 45%, #4D3398 100%)",
+      }}
+    >
+      <ScrollTop />
+
+      <div className="container px-6 py-8">
+
+          <Outlet />
+      </div>
     </div>
   );
 }
