@@ -19,7 +19,7 @@ import HighBoardPage from "../features/board/pages/HighBoardPage";
 
 import CommitteesPage from "../features/committees/pages/CommitteesPage";
 import CommitteeDetailsPage from "../features/committees/pages/CommitteeDetailsPage";
-import AboutUsPage from "../features/committees/pages/AboutUsPage";
+import AboutUsPage from "../features/about/pages/AboutUsPage";
 
 import ContactUsPage from "../features/contact/pages/ContactUsPage";
 
