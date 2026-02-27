@@ -67,6 +67,7 @@ export const router = createBrowserRouter([
       { path: PATHS.PUBLIC.WORKSHOP_DETAILS, element: <WorkShopDetailsPage /> },
 
       { path: PATHS.PUBLIC.CONTACT, element: <ContactUsPage /> },
+      { path: PATHS.PUBLIC.BOARD_HIGH, element: <HighBoardPage /> },
     ],
   },
 
@@ -94,10 +95,7 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <ProfileLayout />,
-        children: [
-          { path: PATHS.PROFILE, element: <ProfilePage /> },
-          { path: PATHS.BOARD_HIGH, element: <HighBoardPage /> },
-        ],
+        children: [{ path: PATHS.PROFILE, element: <ProfilePage /> }],
       },
     ],
   },

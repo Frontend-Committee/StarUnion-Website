@@ -29,7 +29,7 @@ export default function CommitteesPage() {
   }, [searchQuery, activeFilter]);
 
   return (
-    <section className="min-h-screen px-4 py-10 bg-gradientBg3 md:px-8">
+    <section className="min-h-screen px-4 py-10 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">

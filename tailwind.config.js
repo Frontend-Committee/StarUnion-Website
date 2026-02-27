@@ -6,8 +6,8 @@ module.exports = {
     container: {
       center: true,
       padding: {
-        DEFAULT: "16px", // mobile side margins 
-        lg: "24px", // desktop side margins 
+        DEFAULT: "16px", // mobile side margins
+        lg: "24px", // desktop side margins
       },
     },
 
@@ -36,13 +36,13 @@ module.exports = {
 
       backgroundImage: {
         gradientBg3:
-          "radial-gradient(circle at top, #241352 0%, #4D3398 45%, #1E1A2B 100%)",
+          "radial-gradient(circle at 50% 35%, rgba(77,51,152,0.35) 0%, rgba(77,51,152,0) 60%), linear-gradient(to bottom, #1E1A2B 0%, #241352 45%, #4D3398 100%)",
         gradientFooter: "linear-gradient(135deg, #E1D6FF 0%, #7441FF 100%)",
         gradientBrand:
           "linear-gradient(135deg, #7441FF 0%, #11EDA4 50%, #EFD830 100%)",
       },
 
-      // typography 
+      // typography
       fontSize: {
         h1: ["44px", { lineHeight: "1.1", fontWeight: "800" }],
         h2: ["32px", { lineHeight: "1.15", fontWeight: "800" }],

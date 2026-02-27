@@ -26,7 +26,7 @@ function IconChevronDown({ open }) {
 
 function IconChevronRight() {
   return (
-    <img src={ArrowRight} className="w-8 h-8 hover:scale-125 transition-transform duration-200" alt="Arrow Right" />
+    <img src={ArrowRight} className="w-8 h-8 transition-transform duration-200 hover:scale-125" alt="Arrow Right" />
   );
 }
 
@@ -91,14 +91,14 @@ function ActivityCard({ image, title, delay = 0 }) {
     >
       <img
         src={image} alt={title}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+        className="absolute inset-0 object-cover w-full h-full transition-transform duration-500 ease-out group-hover:scale-110"
       />
 
 {/* Or more precisely matching your brand purple */}
 
 {/* Or using mix-blend-mode for a more natural tint */}
-<div className="absolute inset-0 bg-[#7D7B82]/45 " />      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-300" />
-      <div className="absolute inset-0 flex flex-col items-center justify-between py-5 px-4">
+<div className="absolute inset-0 bg-[#7D7B82]/45 " />      <div className="absolute inset-0 transition-colors duration-300 bg-black/30 group-hover:bg-black/45" />
+      <div className="absolute inset-0 flex flex-col items-center justify-between px-4 py-5">
         <h3 className="text-white font-bold text-base text-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
           {title}
         </h3>
@@ -134,7 +134,7 @@ export default function AboutUsPage() {
   ];
 
   return (
-    <div className="w-full overflow-x-hidden bg-[radial-gradient(circle_at_center,_#4D3398_0%,_#241352_40%,_#1E1A2B_100%)]">
+    <div className="w-full overflow-x-hidden ">
 
       {/* ══════ 1. HERO ══════ */}
       <section
@@ -149,15 +149,15 @@ export default function AboutUsPage() {
       <section className="py-16">
         <div className="container">
           <ScrollAnimation variant="fade-right">
-            <h2 className="text-tertiary text-4xl font-semibold mb-4">Who We Are</h2>
+            <h2 className="mb-4 text-4xl font-semibold text-tertiary">Who We Are</h2>
           </ScrollAnimation>
           <ScrollAnimation variant="fade-up" delay={150}>
-            <p className="text-white text-sm  leading-loose max-w-2xl  mb-3">
+            <p className="max-w-2xl mb-3 text-sm leading-loose text-white">
             S.T.A.R Union is a student activity founded on September 9, 2023, with a strong belief that every student has the potential to build, innovate, and grow. We focus on empowering students—especially in technology and computer science—by providing hands-on experiences, real-world exposure, and a supportive environment that bridges the gap between learning and practice.
             </p>
           </ScrollAnimation>
           {/* <ScrollAnimation variant="fade-up" delay={300}>
-            <p className="text-white text-sm leading-loose">
+            <p className="text-sm leading-loose text-white">
               We focus on empowering students—especially in technology and
               computer science—by providing hands-on experiences, real-world
               exposure, and a supportive environment that bridges the gap between
@@ -172,10 +172,10 @@ export default function AboutUsPage() {
         <div className="container flex flex-wrap items-center gap-12">
           <div className="flex-1 min-w-[300px]">
             <ScrollAnimation variant="fade-right">
-              <h2 className="text-4xl font-semibold text-tertiary mb-4">Our Mission</h2>
+              <h2 className="mb-4 text-4xl font-semibold text-tertiary">Our Mission</h2>
             </ScrollAnimation>
             <ScrollAnimation variant="fade-up" delay={200}>
-              <p className="text-white text-sm leading-loose max-w-lg">
+              <p className="max-w-lg text-sm leading-loose text-white">
                 To equip students with technical and non-technical skills through
                 workshops, events, and practical experiences, while spreading
                 awareness about startups, micro-businesses, and entrepreneurship.
@@ -200,11 +200,11 @@ export default function AboutUsPage() {
         <div className="container">
           <div className="flex items-center justify-between mb-8">
             <ScrollAnimation variant="fade-right">
-              <h2 className="text-tertiary text-4xl font-semibold m-0">Our Committees</h2>
+              <h2 className="m-0 text-4xl font-semibold text-tertiary">Our Committees</h2>
             </ScrollAnimation>
             <ScrollAnimation variant="zoom-in">
               <button
-                className="flex items-center justify-center w-9 h-9 rounded-full bg-white/6 text-white cursor-pointer hover:bg-white/14 transition-colors duration-200"
+                className="flex items-center justify-center text-white transition-colors duration-200 rounded-full cursor-pointer w-9 h-9 bg-white/6 hover:bg-white/14"
                 aria-label="Browse committees"
               >
                 <IconChevronRight />
@@ -229,7 +229,7 @@ export default function AboutUsPage() {
       <section className="w-full py-16">
         <div className="container">
           <ScrollAnimation variant="fade-up">
-            <h2 className="text-tertiary text-4xl font-semibold mb-8">What We Do</h2>
+            <h2 className="mb-8 text-4xl font-semibold text-tertiary">What We Do</h2>
           </ScrollAnimation>
           <div className="grid grid-cols-2 max-w-[650px] mx-auto gap-3">
             {activities.map((act, i) => (
