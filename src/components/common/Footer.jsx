@@ -134,7 +134,7 @@ export default function Footer() {
               <a
                 href="https://www.facebook.com/profile.php?id=61551413932501"
                 aria-label="Facebook"
-                className="grid place-items-center w-7 h-7 rounded  ring-1 ring-white/10 shadow-[0_6px_18px_rgba(0,0,0,0.35)] hover:brightness-110 transition overflow-hidden"
+                className="grid overflow-hidden transition rounded place-items-center w-7 h-7 hover:brightness-110"
               >
                 <img
                   src={facebook}
@@ -146,7 +146,7 @@ export default function Footer() {
               <a
                 href="https://www.instagram.com/star_unionn/"
                 aria-label="Instagram"
-                className="grid place-items-center w-7 h-7 rounded  ring-1 ring-white/10 shadow-[0_6px_18px_rgba(0,0,0,0.35)] hover:brightness-110 transition overflow-hidden"
+                className="grid overflow-hidden transition rounded place-items-center w-7 h-7 hover:brightness-110"
               >
                 <img
                   src={insta}
@@ -158,7 +158,7 @@ export default function Footer() {
               <a
                 href="https://www.linkedin.com/company/star-union2024/posts/?feedView=all"
                 aria-label="LinkedIn"
-                className="grid place-items-center w-7 h-7 rounded ring-1 ring-white/10 shadow-[0_6px_18px_rgba(0,0,0,0.35)] hover:brightness-110 transition overflow-hidden"
+                className="grid overflow-hidden transition rounded place-items-center w-7 h-7 hover:brightness-110"
               >
                 <img
                   src={linkedin}

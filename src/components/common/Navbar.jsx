@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { PATHS } from "../../routes/paths";
-import navLogo from "../../assets/icons/navLogo.jpg";
+import StarLogo from "../../assets/icons/StarLogo.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Navbar() {
               aria-label="Home"
             >
               <img
-                src={navLogo}
+                src={StarLogo}
                 alt="Star Union"
                 className="object-cover w-full h-full"
               />
