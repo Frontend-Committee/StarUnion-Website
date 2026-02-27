@@ -5,7 +5,7 @@ export const PATHS = {
   PUBLIC: {
     ABOUT: "about-us",
     COMMITTEES: "committees",
-    COMMITTEE_DETAILS: "committees/:id",
+    COMMITTEE_DETAILS: "/committees/:slug",
     EVENTS: "events",
     EVENT_DETAILS: "events/:id",
     PROJECTS: "projects",
