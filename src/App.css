@@ -90,4 +90,12 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+.container {
+  @apply max-w-6xl px-4 py-3 mx-auto;
+}
+
+/* Activity card image zoom on hover */
+.group:hover .activity-card-img {
+  transform: scale(1.06);
+}
 
