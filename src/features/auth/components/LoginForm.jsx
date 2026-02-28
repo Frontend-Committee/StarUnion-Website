@@ -1,53 +1,89 @@
-import { Link } from "react-router-dom";
-import emailLogo from "./../../../assets/icons/Vector.png"
-import passLogo from "./../../../assets/icons/Vector (1).png"
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+import { Form } from "@/components/ui/Form";
+import { Label } from "@/components/ui/Label";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/button";
+
+import { emailValidation, passwordValidation } from "@/utils/validators.js"; 
+
 function LoginForm() {
-    const fakeLogin = () => {
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const fakeLogin = (data) => {
     localStorage.setItem("token", "123");
-    navigate(to, { replace: true });
+    navigate("/", { replace: true });
   };
+
   return (
-    <form className="w-[400px] mx-auto py-6 px-1">
+    <Form onSubmit={handleSubmit(fakeLogin)}>
       <div className="flex flex-col mb-4">
-        <label htmlFor="email" className="flex items-center gap-2 text-[#7441FF] font-medium mb-1">
-          <img src={emailLogo} alt="Email Icon" className="size-5"/>
+        <Label htmlFor="email">
+          <i className="fa-regular fa-envelope fa-lg"></i>
           Email Address
-        </label>
-        <input
+        </Label>
+
+        <Input
           type="email"
           id="email"
-          name="user-email"
-          
-          className="p-2 rounded-md outline-none focus:ring-0 bg-[#7441FF] text-white"
+          {...register("email", emailValidation)}
+          error={errors.email}
         />
+
+        {errors.email && (
+          <p className="text-[#EF4444] font-semibold text-sm mt-1">{errors.email.message}</p>
+        )}
       </div>
 
       <div className="flex flex-col mb-4">
-        <label htmlFor="pass" className="flex items-center text-[#7441FF] font-medium mb-1">
-          <img src={passLogo} alt="Password Icon" className="size-5"/>
-            Password
-        </label>
-        <input
+        <Label htmlFor="pass">
+          <i className="fa-solid fa-lock"></i>
+          Password
+        </Label>
+
+        <Input
           type="password"
           id="pass"
-          name="password"
-          className="text-white p-2 rounded-md outline-none focus:ring-0 bg-[#7441FF]"
+          {...register("password", passwordValidation)}
+          error={errors.password}
         />
+
+        {errors.password && (
+          <p className="text-[#EF4444] font-semibold text-sm mt-1">{errors.password.message}</p>
+        )}
       </div>
 
-      <div className="text-sm text-[#7441FF] mb-4">
-        <p>Forgot Password? <Link to={"/auth/forgot-password"} className="underline">Forgot</Link></p>
-        <p>Don't have an Account? <Link to={"/auth/register"} className="underline">Register</Link></p>
+      <div className="text-sm text-[#452798] text-start mb-4 font-semibold">
+        <p>
+          Forgot Password?{" "}
+          <Link to="/auth/forgot-password" className="underline">
+            Forgot
+          </Link>
+        </p>
+
+        <p>
+          Don't have an Account?{" "}
+          <Link to="/auth/register" className="underline">
+            Register
+          </Link>
+        </p>
       </div>
 
-      <button
-        onClick={fakeLogin}
+      <Button
         type="submit"
-        className="w-1/3 py-2 bg-[#7441FF] text-white font-semibold rounded-md"
+        className="w-1/3 py-2 border-2 hover:bg-white/60 border-[#452798] hover:text-[#452798] bg-[#452798] text-white font-semibold rounded-md"
       >
         Log In
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 }
-export default LoginForm
+
+export default LoginForm;
