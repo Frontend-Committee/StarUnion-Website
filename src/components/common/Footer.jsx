@@ -6,10 +6,9 @@ import linkedin from "../../assets/icons/linkedin.png";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#0B0B12]">
-      <div className="container px-4 py-10 mx-auto sm:px-6 lg:px-24 xl:px-36">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4 md:gap-8">
-          {/* Brand */}
+    <footer className="border-t border-white/10 bg-[#0B0B12] p-7">
+      <div className="container px-4 py-10 mx-auto sm:px-6 ">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4 md:gap-16">
           <div className="space-y-3">
             <h2 className="text-lg font-semibold">
               <span className="bg-[linear-gradient(90deg,#7441FF_0%,#11EDA4_55%,#EFD830_100%)] bg-clip-text text-transparent">
