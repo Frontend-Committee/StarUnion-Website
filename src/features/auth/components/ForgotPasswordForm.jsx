@@ -1,44 +1,58 @@
-import passLogo from "./../../../assets/icons/Vector (1).png"
-function ForgotPasswordForm() {
-    const fakeLogin = () => {
+import {useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+import { Form } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+import { emailValidation} from "@/utils/validators.js"; 
+
+function LoginForm() {
+  const navigate = useNavigate();
+  const handleContinue = () => {
+  navigate("/auth/otp");
+};
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const fakeLogin = () => {
     localStorage.setItem("token", "123");
-    navigate(to, { replace: true });
+    navigate("/", { replace: true });
   };
+
   return (
-    <form className="w-[410px] mx-auto py-6 px-1">
-
-
+    <Form  onSubmit ={handleSubmit(handleContinue)}>
       <div className="flex flex-col mb-4">
-        <label htmlFor="pass" className="flex items-center text-[#7441FF] font-medium mb-1">
-          <img src={passLogo} alt="Password Icon" className="size-5"/>
-             Password
-        </label>
-        <input
-          type="password"
-          id="pass"
-          name="password"
-          className="text-white p-2 rounded-md outline-none focus:ring-0 bg-[#7441FF]"
+        <Label htmlFor="email">
+          <i className="fa-regular fa-envelope fa-lg"></i>
+          Email Address
+        </Label>
+
+        <Input
+          type="email"
+          id="email"
+          {...register("email", emailValidation)}
+          error={errors.email}
         />
+
+        {errors.email && (
+          <p className="text-[#EF4444] font-semibold text-sm mt-1">{errors.email.message}</p>
+        )}
       </div>
-      <div className="flex flex-col mb-4">
-        <label htmlFor="pass" className="flex items-center text-[#7441FF] font-medium mb-1">
-          <img src={passLogo} alt="Password Icon" className="size-5"/>
-             Confirm Password
-        </label>
-        <input
-          type="password"
-          id="pass"
-          name="password"
-          className="text-white p-2 rounded-md outline-none focus:ring-0 bg-[#7441FF]"
-        />
-      </div>
-      <button
+
+     
+      <Button
         type="submit"
-        className="w-1/3 py-2 bg-[#7441FF] text-white font-semibold rounded-md"
+        className="w-1/3 py-2 border-2 hover:bg-white/60 border-[#452798] hover:text-[#452798] bg-[#452798] text-white font-semibold rounded-md"
       >
-        Confirm
-      </button>
-    </form>
+        Continue
+      </Button>
+    </Form>
   );
 }
-export default ForgotPasswordForm;
+
+export default LoginForm;
