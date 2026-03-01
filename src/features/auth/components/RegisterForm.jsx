@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { Form } from "@/components/ui/Form";
-import { Label } from "@/components/ui/Label";
-import { Input } from "@/components/ui/Input";
+import { Form } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { confirmPasswordValidation, emailValidation, passwordValidation, phoneValidation } from "@/utils/validators.js";
