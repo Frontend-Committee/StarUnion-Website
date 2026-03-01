@@ -20,7 +20,7 @@ export default function UpcomingSection() {
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
+        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
           {eventsData.map((event, index) => (
             <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
               <MediaCard
@@ -48,7 +48,7 @@ export default function UpcomingSection() {
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
+        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
           {workshopsData.map((workshop, index) => (
             <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
               <MediaCard
@@ -76,7 +76,7 @@ export default function UpcomingSection() {
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
+        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
           {servicesData.map((service, index) => (
             <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
               <MediaCard
@@ -103,7 +103,7 @@ export default function UpcomingSection() {
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 overflow-x-auto snap-x">
+        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
           {storiesData.map((story, index) => (
             <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
               <MediaCard
