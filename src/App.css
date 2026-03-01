@@ -98,4 +98,8 @@ body {
 .group:hover .activity-card-img {
   transform: scale(1.06);
 }
+.gradient-content{
+  @apply text-3xl font-bold bg-gradient-to-t from-[#4D3398] via-[#452798] via-[#6D44E2] to-[#1E1A2B] bg-clip-text text-transparent;
+}
+.error-validation{@apply text-[#EF4444] font-semibold text-sm mt-1}
 

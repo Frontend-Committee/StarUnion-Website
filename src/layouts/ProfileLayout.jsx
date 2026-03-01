@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import ScrollTop from "../components/common/ScrollTop";
+import Footer from "@/components/common/Footer";
 
 export default function ProfileLayout() {
   return (
@@ -12,10 +13,11 @@ export default function ProfileLayout() {
     >
       <ScrollTop />
 
-      <div className="container px-6 py-8">
+      {/* <div className="container px-6 py-8"> */}
 
           <Outlet />
-      </div>
+      {/* </div> */}
+      {/* <Footer/> */}
     </div>
   );
 }

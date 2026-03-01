@@ -20,9 +20,27 @@ export const confirmPasswordValidation = (getPasswordValue) => ({
 });
 export const otpValidation = {
   validate: {
-    requiredLength: (value) =>
-      value.join("").length === 6 || "Must be 6 digits",
-    onlyNumbers: (value) =>
-      value.every((v) => /^\d$/.test(v)) || "Must be digits only",
+    requiredLength: (formValues) => {
+      const otp = formValues?.otp;
+
+      if (!Array.isArray(otp)) return true;
+
+      return otp.join("").length === 6 || "Must be 6 digits";
+    },
+
+    onlyNumbers: (formValues) => {
+      const otp = formValues?.otp;
+
+      if (!Array.isArray(otp)) return true;
+
+      return otp.every((v) => /^\d$/.test(v)) || "Must be digits only";
+    },
   },
 };
+export const phoneValidation = {
+    required: "Phone is required",
+    pattern: {
+        value: /^01[0125]\d{8}$/,
+        message: "Invalid Egyptian phone number"
+    }
+}

@@ -5,7 +5,7 @@ export default function NewPasswordPage() {
 
 
 
-<h1 className="text-4xl text-[#452798] font-extrabold">
+<h1 className="gradient-content">
   New Password
 </h1>
 <NewPasswordForm/>

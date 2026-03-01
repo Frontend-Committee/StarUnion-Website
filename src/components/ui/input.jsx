@@ -5,7 +5,7 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const inputVariants = cva(
-  "p-2 rounded-md outline-none focus:ring-0 bg-[#452798] text-white"
+  "p-1 rounded-md outline-none focus:ring-0 bg-[#452798] text-white"
  
 )
 
