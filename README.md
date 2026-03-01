@@ -2,13 +2,13 @@
 
 Welcome to the **Star Union Website**, a modern, high-performance web platform built with React and Vite. This project delivers a professional, animated, and responsive interface for managing community features, events, committees, and more.
 
-## 🚀 Overview
+## Overview
 
 The Star Union Website is designed with a **feature-first architecture**, ensuring scalability and maintainability. It leverages the latest web technologies to provide a seamless user experience with smooth transitions and a premium look and feel.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **Authentication System**: Complete user flow including login, registration, password recovery, and secure state management.
 - **Profile Management**: Personalized user dashboards and profile customization.
@@ -20,7 +20,7 @@ The Star Union Website is designed with a **feature-first architecture**, ensuri
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend Core
 
@@ -43,7 +43,7 @@ The Star Union Website is designed with a **feature-first architecture**, ensuri
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 The project follows a **Feature-Based** directory structure for better organization:
 
@@ -66,7 +66,7 @@ src/
 
 ---
 
-## 🏁 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -109,7 +109,7 @@ The output will be in the `dist/` folder.
 
 ---
 
-## 🐳 Deployment
+## Deployment
 
 ### Vercel
 
@@ -124,7 +124,7 @@ For containerized environments, use the provided Dockerfiles:
 
 ---
 
-## 📄 License
+## License
 
 This project is private and intended for use by Star Union.
 
