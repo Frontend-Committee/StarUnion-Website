@@ -22,7 +22,9 @@ export default function ProfileCard() {
   };
 
   return (
-    <div className="relative max-w-6xl mx-auto px-4">
+    <div className="w-[93%] mx-auto">
+
+    <div className="relative">
       <div className="relative -mt-24 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pb-6">
         
         <div className="flex flex-col items-center md:items-start">
@@ -50,24 +52,24 @@ export default function ProfileCard() {
 
           <div className="text-center md:text-left">
             <h2 className="text-3xl font-bold text-[#FCDD00]">Mohammed Ali</h2>
-            <p className="text-white text-sm opacity-90 italic">UI UX Designer</p>
+            <p className="text-white opacity-90 italic">UI UX Designer</p>
             <p className="text-gray-400 text-xs mt-1">Egypt, Cairo</p>
             
             <div className="flex gap-3 mt-4 justify-center md:justify-start">
-              <Button className="bg-white text-[#7A4BFF] rounded-md text-sm shadow-md hover:bg-white/60 border-[#452798] hover:text-[#452798]">
+              <Button className="bg-white text-[#7A4BFF] rounded-md shadow-md hover:bg-white/60 border-[#452798] hover:text-[#452798]">
                 Edit Profile
               </Button>
-              <Button className=" text-[#7A4BFF] bg-white rounded-md text-sm hover:bg-white/60 border-[#452798] hover:text-[#452798]">
+              <Button className=" text-[#7A4BFF] bg-white rounded-md hover:bg-white/60 border-[#452798] hover:text-[#452798]">
                 Setting
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-center md:items-end gap-5 w-full md:w-auto">
+        <div className="flex flex-col items-center self-center mt-10 md:items-end gap-5 w-full md:w-auto">
           <div className="text-center md:text-right">
-            <span className="text-[10px] text-gray-400 block mb-1">
-              Current Role <i className="fa-solid fa-lock text-[8px] ml-1"></i>
+            <span className="text-gray-400 block mb-1">
+              Current Role <i className="fa-solid fa-lock ml-1"></i>
             </span>
             <div className="bg-[#FFFFFF33] text-white text-xs px-6 py-1.5 rounded-md border border-white/10 italic">
               UI UX - Member
@@ -75,15 +77,16 @@ export default function ProfileCard() {
           </div>
 
           <div className="text-center md:text-right">
-            <span className="text-[10px] text-gray-400 block mb-1">
-              Skills <i className="fa-regular fa-star text-[8px] ml-1"></i>
+            <span className="text-gray-400 block mb-1">
+              Skills <i className="fa-regular fa-star ml-1"></i>
             </span>
-             <Button className=" text-[#7A4BFF] bg-white rounded-md text-sm hover:bg-white/60 border-[#452798] hover:text-[#452798]">
+             <Button className=" text-[#7A4BFF] bg-white rounded-md hover:bg-white/60 border-[#452798] hover:text-[#452798]">
                 Add Your Skills
               </Button>
           </div>
         </div>
 
+            </div>
       </div>
     </div>
   );
