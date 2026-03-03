@@ -6,7 +6,7 @@ import ScrollAnimation from "@/components/ui/ScrollAnimation";
 export default function HeroSection() {
   return (
     <div className="min-h-screen flex flex-col-reverse items-center justify-center gap-10 px-6 py-10 md:flex-row md:gap-60 md:px-20">
-      <ScrollAnimation variant="fade-right">
+      <ScrollAnimation variant="fade-right" delay={50}>
         <div className="flex flex-col items-center justify-center flex-1 gap-5 text-center">
           <h2 className="text-[#EFD830] font-bold text-3xl md:text-4xl lg:text-6xl">
             Reach The Stars
@@ -21,9 +21,13 @@ export default function HeroSection() {
         </div>
       </ScrollAnimation>
 
-      <ScrollAnimation variant="fade-left">
+      <ScrollAnimation variant="fade-left" delay={50}>
         <div className="flex justify-center md:justify-end items-center flex-1 p-4 md:p-8 w-full">
-          <img src={starLogo} alt="Star Logo" className="object-contain  w-72" />
+          <img
+            src={starLogo}
+            alt="Star Logo"
+            className="object-contain  w-72"
+          />
         </div>
       </ScrollAnimation>
     </div>
