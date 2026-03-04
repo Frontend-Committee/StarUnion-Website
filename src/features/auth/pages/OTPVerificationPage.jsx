@@ -74,10 +74,10 @@ export function OTPVerificationPage() {
   };
 
   return (
-    <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-10 rounded-3xl shadow-2xl w-full max-w-md text-center animate-in fade-in zoom-in duration-500">
+    <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-6 md:p-10 rounded-3xl shadow-2xl w-full max-w-md text-center animate-in fade-in zoom-in duration-500">
       {/* Header */}
       <h1
-        className="text-4xl font-extrabold mb-3 tracking-tight"
+        className="text-3xl md:text-4xl font-extrabold mb-3 tracking-tight"
         style={{
           background: "radial-gradient(313.53% 95.11% at 15.23% 95.11%, #7A4BFF 0%, #6D44E2 25.96%, #4D3398 55.29%, #1E1A2B 100%)",
           WebkitBackgroundClip: "text",
@@ -93,7 +93,7 @@ export function OTPVerificationPage() {
 
       <Form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
         {/* OTP Inputs */}
-        <div className="flex gap-3 mb-4">
+        <div className="flex gap-2 sm:gap-3 mb-4">
           {Array.from({ length: 6 }).map((_, i) => (
             <Input
               key={i}
@@ -103,7 +103,7 @@ export function OTPVerificationPage() {
               {...register(`otp.${i}`, otpValidation)}
               onChange={(e) => handleChange(e, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
-              className="w-12 h-12 text-center text-lg font-bold border-2 border-[#452798]/30 bg-white text-[#452798] rounded-xl outline-none focus:ring-2 focus:ring-[#6D44E2] focus:border-[#6D44E2] transition-all shadow-sm"
+              className="w-10 h-10 sm:w-12 sm:h-12 text-center text-lg font-bold border-2 border-[#452798]/30 bg-white text-[#452798] rounded-xl outline-none focus:ring-2 focus:ring-[#6D44E2] focus:border-[#6D44E2] transition-all shadow-sm"
             />
           ))}
         </div>

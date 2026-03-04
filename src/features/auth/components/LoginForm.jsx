@@ -23,9 +23,9 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-10 rounded-3xl shadow-2xl w-full max-w-md">
+    <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-6 md:p-10 rounded-3xl shadow-2xl w-full max-w-md">
       <h1
-        className="text-5xl font-extrabold mb-3 text-center tracking-tight"
+        className="text-4xl md:text-5xl font-extrabold mb-3 text-center tracking-tight"
         style={{
           background: "radial-gradient(313.53% 95.11% at 15.23% 95.11%, #7A4BFF 0%, #6D44E2 25.96%, #4D3398 55.29%, #1E1A2B 100%)",
           WebkitBackgroundClip: "text",

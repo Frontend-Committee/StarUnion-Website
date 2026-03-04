@@ -37,10 +37,10 @@ function RegisterForm() {
     };
 
     return (
-        <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-8 md:p-10 rounded-3xl shadow-2xl w-fit min-w-[900px] animate-in fade-in zoom-in duration-500 mt-16 md:mt-auto">
+        <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-6 md:p-10 rounded-3xl shadow-2xl w-full max-w-4xl animate-in fade-in zoom-in duration-500">
             <div className="text-center mb-10">
                 <h1 
-                    className="text-4xl md:text-5xl font-black mb-3 tracking-tighter inline-block"
+                    className="text-3xl md:text-5xl font-black mb-3 tracking-tighter inline-block"
                     style={{
                         background: "radial-gradient(313.53% 95.11% at 15.23% 95.11%, #7A4BFF 0%, #6D44E2 25.96%, #4D3398 55.29%, #1E1A2B 100%)",
                         WebkitBackgroundClip: "text",
@@ -50,11 +50,11 @@ function RegisterForm() {
                 >
                     Become A Star <span className="text-[#FCDD00] text-3xl md:text-4xl align-middle">✨</span>
                 </h1>
-                <p className="text-[#452798]/70 text-sm font-medium">Please fill in your details to create an account</p>
+                <p className="text-[#452798]/70 text-sm font-medium px-2">Please fill in your details to create an account</p>
             </div>
 
             <Form onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid grid-cols-1 md:grid-cols-[423px_423px] gap-x-6 gap-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
 
                     {/* Full Name */}
                     <div className="flex flex-col group">
