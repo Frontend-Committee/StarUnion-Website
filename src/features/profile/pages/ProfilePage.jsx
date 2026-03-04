@@ -26,15 +26,14 @@ export default function ProfilePage() {
         <div className="relative w-full min-h-[250px] flex flex-col items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${logo})` }}
         >
-
-          <i className="fa-solid fa-arrow-up-right-from-square absolute top-6 right-8 rounded size-6 p-1 bg-white text-[#452798] cursor-pointer"></i>
+          <i className="fa-regular fa-pen-to-square absolute top-6 right-8 rounded size-6 p-1 bg-white text-[#452798] cursor-pointer"></i>        
         </div>
 
         <ProfileCard />
       </div>
       <div className="w-[94%] mx-auto">
 
-        <div className="px-4 mt-8 pb-20">
+        <div className="px-4 mt-8">
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
             <FeatureBox
@@ -52,7 +51,8 @@ export default function ProfilePage() {
           </div>
 
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6  pl-3">Application Status</h3>
+            <h3 className="text-[#FCDD00] font-semibold
+             text-2xl mb-6  pl-3">Application Status</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-sm">
               {ApplicationStatus.map((item, index) => (
                 <Card
@@ -71,7 +71,8 @@ export default function ProfilePage() {
             </div>
           </section>
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6  pl-3">My Activities</h3>
+            <h3 className="text-[#FCDD00] font-semibold
+             text-2xl mb-6">My Activities</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-sm">
               {myActivities.map((item, index) => (
                 <Card
@@ -90,8 +91,9 @@ export default function ProfilePage() {
               ))}
             </div>
           </section>
-          <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6  pl-3">Attendee Sessions</h3>
+          <section>
+            <h3 className="text-[#FCDD00] font-semibold
+             text-2xl mb-6 pl-3">Attendee Sessions</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-sm">
               {attendedSessions.map((item, index) => (
                 <Card
@@ -109,6 +111,10 @@ export default function ProfilePage() {
                 />
               ))}
             </div>
+                    <div className="icon text-center my-3">
+          <i class="fa-solid fa-chevron-down fa-2xl text-[#FCDD00] cursor-pointer"></i>
+        </div>
+
           </section>
 
           
@@ -123,16 +129,33 @@ export default function ProfilePage() {
 
 
 const FeatureBox = ({ title, desc }) => (
-  <div className={`bg-[#7441FE] p-5 rounded-xl  text-white shadow-lg relative group cursor-pointer`}>
-    <h4 className=" text-[#FCDD00] font-bold">
-      {title} <i className="fa-solid bg-transparent text-white fa-circle-arrow-right opacity-0 group-hover:opacity-100 transition-all"></i>
-    </h4>
-    <p className="mt-2">{desc}</p>
+  <div className="bg-[#7441FE] p-5 rounded-md text-white shadow-lg relative group cursor-pointer">
+    <h4 className="text-[#FCDD00] font-bold">{title}</h4>
+
+    <div className="flex mt-2">
+      <p className="mt-2 pr-12">{desc}</p>
+      <div className="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-8 w-8"
+        >
+          <path
+            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      </div>
+    </div>
   </div>
 );
 
 const Card = ({ title, status, date, dotColor, imgSrc ,rate , role}) => (
-  <div className="transition-all hover:scale-[1.003] overflow-hidden rounded-xl text-white shadow-2xl relative group cursor-pointer">
+  <div className="transition-all hover:scale-[1.003] overflow-hidden rounded-md text-white shadow-2xl relative group cursor-pointer text-2xl">
     <div className="group">
       <div
         className="bg-center pointer-events-none transition-transform duration-500 group-hover:scale-110"
@@ -147,7 +170,7 @@ const Card = ({ title, status, date, dotColor, imgSrc ,rate , role}) => (
         {status && (
           <p className="text-white font-semibold flex items-center gap-2">
             Status: {status}
-            <span className={`w-5 h-5 rounded-full ${dotColor || "bg-[#03DF20]"} shadow-[0_0_10px]`}></span>
+            <span className={`w-8 h-8 rounded-full ${dotColor || "bg-[#03DF20]"}`}></span>
           </p>
         )}
         {date && (
@@ -173,10 +196,3 @@ const Card = ({ title, status, date, dotColor, imgSrc ,rate , role}) => (
 
 );
 
-// const ActivityCard = ({ title, role, date }) => (
-//   <div className="bg-[#1A0B48] border border-white/5 p-6 rounded-2xl shadow-xl hover:bg-[#22105a] transition-all">
-//     <h4 className="text-[#FCDD00] text-sm font-bold mb-1">{title}</h4>
-//     <p className="text-white ">Role: {role}</p>
-//     <p className="text-white mt-4">Date: {date}</p>
-//   </div>
-// );
