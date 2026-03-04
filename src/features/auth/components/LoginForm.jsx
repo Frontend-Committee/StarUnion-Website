@@ -1,16 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
 import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { useAuth } from "@/hooks/useAuth";
 import { emailValidation, passwordValidation } from "@/utils/validators.js"; 
 
 function LoginForm() {
   const navigate = useNavigate();
-
+  const {loginUser} =useAuth()
   const {
     register,
     handleSubmit,
@@ -18,7 +17,7 @@ function LoginForm() {
   } = useForm();
 
   const fakeLogin = (data) => {
-    localStorage.setItem("token", "123");
+    loginUser("123");
     navigate("/", { replace: true });
   };
 
