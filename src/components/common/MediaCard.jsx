@@ -19,7 +19,7 @@ export default function MediaCard({ image, title, buttonText, date }) {
           </h3>
 
           {date && (
-            <div className="bg-white text-black rounded-xl flex flex-col items-center justify-center w-10 h-10 shrink-0 shadow-sm leading-none">
+            <div className="bg-white border border-[#7441FF] text-black rounded-xl flex flex-col items-center justify-center w-10 h-10 shrink-0 shadow-sm leading-none">
               <span className="font-bold text-sm">{date.day}</span>
               <span className="text-[10px] font-semibold text-gray-600">
                 {date.month}
@@ -28,7 +28,7 @@ export default function MediaCard({ image, title, buttonText, date }) {
           )}
         </div>
 
-        <Button className="w-full bg-white text-[#7A4BFF] hover:bg-gray-100 font-bold rounded-xl py-5 transition-transform group-hover:scale-[1.02]">
+        <Button className="w-full bg-white border border-[#7441FF] text-[#452798] hover:bg-gray-100 font-bold rounded-xl py-5 transition-transform group-hover:scale-[1.02]">
           {buttonText || "Apply Now"}
         </Button>
       </div>
