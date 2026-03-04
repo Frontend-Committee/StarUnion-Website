@@ -5,28 +5,28 @@ import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export default function HeroSection() {
   return (
-    <div className="min-h-screen flex flex-col-reverse items-center justify-center gap-10 px-6 py-10 md:flex-row md:gap-60 md:px-20">
+    <div className="min-h-screen flex flex-col-reverse items-center justify-center gap-10 md:flex-row md:gap-20">
       <ScrollAnimation variant="fade-right" delay={50}>
-        <div className="flex flex-col items-center justify-center flex-1 gap-5 text-center">
-          <h2 className="text-[#EFD830] font-bold text-3xl md:text-4xl lg:text-6xl">
+        <div className="flex flex-col items-center justify-center flex-1 gap-8 text-center">
+          <h2 className="text-[#EFD830] font-bold text-3xl md:text-4xl lg:text-5xl">
             Reach The Stars
           </h2>
-          <p className="text-lg text-gray-300 md:text-xl lg:text-2xl max-w-lg leading-relaxed">
+          <p className="text-lg font-bold text-white md:text-xl lg:text-xl max-w-lg leading-relaxed tracking-wider">
             Unlock your potential. Build your future. Lead with confidence.
           </p>
 
-          <Button className="bg-primary hover:bg-[#683ce3] text-white text-xl px-8 py-7 rounded">
+          <Button className="bg-primary hover:bg-[#683ce3] text-white text-lg px-8 py-7 rounded">
             Join Us
           </Button>
         </div>
       </ScrollAnimation>
 
       <ScrollAnimation variant="fade-left" delay={50}>
-        <div className="flex justify-center md:justify-end items-center flex-1 p-4 md:p-8 w-full">
+        <div className="flex justify-center md:justify-end items-center flex-1 w-full">
           <img
             src={starLogo}
             alt="Star Logo"
-            className="object-contain  w-72"
+            className="object-contain  w-full"
           />
         </div>
       </ScrollAnimation>

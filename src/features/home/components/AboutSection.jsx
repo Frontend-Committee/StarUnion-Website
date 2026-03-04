@@ -14,10 +14,10 @@ const statsData = [
 
 export default function AboutSection() {
   return (
-    <div className="flex flex-col items-center w-full gap-8 px-4 mb-5 md:px-20 ">
+    <div className="flex flex-col items-center w-full gap-8 mb-5">
       <ScrollAnimation>
         <div className="flex flex-col items-center w-full p-8 text-center shadow-lg rounded-2xl md:p-12 bg-primary">
-          <h2 className="text-[#EFD830] font-bold text-3xl mb-6">About Us</h2>
+          <h2 className="text-[#FFE738] font-bold text-3xl mb-6">About Us</h2>
           <p className="w-full text-base leading-relaxed text-white md:w-2/3 md:text-xl">
             S.T.A.R Union is a student activity founded on September 9, 2023,
             with a specific focus on helping students in the field of
@@ -41,11 +41,11 @@ export default function AboutSection() {
                 <img
                   src={stat.icon}
                   alt={stat.text}
-                  className="object-contain w-8 md:w-10"
+                  className="object-contain w-8"
                 />
               </div>
-              <div className="flex flex-col items-start justify-center">
-                <h2 className="font-bold text-2xl md:text-3xl text-[#EFD830] leading-none">
+              <div className="flex flex-col items-center justify-center">
+                <h2 className="font-bold text-xl md:text-2xl text-[#FFE738] leading-none">
                   {stat.number}
                 </h2>
                 <p className="text-sm md:text-base whitespace-nowrap">

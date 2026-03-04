@@ -8,7 +8,7 @@ export default function ProjectsGrid({ projects }) {
     <>
       <Motion.div
         layout
-        className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:grid-cols-4"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4 max-md:px-10"
       >
         <AnimatePresence mode="popLayout">
           {projects.map((project, index) => (
