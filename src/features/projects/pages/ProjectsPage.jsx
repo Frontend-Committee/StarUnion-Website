@@ -19,12 +19,12 @@ export default function ProjectsPage() {
   });
 
   return (
-    <section className="min-h-screen px-4 py-10 md:px-8">
+    <section className="min-h-screen  container">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">
           <h1 className="mb-8 font-bold text-3xl md:text-4xl text-[#EFD830]">
-            Projects
+            Our Projects
           </h1>
         </ScrollAnimation>
 

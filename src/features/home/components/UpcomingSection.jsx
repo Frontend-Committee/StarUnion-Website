@@ -5,12 +5,12 @@ import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export default function UpcomingSection() {
   return (
-    <div className="flex flex-col w-full gap-5 px-4 py-10 md:px-20">
+    <div className="flex flex-col w-full gap-3 my-10">
       {/* events */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Upcoming Events
             </h2>
 
@@ -38,8 +38,8 @@ export default function UpcomingSection() {
       {/* workshops */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Upcoming Workshops
             </h2>
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
@@ -66,8 +66,8 @@ export default function UpcomingSection() {
       {/* services */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Services We Offer
             </h2>
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
@@ -93,8 +93,8 @@ export default function UpcomingSection() {
       {/* stories */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#EFD830]">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               See Our Success Stories
             </h2>
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
