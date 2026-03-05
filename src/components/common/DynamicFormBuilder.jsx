@@ -138,18 +138,18 @@ const ICON_MAP = {
 
 function FieldIcon({ icon }) {
   const el = ICON_MAP[icon] || ICON_MAP.default;
-  return <span className="text-[#9B7EFF]">{el}</span>;
+  return <span className="text-[#452798]/70">{el}</span>;
 }
 
 // ─── Individual Field Components ─────────────────────────────────────────────
 
 function FieldWrapper({ field, error, children }) {
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex flex-col">
       {field.label && (
         <label
           htmlFor={field.name}
-          className="flex items-center gap-2 text-white font-semibold text-sm tracking-wide"
+          className="flex items-center gap-2 font-bold text-[#452798] text-xs uppercase tracking-wider mb-2.5 ml-1"
         >
           {field.icon && <FieldIcon icon={field.icon} />}
           {field.label}
@@ -165,25 +165,24 @@ function FieldWrapper({ field, error, children }) {
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
-            className="flex items-center gap-1 text-[#FF6B6B] text-xs font-medium"
+            className="text-rose-600 font-medium text-xs mt-1.5 ml-1"
           >
-            <AlertCircle className="w-3 h-3 flex-shrink-0" />
             {error}
           </motion.p>
         )}
       </AnimatePresence>
       {field.hint && !error && (
-        <p className="text-[#9B7EFF]/70 text-xs">{field.hint}</p>
+        <p className="text-[#452798]/70 text-xs mt-1.5 ml-1">{field.hint}</p>
       )}
     </div>
   );
 }
 
 const inputBase =
-  "w-full px-4 py-3 rounded-xl bg-[#452798]/60 border border-[#6B4FD0]/40 text-white placeholder:text-[#9B7EFF]/50 text-sm outline-none transition-all duration-200 focus:border-[#9B7EFF] focus:bg-[#452798]/80 focus:shadow-[0_0_0_3px_rgba(116,65,255,0.15)]";
+  "w-full bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-2 focus:ring-[#452798]/50 text-sm";
 
 const errorBorder =
-  "border-[#FF6B6B]/60 focus:border-[#FF6B6B] focus:shadow-[0_0_0_3px_rgba(255,107,107,0.12)]";
+  "ring-2 ring-rose-400/60 focus:ring-2 focus:ring-rose-500/70";
 
 // Text / Email / Number / URL / Tel
 function TextField({ field, value, onChange, onBlur, error }) {
@@ -210,7 +209,7 @@ function TextField({ field, value, onChange, onBlur, error }) {
           <button
             type="button"
             onClick={() => setShow((s) => !s)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9B7EFF]/70 hover:text-white transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
           >
             {show ? (
               <EyeOff className="w-4 h-4" />
@@ -270,14 +269,14 @@ function SelectField({ field, value, onChange, onBlur, error }) {
           }}
           disabled={field.disabled}
           className={`${inputBase} flex items-center justify-between text-left ${
-            !value ? "text-[#9B7EFF]/50" : "text-white"
+            !value ? "text-white/40" : "text-white"
           } ${error ? errorBorder : ""} ${field.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
         >
           <span className="truncate">{displayLabel}</span>
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className="text-[#9B7EFF] flex-shrink-0 ml-2"
+            className="text-white/70 flex-shrink-0 ml-2"
           >
             <ChevronDown className="w-4 h-4" />
           </motion.span>
@@ -291,7 +290,7 @@ function SelectField({ field, value, onChange, onBlur, error }) {
               exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
               transition={{ duration: 0.15 }}
               style={{ transformOrigin: "top" }}
-              className="absolute z-50 mt-1 w-full rounded-xl border border-[#6B4FD0]/50 bg-[#1E1A2B] shadow-[0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden max-h-52 overflow-y-auto scrollbar-hide"
+              className="absolute z-50 mt-1 w-full rounded-xl border border-white/70 bg-white shadow-2xl overflow-hidden max-h-52 overflow-y-auto scrollbar-hide"
             >
               {field.options?.map((option, idx) => {
                 const optVal =
@@ -309,8 +308,8 @@ function SelectField({ field, value, onChange, onBlur, error }) {
                     }}
                     className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
                       isSelected
-                        ? "bg-[#7441FF]/30 text-[#11EDA4] font-semibold"
-                        : "text-white/80 hover:bg-[#452798]/60 hover:text-white"
+                        ? "bg-[#452798]/10 text-[#452798] font-semibold"
+                        : "text-[#452798]/80 hover:bg-[#452798]/10 hover:text-[#452798]"
                     }`}
                   >
                     {optLabel}
@@ -341,17 +340,17 @@ function RadioField({ field, value, onChange, onBlur, error }) {
               key={idx}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 ${
                 isSelected
-                  ? "border-[#7441FF] bg-[#452798]/40 shadow-[0_0_0_2px_rgba(116,65,255,0.2)]"
-                  : "border-[#6B4FD0]/30 bg-[#452798]/20 hover:border-[#9B7EFF]/50 hover:bg-[#452798]/30"
+                  ? "border-[#452798]/50 bg-[#452798]/10"
+                  : "border-[#452798]/20 bg-white hover:border-[#452798]/40 hover:bg-[#452798]/5"
               }`}
             >
               <span
                 className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${
-                  isSelected ? "border-[#7441FF]" : "border-[#9B7EFF]/50"
+                  isSelected ? "border-[#452798]" : "border-[#452798]/40"
                 }`}
               >
                 {isSelected && (
-                  <span className="w-2 h-2 rounded-full bg-[#7441FF]" />
+                  <span className="w-2 h-2 rounded-full bg-[#452798]" />
                 )}
               </span>
               <input
@@ -365,7 +364,7 @@ function RadioField({ field, value, onChange, onBlur, error }) {
                 className="sr-only"
               />
               <span
-                className={`text-sm font-medium ${isSelected ? "text-white" : "text-white/70"}`}
+                className={`text-sm font-medium ${isSelected ? "text-[#452798]" : "text-[#452798]/70"}`}
               >
                 {optLabel}
               </span>
@@ -389,8 +388,8 @@ function CheckboxField({ field, value, onChange, onBlur, error }) {
           }}
           className={`w-5 h-5 rounded-md border-2 flex-shrink-0 flex items-center justify-center mt-0.5 transition-all duration-200 ${
             value
-              ? "bg-[#7441FF] border-[#7441FF] shadow-[0_0_12px_rgba(116,65,255,0.4)]"
-              : "border-[#6B4FD0]/50 bg-[#452798]/30 group-hover:border-[#9B7EFF]/70"
+              ? "bg-[#452798] border-[#452798] shadow-[0_0_12px_rgba(69,39,152,0.35)]"
+              : "border-[#452798]/40 bg-white group-hover:border-[#452798]/60"
           }`}
         >
           {value && (
@@ -423,7 +422,7 @@ function CheckboxField({ field, value, onChange, onBlur, error }) {
           className="sr-only"
         />
         <span
-          className={`text-sm leading-relaxed ${value ? "text-white" : "text-white/70"}`}
+          className={`text-sm leading-relaxed ${value ? "text-[#452798]" : "text-[#452798]/70"}`}
           dangerouslySetInnerHTML={{
             __html: field.checkboxLabel || field.label,
           }}
@@ -458,23 +457,23 @@ function MultiCheckboxField({ field, value = [], onChange, onBlur, error }) {
               key={idx}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 ${
                 isChecked
-                  ? "border-[#11EDA4]/50 bg-[#11EDA4]/10"
-                  : "border-[#6B4FD0]/30 bg-[#452798]/20 hover:border-[#9B7EFF]/40"
+                  ? "border-[#452798]/50 bg-[#452798]/10"
+                  : "border-[#452798]/20 bg-white hover:border-[#452798]/40"
               }`}
             >
               <div
                 onClick={() => toggle(optVal)}
                 className={`w-4 h-4 rounded border-2 flex-shrink-0 flex items-center justify-center transition-all ${
                   isChecked
-                    ? "bg-[#11EDA4] border-[#11EDA4]"
-                    : "border-[#9B7EFF]/50"
+                    ? "bg-[#452798] border-[#452798]"
+                    : "border-[#452798]/40"
                 }`}
               >
                 {isChecked && (
                   <svg viewBox="0 0 10 8" fill="none" className="w-2.5 h-2">
                     <path
                       d="M1 4l2.5 2.5L9 1"
-                      stroke="#1E1A2B"
+                      stroke="#FFFFFF"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -489,7 +488,7 @@ function MultiCheckboxField({ field, value = [], onChange, onBlur, error }) {
                 className="sr-only"
               />
               <span
-                className={`text-sm font-medium ${isChecked ? "text-[#11EDA4]" : "text-white/70"}`}
+                className={`text-sm font-medium ${isChecked ? "text-[#452798]" : "text-[#452798]/70"}`}
               >
                 {optLabel}
               </span>
@@ -535,12 +534,12 @@ function RangeField({ field, value, onChange, onBlur, error }) {
   return (
     <FieldWrapper field={field} error={error}>
       <div className="flex flex-col gap-2">
-        <div className="flex justify-between text-xs text-[#9B7EFF]/70">
+        <div className="flex justify-between text-xs text-[#452798]/70">
           <span>
             {min}
             {field.unit}
           </span>
-          <span className="text-[#11EDA4] font-bold text-sm">
+          <span className="text-[#452798] font-bold text-sm">
             {current}
             {field.unit}
           </span>
@@ -549,9 +548,9 @@ function RangeField({ field, value, onChange, onBlur, error }) {
             {field.unit}
           </span>
         </div>
-        <div className="relative h-2 rounded-full bg-[#452798]/40">
+        <div className="relative h-2 rounded-full bg-[#452798]/20">
           <div
-            className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[#7441FF] to-[#11EDA4] transition-all"
+            className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[#452798] to-[#683CE3] transition-all"
             style={{ width: `${pct}%` }}
           />
           <input
@@ -598,16 +597,16 @@ function FileField({ field, value, onChange, onBlur, error }) {
         }}
         className={`flex flex-col items-center gap-2 px-4 py-6 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200 ${
           dragging
-            ? "border-[#11EDA4] bg-[#11EDA4]/10"
+            ? "border-[#452798]/60 bg-[#452798]/10"
             : error
               ? "border-[#FF6B6B]/50 bg-[#FF6B6B]/5"
-              : "border-[#6B4FD0]/40 bg-[#452798]/20 hover:border-[#9B7EFF]/60 hover:bg-[#452798]/30"
+              : "border-[#452798]/35 bg-white hover:border-[#452798]/50 hover:bg-[#452798]/5"
         }`}
       >
-        <Upload className="w-6 h-6 text-[#9B7EFF]" />
+        <Upload className="w-6 h-6 text-[#452798]/70" />
         {fileName ? (
           <div className="flex items-center gap-2">
-            <span className="text-sm text-[#11EDA4] font-medium truncate max-w-[200px]">
+            <span className="text-sm text-[#452798] font-medium truncate max-w-[200px]">
               {fileName}
             </span>
             <button
@@ -624,14 +623,14 @@ function FileField({ field, value, onChange, onBlur, error }) {
           </div>
         ) : (
           <>
-            <span className="text-sm text-white/60 text-center">
+            <span className="text-sm text-[#452798]/70 text-center">
               Drag & drop or{" "}
-              <span className="text-[#9B7EFF] font-medium">
+              <span className="text-[#452798] font-medium">
                 click to upload
               </span>
             </span>
             {field.accept && (
-              <span className="text-xs text-[#9B7EFF]/50">{field.accept}</span>
+              <span className="text-xs text-[#452798]/50">{field.accept}</span>
             )}
           </>
         )}
@@ -698,7 +697,7 @@ function ToggleField({ field, value, onChange, onBlur, error }) {
           onBlur(field.name);
         }}
         className={`relative w-12 h-6 rounded-full transition-all duration-300 ${
-          value ? "bg-[#7441FF]" : "bg-[#452798]/60 border border-[#6B4FD0]/40"
+          value ? "bg-[#452798]" : "bg-[#452798]/20 border border-[#452798]/30"
         }`}
       >
         <motion.span
@@ -716,9 +715,9 @@ function ToggleField({ field, value, onChange, onBlur, error }) {
 function HeadingBlock({ field }) {
   return (
     <div className={`col-span-full ${field.className || ""}`}>
-      <h3 className="text-[#EFD830] font-bold text-lg">{field.label}</h3>
+      <h3 className="text-[#452798] font-bold text-lg">{field.label}</h3>
       {field.description && (
-        <p className="text-white/60 text-sm mt-1">{field.description}</p>
+        <p className="text-[#452798]/70 text-sm mt-1">{field.description}</p>
       )}
     </div>
   );
@@ -727,7 +726,7 @@ function HeadingBlock({ field }) {
 function DividerBlock() {
   return (
     <div className="col-span-full">
-      <div className="h-px bg-gradient-to-r from-transparent via-[#6B4FD0]/40 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#452798]/35 to-transparent" />
     </div>
   );
 }
@@ -842,15 +841,15 @@ function SuccessScreen({ schema }) {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
-        className="w-20 h-20 rounded-full bg-[#11EDA4]/15 border border-[#11EDA4]/30 flex items-center justify-center shadow-[0_0_40px_rgba(17,237,164,0.2)]"
+        className="w-20 h-20 rounded-full bg-[#452798]/10 border border-[#452798]/25 flex items-center justify-center shadow-[0_0_30px_rgba(69,39,152,0.18)]"
       >
-        <CheckCircle className="w-10 h-10 text-[#11EDA4]" />
+        <CheckCircle className="w-10 h-10 text-[#452798]" />
       </motion.div>
       <div>
-        <h3 className="text-2xl font-bold text-white mb-2">
+        <h3 className="text-2xl font-bold text-[#452798] mb-2">
           {schema.successTitle || "Submitted Successfully!"}
         </h3>
-        <p className="text-white/60 text-sm max-w-sm">
+        <p className="text-[#452798]/70 text-sm max-w-sm">
           {schema.successMessage ||
             "Your form has been submitted. We'll get back to you soon."}
         </p>
@@ -994,23 +993,25 @@ export default function DynamicFormBuilder({
 
   return (
     <div
-      className={`w-full rounded-2xl border border-[#6B4FD0]/25 bg-gradient-to-b from-[#1E1A2B] to-[#241352] shadow-[0_8px_40px_rgba(0,0,0,0.4)] overflow-hidden ${className}`}
+      className={`w-full bg-white/60 backdrop-blur-xs border border-white/50 rounded-3xl shadow-2xl overflow-hidden ${className}`}
     >
       {/* Header */}
       {(schema?.title || schema?.description) && (
-        <div className="px-6 pt-6 pb-4 border-b border-[#6B4FD0]/20">
+        <div className="px-6 md:px-10 pt-6 md:pt-10 pb-4 md:pb-6 border-b border-[#452798]/15">
           {schema.title && (
-            <h2 className="text-xl font-bold text-white mb-1">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-[#452798] mb-2 text-center tracking-tight">
               {schema.title}
             </h2>
           )}
           {schema.description && (
-            <p className="text-white/60 text-sm">{schema.description}</p>
+            <p className="text-[#452798]/70 text-center text-sm md:text-base font-medium">
+              {schema.description}
+            </p>
           )}
         </div>
       )}
 
-      <div className="p-6">
+      <div className="p-6 md:p-10">
         <AnimatePresence mode="wait">
           {isSuccess ? (
             <SuccessScreen key="success" schema={schema} />
@@ -1023,7 +1024,7 @@ export default function DynamicFormBuilder({
               onSubmit={handleSubmit}
               noValidate
             >
-              <div className={`grid gap-x-5 gap-y-5 grid-cols-1 ${gridClass}`}>
+              <div className={`grid gap-x-5 gap-y-6 grid-cols-1 ${gridClass}`}>
                 {schema?.fields?.map((field) =>
                   renderField({
                     field,
@@ -1043,10 +1044,10 @@ export default function DynamicFormBuilder({
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mt-5 flex items-center gap-2 p-3 rounded-xl bg-[#FF6B6B]/10 border border-[#FF6B6B]/30"
+                    className="mt-5 flex items-center gap-2 p-3 rounded-xl bg-rose-50 border border-rose-200"
                   >
                     <AlertCircle className="w-4 h-4 text-[#FF6B6B] flex-shrink-0" />
-                    <span className="text-[#FF6B6B] text-sm">
+                    <span className="text-rose-600 text-sm font-medium">
                       {submitError}
                     </span>
                   </motion.div>
@@ -1062,7 +1063,7 @@ export default function DynamicFormBuilder({
                     type="button"
                     onClick={onCancel}
                     disabled={isSubmitting}
-                    className="px-6 py-3 rounded-xl border border-[#6B4FD0]/40 text-white/70 text-sm font-semibold hover:bg-[#452798]/30 hover:text-white transition-all disabled:opacity-40"
+                    className="px-6 h-12 rounded-xl border border-[#452798]/30 text-[#452798]/80 text-sm font-semibold hover:bg-[#452798]/10 hover:text-[#452798] transition-all disabled:opacity-40"
                   >
                     {schema?.cancelLabel || "Cancel"}
                   </button>
@@ -1071,7 +1072,7 @@ export default function DynamicFormBuilder({
                   type="submit"
                   disabled={isSubmitting}
                   whileTap={{ scale: 0.97 }}
-                  className="flex-1 md:flex-none px-8 py-3 rounded-xl bg-[#7441FF] hover:bg-[#8B5FFF] text-white text-sm font-bold transition-all duration-200 shadow-[0_4px_16px_rgba(116,65,255,0.35)] hover:shadow-[0_6px_24px_rgba(116,65,255,0.5)] disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 md:flex-none px-8 h-12 rounded-xl bg-[#452798] hover:bg-[#683CE3] text-white text-lg font-bold transition-all duration-200 shadow-lg shadow-[#452798]/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
                   {isSubmitting ? (
                     <>
