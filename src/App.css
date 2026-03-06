@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -28,7 +30,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -54,10 +56,9 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 
 /* Base global styles */
 * {
@@ -94,8 +95,16 @@ body {
   @apply max-w-6xl px-4 py-3 mx-auto;
 }
 
+.group:hover .activity-card-img {
+  transform: scale(1.06);
+}
+
 /* Activity card image zoom on hover */
 .group:hover .activity-card-img {
   transform: scale(1.06);
 }
+.gradient-content{
+  @apply text-3xl font-bold bg-gradient-to-t from-[#4D3398] via-[#452798] via-[#6D44E2] to-[#1E1A2B] bg-clip-text text-transparent;
+}
+.error-validation{@apply text-[#EF4444] font-semibold text-sm mt-1}
 

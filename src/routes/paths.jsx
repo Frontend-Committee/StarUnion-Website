@@ -16,16 +16,16 @@ export const PATHS = {
     WORKSHOP_DETAILS: "workshops/:id",
     CONTACT: "contact",
     BOARD_HIGH: "board/high",
-    PORTFOLIO: "portfolio"
+    FORM_DEMO: "form-demo",
   },
 
   AUTH_PAGES: {
     LOGIN: "login",
     REGISTER: "register",
     FORGOT_PASSWORD: "forgot-password",
+    NEW_PASSWORD: "new-password",
     OTP: "otp",
   },
 
   PROFILE: "/profile",
-  
 };

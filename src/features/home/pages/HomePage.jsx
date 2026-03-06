@@ -5,7 +5,7 @@ import UpcomingSection from "../components/UpcomingSection";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="container min-h-screen ">
       <HeroSection />
       <AboutSection />
       <UpcomingSection />
