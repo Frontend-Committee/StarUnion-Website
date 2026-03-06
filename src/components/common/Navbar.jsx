@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { PATHS } from "../../routes/paths";
 import StarLogo from "../../assets/icons/StarLogo.png";
+import { MdOutlineMenu } from "react-icons/md";
 
 import home from "../../assets/icons/home.png";
 import about from "../../assets/icons/about.png";
@@ -9,6 +10,7 @@ import committees from "../../assets/icons/committees.png";
 import high from "../../assets/icons/high.png";
 import services from "../../assets/icons/services.png";
 import contact from "../../assets/icons/contact.png";
+import projects from "../../assets/icons/projects.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ export default function Navbar() {
   const mobileLinkClass = ({ isActive }) =>
     [
       "flex items-center gap-4 px-2 py-3 text-[15px] leading-none transition",
-      isActive ? "text-yellow-300" : "text-white/90 hover:text-white",
+      isActive ? "text-yellow-300" : "text-white/90 hover:text-yellow-300",
     ].join(" ");
 
   const mobileItems = useMemo(
@@ -98,6 +100,17 @@ export default function Navbar() {
         ),
       },
       {
+        to: `/${PATHS.PUBLIC.PROJECTS}`,
+        label: "Portfolio",
+        icon: (
+          <img
+            src={projects}
+            alt=""
+            className="w-4 h-4 brightness-0 invert opacity-90"
+          />
+        ),
+      },
+      {
         to: `/${PATHS.PUBLIC.CONTACT}`,
         label: "Contact Us",
         icon: (
@@ -116,14 +129,11 @@ export default function Navbar() {
     <>
       <nav className="sticky top-0 z-50 backdrop-blur-sm">
         <div className="bg-transparent">
-          <div className="container flex items-center justify-between py-4">
+          <div className="container flex items-center justify-between py-5 mt-6">
             <button
-              onClick={() => {
-                if (window.innerWidth < 768) setOpen(true);
-                else navigate("/");
-              }}
+              onClick={() => navigate("/")}
               className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
-              aria-label="Open menu"
+              aria-label="Go home"
             >
               <img
                 src={StarLogo}
@@ -160,24 +170,37 @@ export default function Navbar() {
               <NavLink to={`/${PATHS.PUBLIC.CONTACT}`} className={navLinkClass}>
                 Contact us
               </NavLink>
+              <NavLink
+                to={`/${PATHS.PUBLIC.PROJECTS}`}
+                className={navLinkClass}
+              >
+                Portfolio
+              </NavLink>
             </div>
 
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
               {!isAuth ? (
                 <button
                   onClick={handleLogin}
-                  className="px-6 py-2 rounded-full bg-primary text-white font-medium ring-1 ring-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#6A49D6]/80 transition"
+                  className="px-6 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Log In
                 </button>
               ) : (
                 <button
                   onClick={handleProfile}
-                  className="px-6 py-2 rounded-full bg-primary text-white font-medium ring-1 ring-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#6A49D6]/80 transition"
+                  className="px-6 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Profile
                 </button>
               )}
+              <button
+                onClick={() => setOpen(true)}
+                className="flex items-center justify-center p-2 text-white transition md:hidden hover:text-yellow-300"
+                aria-label="Open menu"
+              >
+                <MdOutlineMenu size={28} />
+              </button>
             </div>
           </div>
         </div>
@@ -259,7 +282,7 @@ export default function Navbar() {
                   close();
                   handleLogin();
                 }}
-                className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-xl bg-white/10 ring-1 ring-white/10 hover:bg-white/15"
+                className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg hover:bg-[#683ce3]"
               >
                 Log In
               </button>
@@ -269,7 +292,7 @@ export default function Navbar() {
                   close();
                   handleProfile();
                 }}
-                className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-xl bg-white/10 ring-1 ring-white/10 hover:bg-white/15"
+                className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg hover:bg-[#683ce3]"
               >
                 Profile
               </button>
