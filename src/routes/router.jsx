@@ -37,6 +37,7 @@ import ServiceDetailsPage from "../features/services/pages/ServiceDetailsPage";
 import WorkShopsPage from "../features/workshops/pages/WorkShopsPage";
 import WorkShopDetailsPage from "../features/workshops/pages/WorkShopDetailsPage";
 
+import Portfolio from "../features/portfolio/Portfolio";
 const NotFound = () => <div>404 - Not Found</div>;
 
 export const router = createBrowserRouter([
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
 
       { path: PATHS.PUBLIC.CONTACT, element: <ContactUsPage /> },
       { path: PATHS.PUBLIC.BOARD_HIGH, element: <HighBoardPage /> },
+       { path: PATHS.PUBLIC.PORTFOLIO, element: <Portfolio /> },
     ],
   },
 

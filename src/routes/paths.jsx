@@ -16,6 +16,7 @@ export const PATHS = {
     WORKSHOP_DETAILS: "workshops/:id",
     CONTACT: "contact",
     BOARD_HIGH: "board/high",
+    PORTFOLIO: "portfolio"
   },
 
   AUTH_PAGES: {

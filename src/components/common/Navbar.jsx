@@ -160,6 +160,9 @@ export default function Navbar() {
               <NavLink to={`/${PATHS.PUBLIC.CONTACT}`} className={navLinkClass}>
                 Contact us
               </NavLink>
+              <NavLink to={`/${PATHS.PUBLIC.PROJECTS}`} className={navLinkClass}>
+                Portfolio
+              </NavLink>
             </div>
 
             <div className="flex items-center">
