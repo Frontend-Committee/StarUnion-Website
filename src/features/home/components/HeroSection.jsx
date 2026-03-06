@@ -15,7 +15,7 @@ export default function HeroSection() {
             Unlock your potential. Build your future. Lead with confidence.
           </p>
 
-          <Button className="bg-primary hover:bg-[#683ce3] text-white text-lg px-8 py-7 rounded mb-7 md:mb-0">
+          <Button className="bg-primary hover:bg-[#683ce3] text-white text-lg px-8 py-7 rounded mb-10 md:mb-0">
             Join Us
           </Button>
         </div>
