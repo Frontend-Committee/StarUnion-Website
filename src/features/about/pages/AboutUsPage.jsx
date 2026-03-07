@@ -154,7 +154,7 @@ export default function AboutUsPage() {
       <section className="py-20 md:py-32 bg-[#2a1b5c]">
         <div className="container mx-auto px-6 md:px-12">
           <ScrollAnimation variant="fade-up">
-            <h2 className="mb-6 text-3xl md:text-5xl font-bold text-[#FCDD00]">Who We Are</h2>
+            <h2 className="mb-6 text-3xl md:text-4xl font-bold text-[#FCDD00]">Who We Are</h2>
             <p className="text-base md:text-xl leading-[1.8] text-white/90 max-w-4xl">
               S.T.A.R Union is a student activity founded on September 9, 2023, with a strong belief that every student has the potential to build, innovate, and grow. We focus on empowering students—especially in technology and computer science—by providing hands-on experiences, real-world exposure, and a supportive environment that bridges the gap between learning and practice.
             </p>
@@ -167,7 +167,7 @@ export default function AboutUsPage() {
         <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-12 lg:gap-20">
           <div className="flex-1">
             <ScrollAnimation variant="fade-up">
-              <h2 className="mb-6 m-0 text-3xl md:text-5xl font-bold text-[#FCDD00]">Our Mission</h2>
+              <h2 className="mb-6 m-0 text-3xl md:text-4xl font-bold text-[#FCDD00]">Our Mission</h2>
               <p className="text-base md:text-xl leading-[1.8] text-white/90">
                 To equip students with technical and non-technical skills through
                 workshops, events, and practical experiences, while spreading
@@ -195,7 +195,7 @@ export default function AboutUsPage() {
         <div className="container mx-auto px-6 md:px-12">
           <div className="flex items-center justify-between mb-12">
             <ScrollAnimation variant="fade-up" className="flex items-center gap-6">
-              <h2 className="m-0 text-3xl md:text-5xl font-bold text-[#FCDD00]">Our Committees</h2>
+              <h2 className="m-0 text-3xl md:text-4xl font-bold text-[#FCDD00]">Our Committees</h2>
               <IconChevronRight />
             </ScrollAnimation>
           </div>
@@ -211,7 +211,7 @@ export default function AboutUsPage() {
       <section className="w-full py-20 pb-32 bg-[#2a1b5c]">
         <div className="container mx-auto px-6 md:px-12">
           <ScrollAnimation variant="fade-up">
-            <h2 className="mb-12 text-3xl md:text-5xl font-bold text-[#FCDD00]">What We Do</h2>
+            <h2 className="mb-12 text-3xl md:text-4xl font-bold text-[#FCDD00]">What We Do</h2>
           </ScrollAnimation>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {activities.map((act, i) => (
