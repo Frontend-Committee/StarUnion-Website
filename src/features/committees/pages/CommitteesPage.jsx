@@ -62,7 +62,7 @@ export default function CommitteesPage() {
               placeholder="Search Committees.."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full  text-white pl-12 pr-4 py-3 rounded-lg border border-[#2a2050] focus:border-primary focus:outline-none placeholder-gray-500 text-body font-normal transition-colors"
+              className="w-full   pl-12 pr-4 py-3 rounded-lg border border-[#2a2050] focus:border-primary focus:outline-none placeholder-gray-500 text-body font-normal transition-colors"
             />
           </div>
         </ScrollAnimation>
@@ -90,7 +90,7 @@ export default function CommitteesPage() {
         {/* Committees Grid */}
         <Motion.div
           layout
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4"
         >
           <AnimatePresence mode="popLayout">
             {filteredCommittees.map((committee, index) => (

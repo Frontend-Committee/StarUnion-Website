@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
 import {
   HIGH_BOARD_FEATURED,
   HIGH_BOARD_SECTIONS,
 } from "../../../utils/constants";
-
+import facebookIcon from "../../../assets/icons/facebookIcon.png";
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared social icons helper
 ───────────────────────────────────────────────────────────────────────────── */
@@ -29,18 +29,14 @@ const WA_PATH =
 
 const Socials = ({ socials, size = 26 }) => (
   <div className="flex gap-[5px]">
-    {socials?.facebook && (
-      <SocialBtn color="#1877F2" href={socials.facebook} label="Facebook">
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          style={{ width: size - 12, height: size - 12 }}
-        >
-          <path d={FB_PATH} />
-        </svg>
-      </SocialBtn>
-    )}
-    {socials?.linkedin && (
+      {socials?.facebook && (
+                <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
+              )}  {socials?.facebook && (
+                <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
+              )}  {socials?.facebook && (
+                <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
+              )}
+    {/* {socials?.linkedin && (
       <SocialBtn color="#0A66C2" href={socials.linkedin} label="LinkedIn">
         <svg
           viewBox="0 0 24 24"
@@ -50,8 +46,8 @@ const Socials = ({ socials, size = 26 }) => (
           <path d={LI_PATH} />
         </svg>
       </SocialBtn>
-    )}
-    {socials?.instagram && (
+    )} */}
+    {/* {socials?.instagram && (
       <SocialBtn color="#25D366" href={socials.instagram} label="WhatsApp">
         <svg
           viewBox="0 0 24 24"
@@ -61,7 +57,7 @@ const Socials = ({ socials, size = 26 }) => (
           <path d={WA_PATH} />
         </svg>
       </SocialBtn>
-    )}
+    )} */}
   </div>
 );
 
@@ -72,9 +68,9 @@ const Socials = ({ socials, size = 26 }) => (
 const TeamCard = ({ member, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
     <motion.div
-      whileHover={{ y: -5, boxShadow: "0 16px 40px rgba(116,65,255,0.22)" }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="w-[170px] rounded-[14px] overflow-hidden border border-gray-200 bg-white flex flex-col"
+      // whileHover={{  boxShadow: "0 16px 40px rgba(116,65,255,0.22)" }}
+      // transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      className="w-[170px] h-80 rounded-[14px] overflow-hidden border border-gray-200 bg-white flex flex-col primary-card-hover"
       style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
     >
       {/* Photo */}
@@ -135,9 +131,9 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
     <motion.div
       whileHover={{ y: -3, boxShadow: "0 20px 50px rgba(116,65,255,0.18)" }}
       transition={{ type: "spring", stiffness: 280, damping: 24 }}
-      className="w-full rounded-[16px] overflow-hidden bg-white flex flex-row"
+      className="w-full rounded-[16px] overflow-hidden bg-white flex flex-row primary-card-hover"
       style={{
-        border: "1.5px solid #EFD830",
+        // border: "1.5px solid #EFD830",
         boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
         minHeight: 210,
       }}
@@ -186,6 +182,88 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
   </ScrollAnimation>
 );
 
+function HorizontalScrollSection({ children, className = "" }) {
+  const containerRef = useRef(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+
+  const updateArrows = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const maxScrollLeft = el.scrollWidth - el.clientWidth;
+    setShowLeft(el.scrollLeft > 8);
+    setShowRight(maxScrollLeft - el.scrollLeft > 8);
+  }, []);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    updateArrows();
+    const onResize = () => updateArrows();
+    const resizeObserver = new ResizeObserver(updateArrows);
+    resizeObserver.observe(el);
+    el.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      el.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", onResize);
+      resizeObserver.disconnect();
+    };
+  }, [updateArrows]);
+
+  const scrollByAmount = (direction) => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * 280, behavior: "smooth" });
+  };
+
+  return (
+    <div className="relative">
+      <div
+        ref={containerRef}
+        className={`flex gap-4 pt-2 pb-4 overflow-x-auto scrollbar-hide ${className}`}
+      >
+        {children}
+      </div>
+      <div
+        className={`pointer-events-none absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-[#12082B] via-[#12082B]/70 to-transparent transition-opacity duration-200 ${
+          showLeft ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      <div
+        className={`pointer-events-none absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#12082B] via-[#12082B]/70 to-transparent transition-opacity duration-200 ${
+          showRight ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      {showLeft && (
+        <button
+          type="button"
+          onClick={() => scrollByAmount(-1)}
+          aria-label="Scroll left"
+          className="absolute left-2 top-[calc(50%-8px)] -translate-y-1/2 z-20 w-9 h-9 rounded-full border border-white/25 bg-[#452798]/85 text-white shadow-lg shadow-black/40 backdrop-blur-sm hover:bg-[#683CE3] transition"
+        >
+          <span className="flex items-center justify-center">
+            <ScrollArrow direction="left" />
+          </span>
+        </button>
+      )}
+      {showRight && (
+        <button
+          type="button"
+          onClick={() => scrollByAmount(1)}
+          aria-label="Scroll right"
+          className="absolute right-2 top-[calc(50%-8px)] -translate-y-1/2 z-20 w-9 h-9 rounded-full border border-white/25 bg-[#452798]/85 text-white shadow-lg shadow-black/40 backdrop-blur-sm hover:bg-[#683CE3] transition"
+        >
+          <span className="flex items-center justify-center">
+            <ScrollArrow direction="right" />
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 /* ─────────────────────────────────────────────────────────────────────────────
    BoardSection — yellow heading + horizontal scrollable TeamCard list
 ───────────────────────────────────────────────────────────────────────────── */
@@ -193,11 +271,11 @@ const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={sectionDelay}>
     <div className="mb-12">
       <h2 className="text-tertiary font-bold text-h3 mb-5">{label}</h2>
-      <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
+      <HorizontalScrollSection>
         {members.map((member, i) => (
           <TeamCard key={member.id} member={member} delay={i * 70} />
         ))}
-      </div>
+      </HorizontalScrollSection>
     </div>
   </ScrollAnimation>
 );

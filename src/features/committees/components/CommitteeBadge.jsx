@@ -1,5 +1,5 @@
 /* Badge/emblem SVG component matching the Figma shield-style badges */
-
+import commiteeImage from "../../../assets/images/committee.png";
 const ICONS = {
   video: (c) => (
     <g>
@@ -520,85 +520,6 @@ export default function CommitteeBadge({ name, icon, color }) {
   const renderIcon = ICONS[icon] || ICONS.frontend;
 
   return (
-    <svg
-      viewBox="0 0 200 250"
-      className="w-full h-full"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Shield / badge outline */}
-      <path
-        d="M100,8 L188,40 L188,185 L100,242 L12,185 L12,40 Z"
-        fill="none"
-        stroke={color}
-        strokeWidth="2"
-        strokeOpacity="0.6"
-      />
-      {/* Inner shield */}
-      <path
-        d="M100,18 L180,46 L180,180 L100,232 L20,180 L20,46 Z"
-        fill={color}
-        fillOpacity="0.05"
-        stroke={color}
-        strokeWidth="1"
-        strokeOpacity="0.25"
-      />
-
-      {/* STAR UNION header */}
-      <text
-        x="100"
-        y="65"
-        textAnchor="middle"
-        fontSize="9"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="700"
-        fill={color}
-        letterSpacing="2"
-      >
-        STAR UNION
-      </text>
-
-      {/* Committee name */}
-      <text
-        x="100"
-        y="92"
-        textAnchor="middle"
-        fontSize={name.length > 16 ? "11" : name.length > 10 ? "13" : "16"}
-        fontFamily="'Inter', sans-serif"
-        fontWeight="900"
-        fill={color}
-        letterSpacing="1.5"
-      >
-        {name.toUpperCase()}
-      </text>
-
-      {/* Subtitle */}
-      <text
-        x="100"
-        y="112"
-        textAnchor="middle"
-        fontSize="6.5"
-        fontFamily="'Inter', sans-serif"
-        fontWeight="600"
-        fill={color}
-        fillOpacity="0.6"
-        letterSpacing="1"
-      >
-        STAR UNION COMMITTEE
-      </text>
-
-      {/* Divider line */}
-      <line
-        x1="60"
-        y1="120"
-        x2="140"
-        y2="120"
-        stroke={color}
-        strokeWidth="0.5"
-        strokeOpacity="0.3"
-      />
-
-      {/* Committee icon */}
-      {renderIcon(color)}
-    </svg>
+  <img src={commiteeImage} alt=""  />
   );
 }

@@ -770,6 +770,23 @@ function renderField({ field, values, errors, touched, onChange, onBlur }) {
 
   let el;
   switch (field.type) {
+    /*
+    text
+    email
+    password
+    number
+    url
+    tel
+    textarea
+    select
+    radio
+    checkbox
+    multi-checkbox
+    date
+    range
+    file
+    toggle
+    */
     case "text":
     case "email":
     case "password":

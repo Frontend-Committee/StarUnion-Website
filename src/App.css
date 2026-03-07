@@ -108,3 +108,9 @@ body {
 }
 .error-validation{@apply text-[#EF4444] font-semibold text-sm mt-1}
 
+@layer components {
+  .primary-card-hover {
+    @apply hover:border-cardHover hover:shadow-cardHover transition-[border-color,box-shadow] duration-300 hover:translate-y-[-5px]  ;
+  }
+}
+
