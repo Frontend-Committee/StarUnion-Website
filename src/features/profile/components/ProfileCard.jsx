@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import userImg from "./../../../assets/images/ProfilePage/portfolioImg.jpg"
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 export default function ProfileCard() {
   const [image, setImage] = useState(userImg);
