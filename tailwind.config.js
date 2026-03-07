@@ -16,7 +16,6 @@ module.exports = {
         primary: "#7441FF",
         secondary: "#11EDA4",
         tertiary: "#EFD830",
-        cardHover: "#7A4BFF",
 
         background: "#FFFFFF",
         text: "#111111",
@@ -86,7 +85,6 @@ module.exports = {
 
       boxShadow: {
         soft: "0 4px 10px rgba(0,0,0,0.1)",
-        cardHover: "0 16px 40px rgba(116,65,255,0.18)",
       },
 
       borderRadius: {
