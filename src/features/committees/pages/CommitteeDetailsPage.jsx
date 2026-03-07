@@ -1,5 +1,4 @@
 import { motion as Motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
 import facebookIcon from "../../../assets/icons/facebookIcon.png";
@@ -9,104 +8,7 @@ import {
   MOCK_TEAM_MEMBERS,
 } from "../../../utils/constants";
 
-const ScrollArrow = ({ direction = "right" }) => (
-  <svg
-    className="w-4 h-4"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d={direction === "left" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
-    />
-  </svg>
-);
-
-function HorizontalScrollSection({ children, className = "" }) {
-  const containerRef = useRef(null);
-  const [showLeft, setShowLeft] = useState(false);
-  const [showRight, setShowRight] = useState(false);
-
-  const updateArrows = useCallback(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const maxScrollLeft = el.scrollWidth - el.clientWidth;
-    setShowLeft(el.scrollLeft > 8);
-    setShowRight(maxScrollLeft - el.scrollLeft > 8);
-  }, []);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    updateArrows();
-    const onResize = () => updateArrows();
-    const resizeObserver = new ResizeObserver(updateArrows);
-    resizeObserver.observe(el);
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      el.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", onResize);
-      resizeObserver.disconnect();
-    };
-  }, [updateArrows]);
-
-  const scrollByAmount = (direction) => {
-    const el = containerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: direction * 280, behavior: "smooth" });
-  };
-
-  return (
-    <div className="relative">
-      <div
-        ref={containerRef}
-        className={`flex gap-4 pt-2 pb-4 overflow-x-auto scrollbar-hide ${className}`}
-      >
-        {children}
-      </div>
-      <div
-        className={`pointer-events-none absolute left-0 top-0 bottom-4 w-12 bg-gradient-to-r from-[#12082B] via-[#12082B]/70 to-transparent transition-opacity duration-200 ${
-          showLeft ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        className={`pointer-events-none absolute right-0 top-0 bottom-4 w-12 bg-gradient-to-l from-[#12082B] via-[#12082B]/70 to-transparent transition-opacity duration-200 ${
-          showRight ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      {showLeft && (
-        <button
-          type="button"
-          onClick={() => scrollByAmount(-1)}
-          aria-label="Scroll left"
-          className="absolute left-2 top-[calc(50%-8px)] -translate-y-1/2 z-20 w-9 h-9 rounded-full border border-white/25 bg-[#452798]/85 text-white shadow-lg shadow-black/40 backdrop-blur-sm hover:bg-[#683CE3] transition"
-        >
-          <span className="flex items-center justify-center">
-            <ScrollArrow direction="left" />
-          </span>
-        </button>
-      )}
-      {showRight && (
-        <button
-          type="button"
-          onClick={() => scrollByAmount(1)}
-          aria-label="Scroll right"
-          className="absolute right-2 top-[calc(50%-8px)] -translate-y-1/2 z-20 w-9 h-9 rounded-full border border-white/25 bg-[#452798]/85 text-white shadow-lg shadow-black/40 backdrop-blur-sm hover:bg-[#683CE3] transition"
-        >
-          <span className="flex items-center justify-center">
-            <ScrollArrow direction="right" />
-          </span>
-        </button>
-      )}
-    </div>
-  );
-}
+import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
 
 /* ────────────────────────────────────────
    Team Member Card — matches Figma exactly
@@ -221,62 +123,34 @@ const TeamCard = ({ member, delay = 0 }) => (
 const ProjectCard = ({ project, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
     <Motion.div
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="w-[220px] rounded-[22px] overflow-hidden border border-purple-500/20 flex flex-col relative primary-card-hover"
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="w-[260px] rounded-[24px] overflow-hidden border border-white/10 flex flex-col relative bg-[#1A0B2E] transition-shadow hover:shadow-2xl hover:shadow-primary/20"
       style={{
-        boxShadow: "0 4px 16px rgba(0,0,0,0.30)",
-        backgroundImage: `url(${project.image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        boxShadow: "0 12px 30px -10px rgba(0,0,0,0.5)",
       }}
     >
-      {/* ── Global overlays covering the ENTIRE card ── */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(8,2,22,0.95) 0%, rgba(8,2,22,0.5) 50%, rgba(8,2,22,0.1) 100%)",
-        }}
-      />
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(8,2,22,0.75) 0%, transparent 40%)",
-        }}
-      />
-
-      {/* ── Title on top centered ── */}
-      <div className="relative z-10 px-3 pt-3 pb-2 text-center">
-        {" "}
-        {/* ← z-10 */}
-        <p className="text-white/50 text-[8px] font-semibold tracking-[0.08em] uppercase mb-[2px]">
-          {project.subtitle}
-        </p>
-        <h4 className="text-white font-black text-[16px] leading-none tracking-tight">
-          {project.title}
-        </h4>
-      </div>
-
-      {/* ── Screenshot preview area ── */}
-      <div
-        className="relative z-10 w-full overflow-hidden"
-        style={{ height: 200 }}
-      >
-        {/* Decorative star top-right */}
-        <div className="absolute opacity-50 top-2 right-2">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
-              fill="white"
-              fillOpacity="0.2"
-              stroke="white"
-              strokeOpacity="0.4"
-              strokeWidth="1"
-            />
+      {/* ── Background Image with specialized overlays ── */}
+      <div className="relative w-full aspect-[4/5] overflow-hidden">
+        <img 
+          src={project.image} 
+          alt={project.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B2E] via-transparent to-black/40" />
+        
+        {/* Decorative star icon from screenshot */}
+        <div className="absolute top-4 right-4 text-white/30">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
           </svg>
+        </div>
+
+        {/* Project Title at Top */}
+        <div className="absolute top-6 left-0 right-0 px-4 text-center">
+          <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
+            {project.title}
+          </h4>
         </div>
       </div>
 
@@ -284,8 +158,8 @@ const ProjectCard = ({ project, delay = 0 }) => (
       <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
         <div className="px-3 pt-1 pb-4 mx-auto">
           <button className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
-            View Details
-          </button>
+          View Details
+        </button>
         </div>
       </div>
     </Motion.div>
@@ -308,38 +182,39 @@ export default function CommitteeDetailsPage() {
   }
 
   return (
-    <section className="min-h-screen px-4 py-8 bg-gradientBg3 md:px-8">
+    <section className="min-h-screen px-4 py-12 bg-gradientBg3 md:px-8 md:py-20">
       <div className="max-w-[1200px] mx-auto">
         {/* Back button */}
         <ScrollAnimation variant="fade-right">
           <button
             onClick={() => navigate("/committees")}
-            className="flex items-center gap-2 mb-8 text-white transition-colors cursor-pointer hover:text-secondary group"
+            className="flex items-center gap-2 mb-12 text-white transition-colors cursor-pointer hover:text-tertiary group"
             id="back-to-committees"
           >
-            <svg
-              className="w-8 h-8 transition-transform group-hover:-translate-x-1"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
+            <div className="p-2 rounded-full border border-white/20 group-hover:bg-white/10 transition-colors">
+              <svg
+                className="w-6 h-6 transition-transform group-hover:-translate-x-1"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+              >
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </div>
+            <span className="font-semibold uppercase tracking-widest text-xs">Back to Committees</span>
           </button>
         </ScrollAnimation>
 
         {/* Section: Meet the team */}
         <ScrollAnimation variant="fade-up" delay={100}>
-          <div className="mb-10">
+          <div className="mb-12">
             <h1 className="font-semibold leading-tight text-tertiary text-h2">
               Meet the talented team
             </h1>
-            <h2 className="mt-1 font-semibold leading-tight text-tertiary text-h2">
+            <h2 className="mt-2 font-bold leading-tight text-white/60 text-xl md:text-2xl">
               Who make all this happen
             </h2>
           </div>

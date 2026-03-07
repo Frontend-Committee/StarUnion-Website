@@ -36,7 +36,7 @@ export default function HeroSection() {
               <img
                 src={starLogo}
                 alt="Star Union"
-                className="relative object-contain w-[85%] sm:w-[70%] md:w-full max-w-[450px] md:max-w-[550px] drop-shadow-[0_20px_50px_rgba(0,0,0,0.4)]"
+                className="relative object-contain w-[90%] md:w-full max-w-[550px] md:max-w-[650px] drop-shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
               />
             </div>
           </Motion.div>

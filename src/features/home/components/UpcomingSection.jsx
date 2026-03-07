@@ -2,10 +2,11 @@ import React from "react";
 import MediaCard from "@/components/common/MediaCard";
 import { eventsData, servicesData, storiesData, workshopsData } from "../data";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 
 export default function UpcomingSection() {
   return (
-    <div className="flex flex-col w-full gap-3 my-10">
+    <div className="flex flex-col w-full gap-12 my-10">
       {/* events */}
       <section>
         <ScrollAnimation>
@@ -16,15 +17,15 @@ export default function UpcomingSection() {
 
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
               See More
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </p>
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
+        <HorizontalScrollSection>
           {eventsData.map((event, index) => (
-            <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
+            <ScrollAnimation mode="popLayout" key={event.id} delay={(index % 4) * 100}>
               <MediaCard
-                key={event.id}
                 title={event.title}
                 image={event.image}
                 buttonText={event.buttonText}
@@ -32,7 +33,7 @@ export default function UpcomingSection() {
               />
             </ScrollAnimation>
           ))}
-        </div>
+        </HorizontalScrollSection>
       </section>
 
       {/* workshops */}
@@ -44,15 +45,15 @@ export default function UpcomingSection() {
             </h2>
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
               See More
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </p>
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
+        <HorizontalScrollSection>
           {workshopsData.map((workshop, index) => (
-            <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
+            <ScrollAnimation mode="popLayout" key={workshop.id} delay={(index % 4) * 100}>
               <MediaCard
-                key={workshop.id}
                 title={workshop.title}
                 image={workshop.image}
                 buttonText={workshop.buttonText}
@@ -60,7 +61,7 @@ export default function UpcomingSection() {
               />
             </ScrollAnimation>
           ))}
-        </div>
+        </HorizontalScrollSection>
       </section>
 
       {/* services */}
@@ -72,22 +73,22 @@ export default function UpcomingSection() {
             </h2>
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
               See More
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </p>
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
+        <HorizontalScrollSection>
           {servicesData.map((service, index) => (
-            <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
+            <ScrollAnimation mode="popLayout" key={service.id} delay={(index % 4) * 100}>
               <MediaCard
-                key={service.id}
                 title={service.title}
                 image={service.image}
                 buttonText={service.buttonText}
               />
             </ScrollAnimation>
           ))}
-        </div>
+        </HorizontalScrollSection>
       </section>
 
       {/* stories */}
@@ -99,22 +100,22 @@ export default function UpcomingSection() {
             </h2>
             <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
               See More
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </p>
           </div>
         </ScrollAnimation>
 
-        <div className="flex gap-4 pb-6 pt-4 overflow-y-hidden overflow-x-auto snap-x">
+        <HorizontalScrollSection>
           {storiesData.map((story, index) => (
-            <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
+            <ScrollAnimation mode="popLayout" key={story.id} delay={(index % 4) * 100}>
               <MediaCard
-                key={story.id}
                 title={story.title}
                 image={story.image}
                 buttonText={story.buttonText}
               />
             </ScrollAnimation>
           ))}
-        </div>
+        </HorizontalScrollSection>
       </section>
     </div>
   );
