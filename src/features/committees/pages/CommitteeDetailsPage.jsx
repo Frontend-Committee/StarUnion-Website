@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
@@ -116,16 +116,16 @@ function HorizontalScrollSection({ children, className = "" }) {
 ──────────────────────────────────────── */
 const TeamCard = ({ member, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
-    <motion.div
+    <Motion.div
       whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="w-[185px] rounded-[14px] overflow-hidden border border-gray-200 bg-white h-80 flex flex-col primary-card-hover"
+      className="w-[220px] rounded-[14px] overflow-hidden border border-gray-200 bg-white h-[380px] flex flex-col primary-card-hover"
       style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.10)" }}
     >
       {/* ── Photo / Banner area ── */}
       <div
         className="relative w-full bg-[#111827] overflow-hidden"
-        style={{ height: 200 }}
+        style={{ height: 230 }}
       >
         {member.photo ? (
           <img
@@ -208,7 +208,7 @@ const TeamCard = ({ member, delay = 0 }) => (
           )} */}
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   </ScrollAnimation>
 );
 
@@ -220,7 +220,7 @@ const TeamCard = ({ member, delay = 0 }) => (
 ──────────────────────────────────────── */
 const ProjectCard = ({ project, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
-    <motion.div
+    <Motion.div
       whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
       className="w-[220px] rounded-[22px] overflow-hidden border border-purple-500/20 flex flex-col relative primary-card-hover"
@@ -288,7 +288,7 @@ const ProjectCard = ({ project, delay = 0 }) => (
           </button>
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   </ScrollAnimation>
 );
 

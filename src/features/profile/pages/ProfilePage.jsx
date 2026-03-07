@@ -1,4 +1,5 @@
 import Footer from "@/components/common/Footer";
+import { useNavigate } from "react-router-dom";
 import ProfileCard from "./../components/ProfileCard";
 import logo from "./../../../assets/images/AboutHero.jpg";
 import imgSrc1 from "./../../../assets/images/ProfilePage/2d3905db88064d93a2ebc114979738c00d8b2df2.jpg";
@@ -20,22 +21,46 @@ const attendedSessions = [
   { title: "Basic Design", date: "April 2025", imgSrc:imgSrc3,rate:4.5 },
 ]
 export default function ProfilePage() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen font-sans overflow-x-hidden">
       <div className="relative">
         <div className="relative w-full min-h-[250px] flex flex-col items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${logo})` }}
         >
-          <i className="fa-regular fa-pen-to-square absolute top-6 right-8 rounded size-6 p-1 bg-white text-[#452798] cursor-pointer"></i>        
+          <div className="container mx-auto relative h-full w-full min-h-[250px]">
+            <button 
+              onClick={() => navigate("/")}
+              className="absolute top-6 left-4 md:left-0 text-white border-2 border-white/40 hover:border-white hover:text-secondary hover:bg-white/10 transition-all cursor-pointer flex items-center justify-center p-1.5 rounded-full z-10"
+              aria-label="Go back"
+            >
+              <svg 
+                className="w-5 h-5 md:w-6 md:h-6" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="3" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button className="absolute top-6 right-4 md:right-0 bg-white text-[#452798] p-1.5 rounded-lg shadow-xl hover:bg-white/90 transition-all cursor-pointer z-10">
+              <i className="fa-regular fa-pen-to-square text-base"></i>
+            </button>
+          </div>
         </div>
 
-        <ProfileCard />
+        <div className="container mx-auto">
+          <ProfileCard />
+        </div>
       </div>
-      <div className="w-[94%] mx-auto">
+      <div className="container mx-auto px-4 md:px-6">
 
-        <div className="px-4 mt-8">
+        <div className="mt-8">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
             <FeatureBox
               title="Join the Community"
               desc="Be part of a supportive student community and start your journey with STAR Union."
@@ -51,9 +76,8 @@ export default function ProfilePage() {
           </div>
 
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold
-             text-2xl mb-6  pl-3">Application Status</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-sm">
+            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Application Status</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 rounded-sm">
               {ApplicationStatus.map((item, index) => (
                 <Card
                   key={index}
@@ -71,9 +95,8 @@ export default function ProfilePage() {
             </div>
           </section>
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold
-             text-2xl mb-6">My Activities</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-sm">
+            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">My Activities</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-sm">
               {myActivities.map((item, index) => (
                 <Card
                   key={index}
@@ -92,9 +115,8 @@ export default function ProfilePage() {
             </div>
           </section>
           <section>
-            <h3 className="text-[#FCDD00] font-semibold
-             text-2xl mb-6 pl-3">Attendee Sessions</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-sm">
+            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Attendee Sessions</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 rounded-sm">
               {attendedSessions.map((item, index) => (
                 <Card
                   key={index}
@@ -154,45 +176,49 @@ const FeatureBox = ({ title, desc }) => (
   </div>
 );
 
-const Card = ({ title, status, date, dotColor, imgSrc ,rate , role}) => (
-  <div className="transition-all hover:scale-[1.003] overflow-hidden rounded-md text-white shadow-2xl relative group cursor-pointer text-2xl">
-    <div className="group">
+const Card = ({ title, status, date, dotColor, imgSrc, rate, role }) => (
+  <div className="transition-all hover:scale-[1.02] overflow-hidden rounded-xl text-white shadow-xl relative group cursor-pointer border border-white/10 bg-[#1A0B48]">
+    <div className="relative aspect-[4/5] overflow-hidden">
       <div
-        className="bg-center pointer-events-none transition-transform duration-500 group-hover:scale-110"
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
         style={{ backgroundImage: `url(${imgSrc || ""})` }}
-      >
-
-
-      <div className="z-10 p-7 bg-[#7A4BFF4D]">
-        <h4 className="text-[#FCDD00] text-center font-semibold text-2xl mb-2">
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A051C] via-transparent to-transparent opacity-60" />
+      
+      <div className="absolute inset-0 p-5 flex flex-col justify-end">
+        <h4 className="text-[#FCDD00] font-bold text-lg mb-2 drop-shadow-md">
           {title}
         </h4>
-        {status && (
-          <p className="text-white font-semibold flex items-center gap-2">
-            Status: {status}
-            <span className={`w-8 h-8 rounded-full ${dotColor || "bg-[#03DF20]"}`}></span>
-          </p>
-        )}
-        {date && (
-          <p className="text-white font-semibold mt-4">
-            Date: {date}
-          </p>
-        )}
-        {rate && (
-          <p className="text-white font-semibold mt-4">
-            Rate: {rate}
-          </p>
-        )}
-        {role && (
-          <p className="text-white font-semibold mt-4">
-            Role: {role}
-          </p>
-        )}
+        
+        <div className="space-y-1.5 backdrop-blur-[2px] bg-black/5 p-2 rounded-lg">
+          {status && (
+            <div className="flex items-center gap-2 text-xs font-medium">
+              <span className="opacity-80">Status:</span>
+              <span>{status}</span>
+              <span className={`w-2.5 h-2.5 rounded-full ${dotColor || "bg-[#03DF20]"} shadow-[0_0_8px_rgba(3,223,32,0.5)]`}></span>
+            </div>
+          )}
+          {date && (
+            <div className="text-xs font-medium flex items-center gap-2">
+              <span className="opacity-80">Date:</span>
+              <span>{date}</span>
+            </div>
+          )}
+          {rate && (
+            <div className="text-xs font-medium flex items-center gap-2 text-[#FCDD00]">
+              <i className="fa-solid fa-star text-[10px]"></i>
+              <span>{rate} / 5.0</span>
+            </div>
+          )}
+          {role && (
+            <div className="text-xs font-medium flex items-center gap-2">
+              <span className="opacity-80">Role:</span>
+              <span className="text-primary-foreground italic">{role}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   </div>
-        </div>
-
-
 );
 

@@ -182,14 +182,14 @@ export default function Navbar() {
               {!isAuth ? (
                 <button
                   onClick={handleLogin}
-                  className="px-6 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-6 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Log In
                 </button>
               ) : (
                 <button
                   onClick={handleProfile}
-                  className="px-6 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-6 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Profile
                 </button>

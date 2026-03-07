@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
 import {
@@ -9,6 +9,22 @@ import facebookIcon from "../../../assets/icons/facebookIcon.png";
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared social icons helper
 ───────────────────────────────────────────────────────────────────────────── */
+const ScrollArrow = ({ direction = "right" }) => (
+  <svg
+    className="w-4 h-4"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d={direction === "left" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
+    />
+  </svg>
+);
+
 const SocialBtn = ({ color, href, label, children }) => (
   <a
     href={href}
@@ -27,7 +43,7 @@ const LI_PATH =
 const WA_PATH =
   "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z";
 
-const Socials = ({ socials, size = 26 }) => (
+const Socials = ({ socials }) => (
   <div className="flex gap-[5px]">
       {socials?.facebook && (
                 <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
@@ -67,16 +83,16 @@ const Socials = ({ socials, size = 26 }) => (
 ───────────────────────────────────────────────────────────────────────────── */
 const TeamCard = ({ member, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
-    <motion.div
+    <Motion.div
       // whileHover={{  boxShadow: "0 16px 40px rgba(116,65,255,0.22)" }}
       // transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="w-[170px] h-80 rounded-[14px] overflow-hidden border border-gray-200 bg-white flex flex-col primary-card-hover"
+      className="w-[220px] h-[380px] rounded-[14px] overflow-hidden border border-gray-200 bg-white flex flex-col primary-card-hover"
       style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
     >
       {/* Photo */}
       <div
         className="relative w-full bg-[#111827] overflow-hidden"
-        style={{ height: 180 }}
+        style={{ height: 230 }}
       >
         {member.photo ? (
           <img
@@ -104,21 +120,21 @@ const TeamCard = ({ member, delay = 0 }) => (
       </div>
 
       {/* Info */}
-      <div className="bg-white px-3 pt-3 pb-4 flex flex-col">
-        <h4 className="text-primary font-bold text-[13px] leading-tight">
+      <div className="bg-white px-4 pt-4 pb-5 flex flex-col">
+        <h4 className="text-primary font-bold text-[16px] leading-tight">
           {member.name}
         </h4>
-        <p className="text-[#111] text-[12px] font-bold mt-[2px]">
+        <p className="text-[#111] text-[14px] font-bold mt-[4px]">
           {member.role}
         </p>
-        <p className="text-gray-500 text-[11px] leading-snug mt-[2px]">
+        <p className="text-gray-500 text-[13px] leading-snug mt-[4px]">
           {member.description}
         </p>
         <div className="mt-3">
-          <Socials socials={member.socials} size={26} />
+          <Socials socials={member.socials} />
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   </ScrollAnimation>
 );
 
@@ -128,32 +144,17 @@ const TeamCard = ({ member, delay = 0 }) => (
 ───────────────────────────────────────────────────────────────────────────── */
 const FeaturedLeaderCard = ({ member, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay}>
-    <motion.div
+    <Motion.div
       whileHover={{ y: -3, boxShadow: "0 20px 50px rgba(116,65,255,0.18)" }}
       transition={{ type: "spring", stiffness: 280, damping: 24 }}
-      className="w-full rounded-[16px] overflow-hidden bg-white flex flex-row primary-card-hover"
+      className="w-full rounded-[16px] overflow-hidden bg-white flex flex-col md:flex-row primary-card-hover"
       style={{
-        // border: "1.5px solid #EFD830",
         boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
         minHeight: 210,
       }}
     >
-      {/* Left: info */}
-      <div className="flex-1 px-6 py-6 flex flex-col justify-center min-w-0">
-        <h3 className="text-primary font-bold text-[20px] leading-tight">
-          {member.name}
-        </h3>
-        <p className="text-[#111] font-bold text-[14px] mt-1">{member.role}</p>
-        <p className="text-gray-500 text-[13px] leading-relaxed mt-2 max-w-xs">
-          {member.description}
-        </p>
-        <div className="mt-5">
-          <Socials socials={member.socials} size={30} />
-        </div>
-      </div>
-
-      {/* Right: photo */}
-      <div className="w-[240px] flex-shrink-0 relative overflow-hidden">
+      {/* Photo (Top on mobile, Right on desktop) */}
+      <div className="w-full md:w-[240px] h-[280px] md:h-auto flex-shrink-0 relative overflow-hidden md:order-2">
         {member.photo ? (
           <img
             src={member.photo}
@@ -169,16 +170,37 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
             }}
           />
         )}
-        {/* White-fade on left edge to blend into card */}
+        {/* White-fade edge to blend into card */}
         <div
-          className="absolute inset-y-0 left-0 w-14 pointer-events-none"
+          className="hidden md:block absolute inset-y-0 left-0 w-14 pointer-events-none"
           style={{
             background:
               "linear-gradient(to right,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
           }}
         />
+        <div
+          className="md:hidden absolute inset-x-0 bottom-0 h-14 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to top,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
+          }}
+        />
       </div>
-    </motion.div>
+
+      {/* Info (Bottom on mobile, Left on desktop) */}
+      <div className="flex-1 px-6 py-6 md:px-8 md:py-8 flex flex-col justify-center min-w-0 md:order-1 text-center md:text-left">
+        <h3 className="text-primary font-bold text-[20px] md:text-[24px] leading-tight">
+          {member.name}
+        </h3>
+        <p className="text-[#111] font-bold text-[15px] md:text-[17px] mt-1">{member.role}</p>
+        <p className="text-gray-500 text-[13px] md:text-[15px] leading-relaxed mt-2 md:mt-3 max-w-sm mx-auto md:mx-0">
+          {member.description}
+        </p>
+        <div className="mt-4 md:mt-5 flex justify-center md:justify-start">
+          <Socials socials={member.socials} />
+        </div>
+      </div>
+    </Motion.div>
   </ScrollAnimation>
 );
 
@@ -270,8 +292,8 @@ function HorizontalScrollSection({ children, className = "" }) {
 const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={sectionDelay}>
     <div className="mb-12">
-      <h2 className="text-tertiary font-bold text-h3 mb-5">{label}</h2>
-      <HorizontalScrollSection>
+      <h2 className="text-tertiary font-bold text-3xl md:text-4xl mb-6 px-4 md:px-0">{label}</h2>
+      <HorizontalScrollSection className="px-4 md:px-0">
         {members.map((member, i) => (
           <TeamCard key={member.id} member={member} delay={i * 70} />
         ))}
@@ -292,27 +314,27 @@ export default function HighBoardPage() {
   const [activeYear, setActiveYear] = useState(2026);
 
   return (
-    <section className="container py-10">
+    <section className="container py-6 md:py-10 px-4 md:px-8">
       {/* ── Year navigation bar ── */}
       <ScrollAnimation variant="fade-down">
-        <div className="flex items-center justify-center gap-2 mb-10 w-fit mx-auto">
+        <div className="flex items-center justify-center gap-2 flex-wrap mb-10 w-full md:w-fit mx-auto">
           {/* Year pills */}
           {YEARS.map((year) => {
             const isActive = year === activeYear;
             return (
-              <motion.button
+              <Motion.button
                 key={year}
                 id={`year-${year}`}
                 onClick={() => setActiveYear(year)}
                 whileTap={{ scale: 0.95 }}
-                className={`relative px-7 py-[9px] rounded-full text-[15px] font-bold transition duration-300 overflow-hidden ${
+                className={`relative px-8 py-[10px] rounded-full text-[18px] font-bold transition duration-300 overflow-hidden ${
                   isActive
                     ? "bg-primary text-white border border-white"
                     : "border border-primary  text-white hover:bg-white/10"
                 }`}
               >
                 {isActive && (
-                  <motion.span
+                  <Motion.span
                     layoutId="year-pill-bg"
                     className="absolute inset-0 rounded-full bg-primary"
                     style={{ zIndex: -1 }}
@@ -320,7 +342,7 @@ export default function HighBoardPage() {
                   />
                 )}
                 {year}
-              </motion.button>
+              </Motion.button>
             );
           })}
         </div>
@@ -328,7 +350,7 @@ export default function HighBoardPage() {
 
       {/* ── Year content (fade-swap on year change) ── */}
       <AnimatePresence mode="wait">
-        <motion.div
+        <Motion.div
           key={activeYear}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -355,7 +377,7 @@ export default function HighBoardPage() {
               sectionDelay={i * 80}
             />
           ))}
-        </motion.div>
+        </Motion.div>
       </AnimatePresence>
     </section>
   );
