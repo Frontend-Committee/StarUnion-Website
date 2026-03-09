@@ -1,11 +1,14 @@
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
+import facebookIcon from "../../../assets/icons/facebookIcon.png";
 import {
   COMMITTEES_DATA,
   MOCK_PROJECTS,
   MOCK_TEAM_MEMBERS,
 } from "../../../utils/constants";
+
+import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
 
 /* ────────────────────────────────────────
    Team Member Card — matches Figma exactly
@@ -15,16 +18,16 @@ import {
 ──────────────────────────────────────── */
 const TeamCard = ({ member, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
-    <motion.div
-      whileHover={{ y: -5, boxShadow: "0 16px 40px rgba(116,65,255,0.18)" }}
+    <Motion.div
+      whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
-      className="w-[185px] rounded-[14px] overflow-hidden border border-gray-200 bg-white flex flex-col"
+      className="w-[220px] rounded-[14px] overflow-hidden border border-gray-200 bg-white h-[380px] flex flex-col primary-card-hover"
       style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.10)" }}
     >
       {/* ── Photo / Banner area ── */}
       <div
         className="relative w-full bg-[#111827] overflow-hidden"
-        style={{ height: 200 }}
+        style={{ height: 230 }}
       >
         {member.photo ? (
           <img
@@ -69,21 +72,13 @@ const TeamCard = ({ member, delay = 0 }) => (
         {/* Coloured icon buttons */}
         <div className="flex gap-[6px] mt-3">
           {member.socials?.facebook && (
-            <a
-              href={member.socials.facebook}
-              className="w-[26px] h-[26px] rounded-[5px] bg-[#1877F2] flex items-center justify-center text-white hover:opacity-80 transition-opacity"
-              aria-label="Facebook"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-[14px] h-[14px]"
-              >
-                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-              </svg>
-            </a>
+            <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
+          )}  {member.socials?.facebook && (
+            <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
+          )}  {member.socials?.facebook && (
+            <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
           )}
-          {member.socials?.linkedin && (
+          {/* {member.socials?.linkedin && (
             <a
               href={member.socials.linkedin}
               className="w-[26px] h-[26px] rounded-[5px] bg-[#0A66C2] flex items-center justify-center text-white hover:opacity-80 transition-opacity"
@@ -112,10 +107,10 @@ const TeamCard = ({ member, delay = 0 }) => (
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
               </svg>
             </a>
-          )}
+          )} */}
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   </ScrollAnimation>
 );
 
@@ -127,71 +122,48 @@ const TeamCard = ({ member, delay = 0 }) => (
 ──────────────────────────────────────── */
 const ProjectCard = ({ project, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
-  <motion.div
-  whileHover={{ y: -5, boxShadow: "0 16px 40px rgba(116,65,255,0.25)" }}
-  transition={{ type: "spring", stiffness: 300, damping: 22 }}
-  className="w-[220px] rounded-[22px] overflow-hidden border border-purple-500/20 flex flex-col relative" // ← add relative
-  style={{
-    boxShadow: "0 4px 16px rgba(0,0,0,0.30)",
-    backgroundImage: `url(${project.image})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  }}
->
-  {/* ── Global overlays covering the ENTIRE card ── */}
-  <div
-    className="absolute inset-0 z-0 pointer-events-none"
-    style={{
-      background:
-        "linear-gradient(to top, rgba(8,2,22,0.95) 0%, rgba(8,2,22,0.5) 50%, rgba(8,2,22,0.1) 100%)",
-    }}
-  />
-  <div
-    className="absolute inset-0 z-0 pointer-events-none"
-    style={{
-      background:
-        "linear-gradient(to bottom, rgba(8,2,22,0.75) 0%, transparent 40%)",
-    }}
-  />
-
-  {/* ── Title on top centered ── */}
-  <div className="relative z-10 px-3 pt-3 pb-2 text-center"> {/* ← z-10 */}
-    <p className="text-white/50 text-[8px] font-semibold tracking-[0.08em] uppercase mb-[2px]">
-      {project.subtitle}
-    </p>
-    <h4 className="text-white font-black text-[16px] leading-none tracking-tight">
-      {project.title}
-    </h4>
-  </div>
-
-  {/* ── Screenshot preview area ── */}
-  <div className="relative z-10 w-full overflow-hidden" style={{ height: 200 }}>
-    {/* Decorative star top-right */}
-    <div className="absolute opacity-50 top-2 right-2">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"
-          fill="white"
-          fillOpacity="0.2"
-          stroke="white"
-          strokeOpacity="0.4"
-          strokeWidth="1"
+    <Motion.div
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="w-[260px] rounded-[24px] overflow-hidden border border-white/10 flex flex-col relative bg-[#1A0B2E] transition-shadow hover:shadow-2xl hover:shadow-primary/20"
+      style={{
+        boxShadow: "0 12px 30px -10px rgba(0,0,0,0.5)",
+      }}
+    >
+      {/* ── Background Image with specialized overlays ── */}
+      <div className="relative w-full aspect-[4/5] overflow-hidden">
+        <img 
+          src={project.image} 
+          alt={project.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
         />
-      </svg>
-    </div>
-  </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B2E] via-transparent to-black/40" />
+        
+        {/* Decorative star icon from screenshot */}
+        <div className="absolute top-4 right-4 text-white/30">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+          </svg>
+        </div>
 
-  {/* ── Bottom bar ── */}
-  <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
-    <div className="px-3 pt-1 pb-4 mx-auto">
-      <button className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
-        View Details
-      </button>
-    </div>
-  </div>
-</motion.div>
-</ScrollAnimation>
+        {/* Project Title at Top */}
+        <div className="absolute top-6 left-0 right-0 px-4 text-center">
+          <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
+            {project.title}
+          </h4>
+        </div>
+      </div>
+
+      {/* ── Bottom bar ── */}
+      <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
+        <div className="px-3 pt-1 pb-4 mx-auto">
+          <button className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
+          View Details
+        </button>
+        </div>
+      </div>
+    </Motion.div>
+  </ScrollAnimation>
 );
 
 /* ── main page ── */
@@ -210,38 +182,39 @@ export default function CommitteeDetailsPage() {
   }
 
   return (
-    <section className="min-h-screen px-4 py-8 bg-gradientBg3 md:px-8">
+    <section className="min-h-screen px-4 py-12 bg-gradientBg3 md:px-8 md:py-20">
       <div className="max-w-[1200px] mx-auto">
         {/* Back button */}
         <ScrollAnimation variant="fade-right">
           <button
             onClick={() => navigate("/committees")}
-            className="flex items-center gap-2 mb-8 text-white transition-colors cursor-pointer hover:text-secondary group"
+            className="flex items-center gap-2 mb-12 text-white transition-colors cursor-pointer hover:text-tertiary group"
             id="back-to-committees"
           >
-            <svg
-              className="w-8 h-8 transition-transform group-hover:-translate-x-1"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
+            <div className="p-2 rounded-full border border-white/20 group-hover:bg-white/10 transition-colors">
+              <svg
+                className="w-6 h-6 transition-transform group-hover:-translate-x-1"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
+              >
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </div>
+            <span className="font-semibold uppercase tracking-widest text-xs">Back to Committees</span>
           </button>
         </ScrollAnimation>
 
         {/* Section: Meet the team */}
         <ScrollAnimation variant="fade-up" delay={100}>
-          <div className="mb-10">
+          <div className="mb-12">
             <h1 className="font-semibold leading-tight text-tertiary text-h2">
               Meet the talented team
             </h1>
-            <h2 className="mt-1 font-semibold leading-tight text-tertiary text-h2">
+            <h2 className="mt-2 font-bold leading-tight text-white/60 text-xl md:text-2xl">
               Who make all this happen
             </h2>
           </div>
@@ -249,14 +222,16 @@ export default function CommitteeDetailsPage() {
 
         {/* Team members row */}
         <ScrollAnimation variant="fade-up" delay={200}>
-          <div className="flex gap-4 pb-4 overflow-x-auto mb-14 scrollbar-hide">
-            {MOCK_TEAM_MEMBERS.map((member, i) => (
-              <TeamCard
-                key={member.id + "-" + i}
-                member={member}
-                delay={i * 80}
-              />
-            ))}
+          <div className="mb-14">
+            <HorizontalScrollSection>
+              {MOCK_TEAM_MEMBERS.map((member, i) => (
+                <TeamCard
+                  key={member.id + "-" + i}
+                  member={member}
+                  delay={i * 80}
+                />
+              ))}
+            </HorizontalScrollSection>
           </div>
         </ScrollAnimation>
 
@@ -280,7 +255,7 @@ export default function CommitteeDetailsPage() {
               Recent Projects
             </h3>
 
-            <div className="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
+            <HorizontalScrollSection>
               {MOCK_PROJECTS.map((project, i) => (
                 <ProjectCard
                   key={project.id + "-" + i}
@@ -288,7 +263,7 @@ export default function CommitteeDetailsPage() {
                   delay={i * 80}
                 />
               ))}
-            </div>
+            </HorizontalScrollSection>
           </div>
         </ScrollAnimation>
       </div>

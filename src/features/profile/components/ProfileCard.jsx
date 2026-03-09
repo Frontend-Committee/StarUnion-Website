@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import userImg from "./../../../assets/images/ProfilePage/portfolioImg.jpg"
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 
 export default function ProfileCard() {
   const [image, setImage] = useState(userImg);
@@ -23,23 +23,23 @@ export default function ProfileCard() {
   };
 
   return (
-    <div className="w-[93%] mx-auto">
+    <div className="w-full">
 
     <div className="relative">
-      <div className="relative -mt-28 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 pb-6">
+      <div className="relative -mt-16 md:-mt-28 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 pb-6 px-4 md:px-0">
         
-        <div className="flex flex-col items-center md:items-start">
+        <div className="flex flex-col items-center md:items-start w-full md:w-auto">
           <div 
-            className="size-60 aspect-square rounded-full gradient-content overflow-hidden shadow-2xl mb-4 cursor-pointer group relative"
+            className="size-48 md:size-60 aspect-square rounded-full gradient-content overflow-hidden shadow-2xl mb-4 cursor-pointer group relative"
             onClick={handleImageClick}
-style={{
-
-    background: `
-      linear-gradient(#111, #111) padding-box,
-      linear-gradient(180deg, #4D3398, #6D44E2, #7A4BFF) border-box
-    `,
-    border:"5px solid "
-  }}          >
+            style={{
+              background: `
+                linear-gradient(#111, #111) padding-box,
+                linear-gradient(180deg, #4D3398, #6D44E2, #7A4BFF) border-box
+              `,
+              border:"5px solid transparent"
+            }}          
+          >
             <img 
               src={image}
               alt="User"
@@ -58,25 +58,25 @@ style={{
             accept="image/*" 
           />
 
-          <div>
-            <h2 className="text-3xl font-bold text-[#FCDD00]">Mohammed Ali</h2>
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#FCDD00]">Muhammad Ali</h2>
             <p className="text-white opacity-90">UI UX Designer</p>
             <p className="text-white mt-1">Egypt, Cairo</p>
             
-            <div className="flex gap-3 mt-4 justify-center md:justify-start">
-              <Button className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF]">
+            <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
+              <Button className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
                 Edit Profile
               </Button>
-              <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF]">
+              <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
                 Setting
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-center self-center mt-10 md:items-end gap-5 w-full md:w-auto">
-          <div className="text-center md:text-right my-3">
-           <span className="text-white flex items-center justify-center gap-2 my-2 text-center">
+        <div className="flex flex-col items-center md:items-end gap-5 w-full md:w-auto mt-6 md:mt-0">
+          <div className="text-center md:text-right">
+           <span className="text-white flex items-center justify-center md:justify-end gap-2 mb-2">
   Current Role
 
   <svg
@@ -87,7 +87,7 @@ style={{
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="h-6 w-6 shrink-0"
+    className="h-5 w-5 md:h-6 md:w-6 shrink-0"
   >
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
@@ -96,16 +96,16 @@ style={{
     <path d="M3 13a20 20 0 0 0 18 0" />
   </svg>
 </span>
-            <div className="bg-[#FFFFFF33] text-white px-6 py-1.5 rounded-md">
+            <div className="bg-[#FFFFFF33] text-white px-6 py-2 rounded-md inline-block">
               UI UX - Member
             </div>
           </div>
 
           <div className="text-center md:text-right">
-            <span className="text-white block mb-1">
-              Skills <i className="fa-regular fa-star ml-1"></i>
+            <span className="text-white block mb-2">
+              Skills <i className="fa-regular fa-star ml-1 text-yellow-300"></i>
             </span>
-             <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF]">
+             <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
                 Add Your Skills
               </Button>
           </div>

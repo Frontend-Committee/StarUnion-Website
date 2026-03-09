@@ -103,8 +103,15 @@ body {
 .group:hover .activity-card-img {
   transform: scale(1.06);
 }
-.gradient-content{
+.gradient-content {
   @apply text-3xl font-bold bg-gradient-to-t from-[#4D3398] via-[#452798] via-[#6D44E2] to-[#1E1A2B] bg-clip-text text-transparent;
 }
-.error-validation{@apply text-[#EF4444] font-semibold text-sm mt-1}
+.error-validation {
+  @apply text-[#EF4444] font-semibold text-sm mt-1;
+}
 
+@layer components {
+  .primary-card-hover {
+    @apply hover:border-[#7A4BFF] hover:shadow-[0_16px_40px_rgba(116,65,255,0.18)] transition-[border-color,box-shadow,transform] duration-300 hover:translate-y-[-5px];
+  }
+}

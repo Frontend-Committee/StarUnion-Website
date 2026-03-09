@@ -14,7 +14,7 @@ const statsData = [
 
 export default function AboutSection() {
   return (
-    <div className="flex flex-col items-center w-full gap-8 mb-5">
+    <div className="flex flex-col items-center w-full gap-8 mb-16 py-10 md:py-20">
       <ScrollAnimation>
         <div className="flex flex-col items-center w-full p-8 text-center shadow-lg rounded-2xl md:p-12 bg-primary">
           <h2 className="text-[#FFE738] font-bold text-3xl mb-6">About Us</h2>

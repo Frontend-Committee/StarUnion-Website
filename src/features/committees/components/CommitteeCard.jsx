@@ -13,20 +13,15 @@ export default function CommitteeCard({ committee, delay = 0 }) {
         <Motion.div
           whileHover={{ scale: 1.04, y: -4 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="relative rounded-[16px] overflow-hidden border border-primary/40 bg-[#160d2e] cursor-pointer h-full flex flex-col"
+          className="relative rounded-[16px] overflow-hidden border border-transparent bg-[#141418] cursor-pointer h-full flex flex-col primary-card-hover"
           style={{
+            background:
+              "linear-gradient(to top, #7A4BFF 0%, #6A3EF2 25%, #3A2B6F 55%, #1E1A2B 78%, #141418 100%)",
             boxShadow: `0 0 20px ${color}10, inset 0 1px 0 ${color}15`,
           }}
         >
-          {/* Badge illustration area */}
           <div className="flex-1 p-3 pb-2">
-            <div
-              className="w-full aspect-[4/5] rounded-xl overflow-hidden flex items-center justify-center relative"
-              style={{
-                background: `linear-gradient(180deg, ${color}12 0%, ${color}06 100%)`,
-                border: `1px solid ${color}25`,
-              }}
-            >
+            <div className="w-full aspect-[4/5] rounded-xl overflow-hidden flex items-center justify-center relative">
               <CommitteeBadge
                 name={committee.name}
                 icon={committee.icon}

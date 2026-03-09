@@ -28,7 +28,7 @@ export default function MediaCard({ image, title, buttonText, date }) {
           )}
         </div>
 
-        <Button className="w-full bg-white border border-[#7441FF] text-[#452798] hover:bg-gray-100 font-bold rounded-xl py-5 transition-transform group-hover:scale-[1.02]">
+        <Button className="w-full bg-white border border-[#7441FF] text-[#452798] hover:bg-gray-100 font-bold rounded-xl py-3 transition-transform group-hover:scale-[1.02]">
           {buttonText || "Apply Now"}
         </Button>
       </div>

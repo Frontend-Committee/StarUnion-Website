@@ -132,7 +132,7 @@ export default function Navbar() {
           <div className="container flex items-center justify-between py-5 mt-6">
             <button
               onClick={() => navigate("/")}
-              className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
+              className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
               aria-label="Go home"
             >
               <img
@@ -182,14 +182,14 @@ export default function Navbar() {
               {!isAuth ? (
                 <button
                   onClick={handleLogin}
-                  className="px-6 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-6 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Log In
                 </button>
               ) : (
                 <button
                   onClick={handleProfile}
-                  className="px-6 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-6 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Profile
                 </button>
@@ -232,7 +232,7 @@ export default function Navbar() {
 
         <div className="px-5 pt-6">
           <div className="flex items-start gap-3">
-            <div className="w-12 h-12 overflow-hidden rounded-full bg-white/20 ring-1 ring-white/20">
+            <div className="w-16 h-16 overflow-hidden rounded-full bg-white/20 ring-1 ring-white/20">
               {user?.avatar ? (
                 <img
                   src={user.avatar}
