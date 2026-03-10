@@ -132,7 +132,7 @@ export default function Navbar() {
           <div className="container flex items-center justify-between py-5 mt-6">
             <button
               onClick={() => navigate("/")}
-              className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
+              className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
               aria-label="Go home"
             >
               <img
