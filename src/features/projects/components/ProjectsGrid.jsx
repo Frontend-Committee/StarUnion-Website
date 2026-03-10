@@ -20,7 +20,11 @@ export default function ProjectsGrid({ projects }) {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3 }}
             >
-              <ProjectCard project={project} delay={(index % 4) * 150} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                delay={(index % 4) * 150}
+              />
             </Motion.div>
           ))}
         </AnimatePresence>

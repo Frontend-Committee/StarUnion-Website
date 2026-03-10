@@ -1,23 +1,34 @@
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import ProjectsGrid from "../components/ProjectsGrid";
 import { useState } from "react";
-// افترضت إن الداتا بتاعتك فيها حقل اسمه year
-import { projectsData } from "../data";
+import { useQuery } from "@tanstack/react-query";
+import { listProjects } from "@/lib/api/endpoints";
 
 const FILTER_TABS = ["All", "2026", "2025", "2024"];
 
 export default function ProjectsPage() {
-  const [search, setSearch] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
-  
-  const filteredProjects = projectsData.filter((project) => {
-    const matchesSearch = project.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    const matchesTab = activeFilter === "All" || project.year === activeFilter;
-    return matchesSearch && matchesTab;
+  const {
+    data: projects = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["projects"],
+    queryFn: ()=>listProjects(),
   });
 
+  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filteredProjects =
+    projects?.filter((project) => {
+      const matchesSearch = project?.title
+        ?.toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesTab =
+        activeFilter === "All" || project.year === activeFilter;
+      return matchesSearch && matchesTab;
+    }) || [];
   return (
     <section className="min-h-screen  container">
       <div className="max-w-[1200px] mx-auto">
@@ -76,7 +87,17 @@ export default function ProjectsPage() {
         </ScrollAnimation>
 
         {/* Project Grid */}
-        <ProjectsGrid projects={filteredProjects} />
+        {isLoading ? (
+          <div className="py-20 text-center text-xl text-[#7A4BFF]">
+            Loading projects...
+          </div>
+        ) : isError ? (
+          <div className="py-20 text-center text-red-500">
+            Error: {error.message}
+          </div>
+        ) : (
+          <ProjectsGrid projects={filteredProjects} />
+        )}
       </div>
     </section>
   );
