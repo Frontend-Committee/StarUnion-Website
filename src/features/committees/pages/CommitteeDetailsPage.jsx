@@ -204,7 +204,7 @@ export default function CommitteeDetailsPage() {
                 <path d="M15 19l-7-7 7-7" />
               </svg>
             </div>
-            <span className="font-semibold uppercase tracking-widest text-xs">Back to Committees</span>
+            {/* <span className="font-semibold uppercase tracking-widest text-xs">Back to Committees</span> */}
           </button>
         </ScrollAnimation>
 
