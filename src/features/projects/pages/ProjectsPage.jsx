@@ -3,10 +3,14 @@ import ProjectsGrid from "../components/ProjectsGrid";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { listProjects } from "@/lib/api/endpoints";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
 const FILTER_TABS = ["All", "2026", "2025", "2024"];
 
 export default function ProjectsPage() {
+  const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("All");
+
   const {
     data: projects = [],
     isLoading,
@@ -14,11 +18,9 @@ export default function ProjectsPage() {
     error,
   } = useQuery({
     queryKey: ["projects"],
-    queryFn: ()=>listProjects(),
+    queryFn: () => listProjects(),
   });
-
-  const [search, setSearch] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
+  if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
   const filteredProjects =
     projects?.filter((project) => {
@@ -30,7 +32,7 @@ export default function ProjectsPage() {
       return matchesSearch && matchesTab;
     }) || [];
   return (
-    <section className="min-h-screen  container">
+    <section className="container min-h-screen">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">
@@ -69,7 +71,7 @@ export default function ProjectsPage() {
 
         {/* Filter Tabs */}
         <ScrollAnimation variant="fade-up" delay={200}>
-          <div className="flex gap-3 mb-10 overflow-x-auto pb-2">
+          <div className="flex gap-3 pb-2 mb-10 overflow-x-auto">
             {FILTER_TABS.map((tab, index) => (
               <button
                 key={index}
@@ -86,18 +88,9 @@ export default function ProjectsPage() {
           </div>
         </ScrollAnimation>
 
-        {/* Project Grid */}
-        {isLoading ? (
-          <div className="py-20 text-center text-xl text-[#7A4BFF]">
-            Loading projects...
-          </div>
-        ) : isError ? (
-          <div className="py-20 text-center text-red-500">
-            Error: {error.message}
-          </div>
-        ) : (
+        
           <ProjectsGrid projects={filteredProjects} />
-        )}
+        
       </div>
     </section>
   );
