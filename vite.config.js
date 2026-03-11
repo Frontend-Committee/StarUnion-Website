@@ -16,8 +16,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://staging.starunion.tech", // لينك الباك إند الحقيقي بدون /api
-        changeOrigin: true, // الخدعة اللي بتضحك على السيرفر وتخليه يقبل الطلب
+        target: "http://staging.starunion.tech",
+        changeOrigin: true, 
       },
     },
   },

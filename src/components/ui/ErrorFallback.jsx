@@ -1,11 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
-export default function ErrorFallback({ message }) {
+export default function ErrorFallback() {
+  const error = useRouteError();
   const handleReload = () => {
     window.location.reload();
   };
-
+  const errorMessage =
+    error?.message || error?.data?.message || error?.statusText;
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen p-4 bg-gradientBg3">
       <div className="flex flex-col items-center justify-center w-full max-w-lg p-8 text-center border md:p-12 bg-bg33/50 backdrop-blur-md rounded-card border-primary/20 shadow-soft">
@@ -29,7 +31,7 @@ export default function ErrorFallback({ message }) {
           Oops! Something went wrong
         </h2>
         <p className="mb-8 text-body text-muted">
-          {message ||
+          {errorMessage ||
             "We couldn't load the data at this moment. Please try again or return home."}
         </p>
 
