@@ -1,25 +1,38 @@
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import ProjectsGrid from "../components/ProjectsGrid";
 import { useState } from "react";
-// افترضت إن الداتا بتاعتك فيها حقل اسمه year
-import { projectsData } from "../data";
+import { useQuery } from "@tanstack/react-query";
+import { listProjects } from "@/lib/api/endpoints";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
 const FILTER_TABS = ["All", "2026", "2025", "2024"];
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
-  
-  const filteredProjects = projectsData.filter((project) => {
-    const matchesSearch = project.title
-      .toLowerCase()
-      .includes(search.toLowerCase());
-    const matchesTab = activeFilter === "All" || project.year === activeFilter;
-    return matchesSearch && matchesTab;
-  });
 
+  const {
+    data: projects = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["projects"],
+    queryFn: () => listProjects(),
+  });
+  if (isLoading) return <LoadingSpinner fullScreen={true} />;
+
+  const filteredProjects =
+    projects?.filter((project) => {
+      const matchesSearch = project?.title
+        ?.toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesTab =
+        activeFilter === "All" || project.year === activeFilter;
+      return matchesSearch && matchesTab;
+    }) || [];
   return (
-    <section className="min-h-screen  container">
+    <section className="container min-h-screen">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">
@@ -58,7 +71,7 @@ export default function ProjectsPage() {
 
         {/* Filter Tabs */}
         <ScrollAnimation variant="fade-up" delay={200}>
-          <div className="flex gap-3 mb-10 overflow-x-auto pb-2">
+          <div className="flex gap-3 pb-2 mb-10 overflow-x-auto">
             {FILTER_TABS.map((tab, index) => (
               <button
                 key={index}
@@ -75,8 +88,9 @@ export default function ProjectsPage() {
           </div>
         </ScrollAnimation>
 
-        {/* Project Grid */}
-        <ProjectsGrid projects={filteredProjects} />
+        
+          <ProjectsGrid projects={filteredProjects} />
+        
       </div>
     </section>
   );

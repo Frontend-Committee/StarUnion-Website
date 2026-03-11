@@ -13,4 +13,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://staging.starunion.tech", // لينك الباك إند الحقيقي بدون /api
+        changeOrigin: true, // الخدعة اللي بتضحك على السيرفر وتخليه يقبل الطلب
+      },
+    },
+  },
 });

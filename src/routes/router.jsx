@@ -39,66 +39,53 @@ import FormDemoPage from "../features/home/pages/FormDemoPage";
 import WorkShopDetailsPage from "../features/workshops/pages/WorkShopDetailsPage";
 import WorkShopsPage from "../features/workshops/pages/WorkShopsPage";
 
+import ErrorFallback from "../components/ui/ErrorFallback";
+
 const NotFound = () => <div>404 - Not Found</div>;
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorFallback />,
     children: [
       { index: true, element: <HomePage /> },
-
       { path: PATHS.PUBLIC.ABOUT, element: <AboutUsPage /> },
-
       { path: PATHS.PUBLIC.COMMITTEES, element: <CommitteesPage /> },
-      {
-        path: PATHS.PUBLIC.COMMITTEE_DETAILS,
-        element: <CommitteeDetailsPage />,
-      },
-
+      { path: PATHS.PUBLIC.COMMITTEE_DETAILS, element: <CommitteeDetailsPage /> },
       { path: PATHS.PUBLIC.EVENTS, element: <EventsPage /> },
       { path: PATHS.PUBLIC.EVENT_DETAILS, element: <EventDetailsPage /> },
-
       { path: PATHS.PUBLIC.PROJECTS, element: <ProjectsPage /> },
       { path: PATHS.PUBLIC.PROJECT_DETAILS, element: <ProjectDetailsPage /> },
-
       { path: PATHS.PUBLIC.SERVICES, element: <ServicesPage /> },
       { path: PATHS.PUBLIC.SERVICE_DETAILS, element: <ServiceDetailsPage /> },
-
       { path: PATHS.PUBLIC.WORKSHOPS, element: <WorkShopsPage /> },
       { path: PATHS.PUBLIC.WORKSHOP_DETAILS, element: <WorkShopDetailsPage /> },
-
       { path: PATHS.PUBLIC.CONTACT, element: <ContactUsPage /> },
       { path: PATHS.PUBLIC.BOARD_HIGH, element: <HighBoardPage /> },
       { path: PATHS.PUBLIC.FORM_DEMO, element: <FormDemoPage /> },
     ],
   },
-
   {
     path: PATHS.AUTH,
     element: <GuestRoute />,
+    errorElement: <ErrorFallback />,
     children: [
       {
         element: <AuthLayout />,
         children: [
           { path: PATHS.AUTH_PAGES.LOGIN, element: <LoginPage /> },
           { path: PATHS.AUTH_PAGES.REGISTER, element: <RegisterPage /> },
-          {
-            path: PATHS.AUTH_PAGES.FORGOT_PASSWORD,
-            element: <ForgotPasswordPage />,
-          },
-          {
-            path: PATHS.AUTH_PAGES.NEW_PASSWORD,
-            element: <NewPasswordPage />,
-          },
+          { path: PATHS.AUTH_PAGES.FORGOT_PASSWORD, element: <ForgotPasswordPage /> },
+          { path: PATHS.AUTH_PAGES.NEW_PASSWORD, element: <NewPasswordPage /> },
           { path: PATHS.AUTH_PAGES.OTP, element: <OTPVerificationPage /> },
         ],
       },
     ],
   },
-
   {
     element: <ProtectedRoute />,
+    errorElement: <ErrorFallback />,
     children: [
       {
         element: <ProfileLayout />,
@@ -106,6 +93,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
   { path: "*", element: <NotFound /> },
 ]);
