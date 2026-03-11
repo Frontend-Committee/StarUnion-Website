@@ -32,11 +32,11 @@ export default function ProjectsPage() {
       return matchesSearch && matchesTab;
     }) || [];
   return (
-    <section className="container min-h-screen">
+    <section className="container min-h-screen px-4 py-10 md:px-8">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">
-          <h1 className="mb-8 font-bold text-3xl md:text-4xl text-[#EFD830]">
+          <h1 className="mb-8 font-semibold text-h2 text-tertiary">
             Our Projects
           </h1>
         </ScrollAnimation>
@@ -64,7 +64,7 @@ export default function ProjectsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search Projects.."
-              className="w-full bg-white text-black pl-12 pr-4 py-3 md:py-4 rounded-xl border-2 border-transparent focus:border-[#7A4BFF] focus:outline-none placeholder-gray-500 transition-colors shadow-sm"
+              className="w-full   pl-12 pr-4 py-3 rounded-lg border border-[#2a2050] focus:border-primary focus:outline-none placeholder-gray-500 text-body font-normal transition-colors"
             />
           </div>
         </ScrollAnimation>
@@ -88,9 +88,7 @@ export default function ProjectsPage() {
           </div>
         </ScrollAnimation>
 
-        
-          <ProjectsGrid projects={filteredProjects} />
-        
+        <ProjectsGrid projects={filteredProjects} />
       </div>
     </section>
   );
