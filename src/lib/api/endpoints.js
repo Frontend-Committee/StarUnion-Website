@@ -111,7 +111,7 @@ export const listWorkshops = async (filters = {}) => {
     const response = await api.get("/workshops/", {
       params: filters,
     });
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error(
       "Error fetching workshops list:",
@@ -144,7 +144,7 @@ export const listEvents = async (filters = {}) => {
     const response = await api.get("/events/", {
       params: filters,
     });
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error(
       "Error fetching events:",
