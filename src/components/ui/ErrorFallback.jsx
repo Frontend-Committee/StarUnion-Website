@@ -31,8 +31,8 @@ export default function ErrorFallback() {
           Oops! Something went wrong
         </h2>
         <p className="mb-8 text-body text-muted">
-          {errorMessage ||
-            "We couldn't load the data at this moment. Please try again or return home."}
+          We couldn't load the data at this moment. Please try again or return
+          home
         </p>
 
         <div className="flex flex-col justify-center w-full gap-4 sm:flex-row">
