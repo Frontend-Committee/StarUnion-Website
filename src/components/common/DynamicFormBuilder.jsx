@@ -209,7 +209,7 @@ function TextField({ field, value, onChange, onBlur, error }) {
           <button
             type="button"
             onClick={() => setShow((s) => !s)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+            className="absolute transition-colors -translate-y-1/2 right-3 top-1/2 text-white/70 hover:text-white"
           >
             {show ? (
               <EyeOff className="w-4 h-4" />
@@ -276,7 +276,7 @@ function SelectField({ field, value, onChange, onBlur, error }) {
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            className="text-white/70 flex-shrink-0 ml-2"
+            className="flex-shrink-0 ml-2 text-white/70"
           >
             <ChevronDown className="w-4 h-4" />
           </motion.span>
@@ -290,7 +290,7 @@ function SelectField({ field, value, onChange, onBlur, error }) {
               exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
               transition={{ duration: 0.15 }}
               style={{ transformOrigin: "top" }}
-              className="absolute z-50 mt-1 w-full rounded-xl border border-white/70 bg-white shadow-2xl overflow-hidden max-h-52 overflow-y-auto scrollbar-hide"
+              className="absolute z-50 w-full mt-1 overflow-hidden overflow-y-auto bg-white border shadow-2xl rounded-xl border-white/70 max-h-52 scrollbar-hide"
             >
               {field.options?.map((option, idx) => {
                 const optVal =
@@ -562,7 +562,7 @@ function RangeField({ field, value, onChange, onBlur, error }) {
             value={current}
             onChange={(e) => onChange(field.name, Number(e.target.value))}
             onBlur={() => onBlur(field.name)}
-            className="absolute inset-0 w-full opacity-0 cursor-pointer h-full"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
         </div>
       </div>
@@ -1061,10 +1061,10 @@ export default function DynamicFormBuilder({
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="mt-5 flex items-center gap-2 p-3 rounded-xl bg-rose-50 border border-rose-200"
+                    className="flex items-center gap-2 p-3 mt-5 border rounded-xl bg-rose-50 border-rose-200"
                   >
                     <AlertCircle className="w-4 h-4 text-[#FF6B6B] flex-shrink-0" />
-                    <span className="text-rose-600 text-sm font-medium">
+                    <span className="text-sm font-medium text-rose-600">
                       {submitError}
                     </span>
                   </motion.div>
