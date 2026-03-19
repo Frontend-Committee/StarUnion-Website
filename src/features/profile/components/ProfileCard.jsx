@@ -1,16 +1,40 @@
-import React, { useRef, useState } from 'react';
-
+import * as jwtDecode from "jwt-decode";
+import React, { useRef, useState, useEffect } from 'react';
 import userImg from "./../../../assets/images/ProfilePage/portfolioImg.jpg"
 import { Button } from '@/components/ui/button';
+import * as authApi from "@/lib/api/authApi.js";
 
 export default function ProfileCard() {
   const [image, setImage] = useState(userImg);
+  const [fullName, setFullName] = useState("Your Name");
+  const [college, setCollege] = useState("");
+  const [university, setUniversity] = useState("");
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const decoded = jwtDecode.jwtDecode(token);
+          const res = await authApi.getUserProfileById(decoded.user_id);
+          if (res) {
+            setFullName(res.full_name || "");
+            setCollege(res.college || "");
+            setUniversity(res.university || "");
+            if (res.profile_photo) setImage(res.profile_photo);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+    fetchProfile();
+  }, []);
 
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
-
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -24,95 +48,94 @@ export default function ProfileCard() {
 
   return (
     <div className="w-full">
+      <div className="relative">
+        <div className="relative -mt-16 md:-mt-28 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 pb-6 px-4 md:px-0">
+          
+          <div className="flex flex-col items-center md:items-start w-full md:w-auto">
+            <div 
+              className="size-48 md:size-60 aspect-square rounded-full gradient-content overflow-hidden shadow-2xl mb-4 cursor-pointer group relative"
+              onClick={handleImageClick}
+              style={{
+                background: `
+                  linear-gradient(#111, #111) padding-box,
+                  linear-gradient(180deg, #4D3398, #6D44E2, #7A4BFF) border-box
+                `,
+                border:"5px solid transparent"
+              }}          
+            >
+              <img 
+                src={image}
+                alt="User"
+                className="w-full h-full object-cover group-hover:opacity-75 transition-opacity"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <i className="fa-solid fa-camera text-white text-2xl"></i>
+              </div>
+            </div>
 
-    <div className="relative">
-      <div className="relative -mt-16 md:-mt-28 flex flex-col md:flex-row justify-between items-center md:items-end gap-6 pb-6 px-4 md:px-0">
-        
-        <div className="flex flex-col items-center md:items-start w-full md:w-auto">
-          <div 
-            className="size-48 md:size-60 aspect-square rounded-full gradient-content overflow-hidden shadow-2xl mb-4 cursor-pointer group relative"
-            onClick={handleImageClick}
-            style={{
-              background: `
-                linear-gradient(#111, #111) padding-box,
-                linear-gradient(180deg, #4D3398, #6D44E2, #7A4BFF) border-box
-              `,
-              border:"5px solid transparent"
-            }}          
-          >
-            <img 
-              src={image}
-              alt="User"
-              className="w-full h-full object-cover group-hover:opacity-75 transition-opacity"
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleImageChange} 
+              className="hidden" 
+              accept="image/*" 
             />
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <i className="fa-solid fa-camera text-white text-2xl"></i>
+
+            <div className="text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#FCDD00]">{fullName}</h2>
+              <p className="text-white opacity-90">UI UX Designer</p>
+              <p className="text-white mt-1">Egypt, Cairo</p>
+              
+              <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
+                <Button className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
+                  Edit Profile
+                </Button>
+                <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
+                  Setting
+                </Button>
+              </div>
             </div>
           </div>
 
-          <input 
-            type="file" 
-            ref={fileInputRef} 
-            onChange={handleImageChange} 
-            className="hidden" 
-            accept="image/*" 
-          />
+          <div className="flex flex-col items-center md:items-end gap-5 w-full md:w-auto mt-6 md:mt-0">
+            <div className="text-center md:text-right">
+             <span className="text-white flex items-center justify-center md:justify-end gap-2 mb-2">
+      Current Role
 
-          <div className="text-center md:text-left">
-            <h2 className="text-2xl md:text-3xl font-bold text-[#FCDD00]">Muhammad Ali</h2>
-            <p className="text-white opacity-90">UI UX Designer</p>
-            <p className="text-white mt-1">Egypt, Cairo</p>
-            
-            <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
-              <Button className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
-                Edit Profile
-              </Button>
-              <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
-                Setting
-              </Button>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="h-5 w-5 md:h-6 md:w-6 shrink-0"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+        <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+        <path d="M12 12l0 .01" />
+        <path d="M3 13a20 20 0 0 0 18 0" />
+      </svg>
+    </span>
+              <div className="bg-[#FFFFFF33] text-white px-6 py-2 rounded-md inline-block">
+                UI UX - Member
+              </div>
+            </div>
+
+            <div className="text-center md:text-right">
+              <span className="text-white block mb-2">
+                Skills <i className="fa-regular fa-star ml-1 text-yellow-300"></i>
+              </span>
+               <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
+                  Add Your Skills
+                </Button>
             </div>
           </div>
+
+              </div>
         </div>
-
-        <div className="flex flex-col items-center md:items-end gap-5 w-full md:w-auto mt-6 md:mt-0">
-          <div className="text-center md:text-right">
-           <span className="text-white flex items-center justify-center md:justify-end gap-2 mb-2">
-  Current Role
-
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="h-5 w-5 md:h-6 md:w-6 shrink-0"
-  >
-    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-    <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
-    <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
-    <path d="M12 12l0 .01" />
-    <path d="M3 13a20 20 0 0 0 18 0" />
-  </svg>
-</span>
-            <div className="bg-[#FFFFFF33] text-white px-6 py-2 rounded-md inline-block">
-              UI UX - Member
-            </div>
-          </div>
-
-          <div className="text-center md:text-right">
-            <span className="text-white block mb-2">
-              Skills <i className="fa-regular fa-star ml-1 text-yellow-300"></i>
-            </span>
-             <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
-                Add Your Skills
-              </Button>
-          </div>
-        </div>
-
-            </div>
       </div>
-    </div>
   );
 }

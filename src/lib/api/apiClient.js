@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://staging.starunion.tech/api/v1";
+const BASE_URL = "/api/v1";
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -10,7 +10,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("access");
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -22,15 +22,45 @@ api.interceptors.request.use(
 );
 
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
-    if (error.response && error.response.status === 401) {
-      console.error("Authentication Error: Token might be expired.");
+    const originalRequest = error.config;
+
+    
+    if (
+      error.response?.status === 401 && 
+      !originalRequest.url.includes("/auth/jwt/create") && 
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const refresh = localStorage.getItem("refresh");
+        if (!refresh) throw new Error("No refresh token");
+
+        
+        const response = await axios.post(`${BASE_URL}/auth/jwt/refresh/`, {
+          refresh: refresh,
+        });
+
+        const newAccessToken = response.data.access;
+        localStorage.setItem("access", newAccessToken);
+
+        api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
+        return api(originalRequest);
+      } catch (refreshError) {
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        
+        if (!window.location.pathname.includes("/login")) {
+            window.location.href = "/login";
+        }
+        return Promise.reject(refreshError);
+      }
     }
     return Promise.reject(error);
-  },
+  }
 );
-
 export default api;
