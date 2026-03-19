@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -7,13 +7,43 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/ui/password-input";
-
+import * as authApi from "@/lib/api/authApi.js";
 import { confirmPasswordValidation, emailValidation, passwordValidation, phoneValidation } from "@/utils/validators.js";
 
 function RegisterForm() {
     const navigate = useNavigate();
     const [isGenderOpen, setIsGenderOpen] = useState(false);
     const [selectedGender, setSelectedGender] = useState("");
+    const [status, setStatus] = useState("");
+    const [loading , setLoading] = useState("");
+    const [serverError , setServerError] = useState("");
+useEffect(() => {
+    if (status) {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+}, [status]);
+    const onSubmit = async(data)=>{
+        console.log(data);
+        try {
+            setStatus(null);
+            setLoading(true);
+            const response =await authApi.registerUser(data);
+            setStatus("success");
+            setTimeout(() => {
+            navigate("/auth/login", { replace: true });
+        }, 2000);
+        } catch (error) {
+            setStatus("error");
+            setServerError(Object.values(error.response.data).flat().join(", "));
+        }
+        finally {
+        setLoading(false);
+    }
+        
+    }
 
     const {
         register,
@@ -25,10 +55,7 @@ function RegisterForm() {
         defaultValues: { gender: "" }
     });
 
-    const onSubmit = () => {
-        localStorage.setItem("token", "123");
-        navigate("/", { replace: true });
-    };
+  
 
     const handleGenderSelect = (value, label) => {
         setSelectedGender(label);
@@ -37,7 +64,24 @@ function RegisterForm() {
     };
 
     return (
-        <div className="bg-white/70 backdrop-blur-md border border-white/50 p-5 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-4xl animate-in fade-in zoom-in duration-500 my-4">
+        <>
+<div
+    className={`
+        fixed top-4 left-1/2 z-50 -translate-x-1/2
+        w-[400px] text-center py-5 text-white bg-[#452798] rounded-md
+        transition-all duration-700 ease-out
+        ${status ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-20"}
+    `}
+>
+    {serverError&&status === "error"&&(<p className="font-[Poppins] tracking-widest text-sm">
+       {serverError}
+        <i className="fa-solid fa-xmark text-red-600"></i>
+    </p>)}
+   {status==="success" &&( <p className="font-[Poppins] tracking-widest text-sm">
+        Your registration has been recorded Successfully 
+        <i className="fa-solid fa-check text-[#03DF20]"></i>
+    </p>)}
+</div>        <div className="bg-white/70 backdrop-blur-md border border-white/50 p-5 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-4xl animate-in fade-in zoom-in duration-500 my-4">
             <div className="text-center mb-6 md:mb-10">
                 <h1 
                     className="text-2xl sm:text-3xl md:text-5xl font-black mb-2 md:mb-3 tracking-tighter inline-block"
@@ -66,10 +110,10 @@ function RegisterForm() {
                             id="user-name" 
                             placeholder="e.g. John Doe"
                             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
-                            {...register("fullName", { required: "Full Name is required" })} 
+                            {...register("full_name", { required: "Full Name is required" })} 
                         />
-                        {errors.fullName && (
-                            <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.fullName.message}</p>
+                        {errors.full_name && (
+                            <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.full_name.message}</p>
                         )}
                     </div>
 
@@ -92,18 +136,18 @@ function RegisterForm() {
 
                     {/* Phone */}
                     <div className="flex flex-col group">
-                        <Label htmlFor="phone" className="text-[#452798] text-xs font-bold uppercase tracking-wider mb-2.5 ml-1 transition-colors group-focus-within:text-[#311f62]">
+                        <Label htmlFor="phone_number" className="text-[#452798] text-xs font-bold uppercase tracking-wider mb-2.5 ml-1 transition-colors group-focus-within:text-[#311f62]">
                             <i className="fa-solid fa-phone mr-2 text-sm"></i> PHONE
                         </Label>
                         <Input 
                             type="tel" 
-                            id="phone" 
+                            id="phone_number" 
                             placeholder="e.g. +20 123 456 789"
                             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
-                            {...register("phone", phoneValidation)} 
-                        />
-                        {errors.phone && (
-                            <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.phone.message}</p>
+                            {...register("phone_number", phoneValidation)} 
+                            />
+                        {errors.phone_number && (
+                            <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.phone_number.message}</p>
                         )}
                     </div>
 
@@ -116,7 +160,7 @@ function RegisterForm() {
                         <div
                             onClick={() => setIsGenderOpen(!isGenderOpen)}
                             className="h-12 px-4 rounded-xl bg-[#452798] text-white flex justify-between items-center cursor-pointer select-none transition-all hover:bg-[#452798]/95 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
-                        >
+                            >
                             <span className={selectedGender ? "text-white font-medium" : "text-white/40"}>
                                 {selectedGender || "Select Gender"}
                             </span>
@@ -126,15 +170,15 @@ function RegisterForm() {
                         {isGenderOpen && (
                             <ul className="absolute top-[100%] left-0 w-full bg-white border border-purple-100 rounded-xl mt-3 z-20 overflow-hidden shadow-2xl p-1 animate-in slide-in-from-top-2">
                                 <li
-                                    onClick={() => handleGenderSelect("male", "Male")}
+                                    onClick={() => handleGenderSelect("Male","male")}
                                     className="p-3 text-[#452798] hover:bg-purple-50 rounded-lg cursor-pointer transition-colors font-bold text-sm"
-                                >
+                                    >
                                     Male
                                 </li>
                                 <li
-                                    onClick={() => handleGenderSelect("female", "Female")}
+                                    onClick={() => handleGenderSelect("Female","female")}
                                     className="p-3 text-[#452798] hover:bg-purple-50 rounded-lg cursor-pointer transition-colors font-bold text-sm mt-1"
-                                >
+                                    >
                                     Female
                                 </li>
                             </ul>
@@ -156,7 +200,7 @@ function RegisterForm() {
                             placeholder="e.g. Cairo University"
                             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
                             {...register("university", { required: "University is required" })} 
-                        />
+                            />
                         {errors.university && (
                             <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.university.message}</p>
                         )}
@@ -173,7 +217,7 @@ function RegisterForm() {
                             placeholder="e.g. Faculty of Engineering"
                             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
                             {...register("college", { required: "College is required" })} 
-                        />
+                            />
                         {errors.college && (
                             <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.college.message}</p>
                         )}
@@ -189,7 +233,7 @@ function RegisterForm() {
                             placeholder="••••••••"
                             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
                             {...register("password", passwordValidation)}
-                        />
+                            />
                         {errors.password && (
                             <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.password.message}</p>
                         )}
@@ -205,7 +249,7 @@ function RegisterForm() {
                             placeholder="••••••••"
                             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-4 focus:ring-[#452798]/20 shadow-lg"
                             {...register("confirmPassword", confirmPasswordValidation(() => getValues("password")))}
-                        />
+                            />
                         {errors.confirmPassword && (
                             <p className="text-rose-600 font-semibold text-[10px] mt-1.5 ml-1 uppercase tracking-wider">{errors.confirmPassword.message}</p>
                         )}
@@ -216,9 +260,10 @@ function RegisterForm() {
                 <div className="mt-12 flex flex-col items-center">
                     <Button
                         type="submit"
-                        className="w-full md:w-80 h-12 bg-[#452798] text-white hover:bg-[#683CE3] active:scale-[0.98] transition-all font-bold rounded-xl shadow-lg shadow-[#452798]/20 text-lg mb-6"
-                    >
-                        Register
+          disabled={loading}
+          className="text-lg w-full h-12 bg-[#452798] text-white hover:bg-[#683CE3] active:scale-[0.98] transition-all font-bold rounded-xl shadow-lg"
+        >
+          {loading ? "Logging in..." : "Register"}
                     </Button>
                     
                     <button 
@@ -231,6 +276,7 @@ function RegisterForm() {
                 </div>
             </Form>
         </div>
+                        </>
     );
 }
 

@@ -40,8 +40,9 @@ import WorkShopDetailsPage from "../features/workshops/pages/WorkShopDetailsPage
 import WorkShopsPage from "../features/workshops/pages/WorkShopsPage";
 
 import ErrorFallback from "../components/ui/ErrorFallback";
+import NotFoundPage from "@/components/ui/NotFoundPage";
 
-const NotFound = () => <div>404 - Not Found</div>;
+// const NotFound = () => <div>404 - Not Found</div>;
 
 export const router = createBrowserRouter([
   {
@@ -93,5 +94,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  { path: "*", element: <NotFound /> },
+  { path: "*", element: <NotFoundPage /> },
 ]);
