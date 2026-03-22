@@ -72,11 +72,28 @@ const TeamCard = ({ member, delay = 0 }) => (
         {/* Coloured icon buttons */}
         <div className="flex gap-[6px] mt-3">
           {member.socials?.facebook && (
-            <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
-          )}  {member.socials?.facebook && (
-            <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
-          )}  {member.socials?.facebook && (
-            <img src={facebookIcon} alt="" srcset="" className="w-6 h-6 object-cover" />
+            <img
+              src={facebookIcon}
+              alt=""
+              srcset=""
+              className="w-6 h-6 object-cover"
+            />
+          )}{" "}
+          {member.socials?.facebook && (
+            <img
+              src={facebookIcon}
+              alt=""
+              srcset=""
+              className="w-6 h-6 object-cover"
+            />
+          )}{" "}
+          {member.socials?.facebook && (
+            <img
+              src={facebookIcon}
+              alt=""
+              srcset=""
+              className="w-6 h-6 object-cover"
+            />
           )}
           {/* {member.socials?.linkedin && (
             <a
@@ -132,13 +149,13 @@ const ProjectCard = ({ project, delay = 0 }) => (
     >
       {/* ── Background Image with specialized overlays ── */}
       <div className="relative w-full aspect-[4/5] overflow-hidden">
-        <img 
-          src={project.image} 
+        <img
+          src={project.image}
           alt={project.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B2E] via-transparent to-black/40" />
-        
+
         {/* Decorative star icon from screenshot */}
         <div className="absolute top-4 right-4 text-white/30">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -158,8 +175,8 @@ const ProjectCard = ({ project, delay = 0 }) => (
       <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
         <div className="px-3 pt-1 pb-4 mx-auto">
           <button className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
-          View Details
-        </button>
+            View Details
+          </button>
         </div>
       </div>
     </Motion.div>
@@ -204,7 +221,9 @@ export default function CommitteeDetailsPage() {
                 <path d="M15 19l-7-7 7-7" />
               </svg>
             </div>
-            <span className="font-semibold uppercase tracking-widest text-xs">Back to Committees</span>
+            <span className="font-semibold uppercase tracking-widest text-xs">
+              Back to Committees
+            </span>
           </button>
         </ScrollAnimation>
 
