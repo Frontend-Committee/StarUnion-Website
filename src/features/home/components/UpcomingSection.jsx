@@ -3,6 +3,7 @@ import MediaCard from "@/components/common/MediaCard";
 import { eventsData, servicesData, storiesData, workshopsData } from "../data";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
+import { Link } from "react-router-dom";
 
 export default function UpcomingSection() {
   return (
@@ -14,17 +15,24 @@ export default function UpcomingSection() {
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Upcoming Events
             </h2>
-
-            <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
-              See More
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </p>
+            <Link to={"/events"}>
+              <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
+                See More
+                <span className="group-hover:translate-x-1 transition-transform">
+                  →
+                </span>
+              </p>
+            </Link>
           </div>
         </ScrollAnimation>
 
         <HorizontalScrollSection>
           {eventsData.map((event, index) => (
-            <ScrollAnimation mode="popLayout" key={event.id} delay={(index % 4) * 100}>
+            <ScrollAnimation
+              mode="popLayout"
+              key={event.id}
+              delay={(index % 4) * 100}
+            >
               <MediaCard
                 title={event.title}
                 image={event.image}
@@ -43,16 +51,24 @@ export default function UpcomingSection() {
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Upcoming Workshops
             </h2>
-            <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
-              See More
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </p>
+            <Link to={"/workshops"}>
+              <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
+                See More
+                <span className="group-hover:translate-x-1 transition-transform">
+                  →
+                </span>
+              </p>
+            </Link>
           </div>
         </ScrollAnimation>
 
         <HorizontalScrollSection>
           {workshopsData.map((workshop, index) => (
-            <ScrollAnimation mode="popLayout" key={workshop.id} delay={(index % 4) * 100}>
+            <ScrollAnimation
+              mode="popLayout"
+              key={workshop.id}
+              delay={(index % 4) * 100}
+            >
               <MediaCard
                 title={workshop.title}
                 image={workshop.image}
@@ -71,16 +87,24 @@ export default function UpcomingSection() {
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Services We Offer
             </h2>
-            <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
-              See More
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </p>
+            <Link to={"/services"}>
+              <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
+                See More
+                <span className="group-hover:translate-x-1 transition-transform">
+                  →
+                </span>
+              </p>
+            </Link>
           </div>
         </ScrollAnimation>
 
         <HorizontalScrollSection>
           {servicesData.map((service, index) => (
-            <ScrollAnimation mode="popLayout" key={service.id} delay={(index % 4) * 100}>
+            <ScrollAnimation
+              mode="popLayout"
+              key={service.id}
+              delay={(index % 4) * 100}
+            >
               <MediaCard
                 title={service.title}
                 image={service.image}
@@ -98,16 +122,24 @@ export default function UpcomingSection() {
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               See Our Success Stories
             </h2>
-            <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
-              See More
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </p>
+            <Link to={"/projects"}>
+              <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
+                See More
+                <span className="group-hover:translate-x-1 transition-transform">
+                  →
+                </span>
+              </p>
+            </Link>
           </div>
         </ScrollAnimation>
 
         <HorizontalScrollSection>
           {storiesData.map((story, index) => (
-            <ScrollAnimation mode="popLayout" key={story.id} delay={(index % 4) * 100}>
+            <ScrollAnimation
+              mode="popLayout"
+              key={story.id}
+              delay={(index % 4) * 100}
+            >
               <MediaCard
                 title={story.title}
                 image={story.image}
