@@ -132,7 +132,7 @@ export default function Navbar() {
           <div className="container flex items-center justify-between py-5 mt-6">
             <button
               onClick={() => navigate("/")}
-              className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
+              className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white/10 ring-1 ring-white/15 shadow-[0_8px_25px_rgba(0,0,0,0.35)] transition hover:bg-white/15"
               aria-label="Go home"
             >
               <img
@@ -142,7 +142,7 @@ export default function Navbar() {
               />
             </button>
 
-            <div className="hidden md:flex items-center gap-6 px-6 py-3 rounded-lg bg-primary ring-1 ring-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+            <div className="hidden md:flex items-center md:gap-4 lg:gap-6 xl:gap-8 px-6 py-3 rounded-lg bg-primary ring-1 ring-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
               <NavLink to="/" className={navLinkClass}>
                 Home
               </NavLink>
@@ -182,14 +182,14 @@ export default function Navbar() {
               {!isAuth ? (
                 <button
                   onClick={handleLogin}
-                  className="hidden md:block px-6 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-4 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Log In
                 </button>
               ) : (
                 <button
                   onClick={handleProfile}
-                  className="hidden md:block px-6 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-4 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Profile
                 </button>

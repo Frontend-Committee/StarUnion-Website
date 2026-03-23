@@ -6,20 +6,38 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useAuth } from "@/hooks/useAuth";
+import * as authApi from "@/lib/api/authApi.js"
 import { emailValidation, passwordValidation } from "@/utils/validators.js";
+import { useState } from "react";
 
 function LoginForm() {
   const navigate = useNavigate();
   const { loginUser } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [serverError, setServerError] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const fakeLogin = (data) => {
-    loginUser("123");
-    navigate("/", { replace: true });
+  const onSubmit = async (data) => {
+    // console.log(data);
+    
+    setLoading(true);
+    setServerError("");
+    try {
+      const response = await authApi.loginUser(data); 
+      loginUser(response.access);
+      
+      navigate("/", { replace: true });
+    } catch (error) {
+      
+      
+      setServerError(error.response.data.detail);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,7 +55,10 @@ function LoginForm() {
       </h1>
       <p className="text-[#452798]/70 mb-9 text-center text-md font-medium">Please enter your details to sign in</p>
 
-      <Form onSubmit={handleSubmit(fakeLogin)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+               {serverError && (
+        <p className="text-rose-600 font-medium my-3 rounded-md bg-rose-200/45 text-center mt-1.5 ml-1">{serverError}</p>
+      )}
         <div className="flex flex-col mb-6 group">
           <Label htmlFor="email" className="font-bold text-[#452798] text-xs uppercase tracking-wider mb-2.5 ml-1">
             <i className="fa-regular fa-envelope mr-2"></i>
@@ -56,6 +77,7 @@ function LoginForm() {
           {errors.email && (
             <p className="text-rose-600 font-medium text-xs mt-1.5 ml-1">{errors.email.message}</p>
           )}
+   
         </div>
 
         <div className="flex flex-col mb-6 group">
@@ -87,9 +109,10 @@ function LoginForm() {
 
         <Button
           type="submit"
-          className="text-lg w-full h-12 bg-[#452798] text-white hover:bg-[#683CE3] active:scale-[0.98] transition-all font-bold rounded-xl shadow-lg shadow-[#452798]/20"
+          disabled={loading}
+          className="text-lg w-full h-12 bg-[#452798] text-white hover:bg-[#683CE3] active:scale-[0.98] transition-all font-bold rounded-xl shadow-lg"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </Form>
     </div>
