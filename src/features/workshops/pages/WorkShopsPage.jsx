@@ -21,9 +21,9 @@ export default function WorkshopPage() {
       const matchesSearch = workshop?.title
         ?.toLowerCase()
         .includes(search.toLowerCase());
-      const matchesTab =
-        activeFilter === "All" || workshop.year === activeFilter;
-      return matchesSearch && matchesTab;
+      // const matchesTab =
+      //   activeFilter === "All" || workshop.year === activeFilter;
+      return matchesSearch;
     }) || [];
 
   return (

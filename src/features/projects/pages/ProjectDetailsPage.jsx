@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import picture from "@/assets/images/ProfilePage/portfolioImg.jpg";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { useProjectDetails } from "../hooks/useProjectDetails";
+import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 
 const teamMembers = [
   { id: 1, name: "Lina Sophia", role: "UX Researcher", img: picture },
@@ -44,11 +46,13 @@ const approaches = [
   },
 ];
 
-const gallery = [picture, picture, picture, picture]; // ضيف صور الجلري هنا
+const gallery = [picture, picture, picture, picture, picture, picture, picture];
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { data: project } = useProjectDetails(id);
 
   return (
     <div className="container min-h-screen px-4 py-10 mx-auto text-white md:px-8">
@@ -98,25 +102,29 @@ export default function ProjectDetailsPage() {
       </ScrollAnimation>
 
       <ScrollAnimation variant="fade-up" delay={100}>
-        <div className="grid grid-cols-1 gap-6 my-10 sm:grid-cols-2 lg:grid-cols-4">
-          {teamMembers.map((member) => (
-            <div
-              key={member.id}
-              className="overflow-hidden shadow-md rounded-xl bg-white/5"
-            >
-              <img
-                src={member.img}
-                alt={member.name}
-                className="object-cover w-full h-[220px]"
-              />
-              <div className="p-4 bg-white">
-                <p className="font-bold text-lg text-[#452798]">
-                  {member.name}
-                </p>
-                <p className="text-sm font-medium text-black">{member.role}</p>
+        <div className="my-10">
+          <HorizontalScrollSection>
+            {teamMembers.map((member) => (
+              <div
+                key={member.id}
+                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5"
+              >
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="object-cover w-full h-[220px]"
+                />
+                <div className="p-4 bg-white">
+                  <p className="font-bold text-lg text-[#452798]">
+                    {member.name}
+                  </p>
+                  <p className="text-sm font-medium text-black">
+                    {member.role}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </HorizontalScrollSection>
         </div>
       </ScrollAnimation>
 
@@ -166,20 +174,21 @@ export default function ProjectDetailsPage() {
             See live project <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-5">
-          {gallery.map((imgSrc, index) => (
-            <div
-              key={index}
-              className="overflow-hidden rounded-xl h-[300px] border border-white/10"
-            >
-              <img
-                src={imgSrc}
-                alt={`Gallery ${index + 1}`}
-                className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-          ))}
+        <div className="mb-10">
+          <HorizontalScrollSection>
+            {gallery.map((imgSrc, index) => (
+              <div
+                key={index}
+                className="shrink-0 w-[300px] md:w-[350px] overflow-hidden rounded-xl h-[300px] border border-white/10"
+              >
+                <img
+                  src={imgSrc}
+                  alt={`Gallery ${index + 1}`}
+                  className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
+                />
+              </div>
+            ))}
+          </HorizontalScrollSection>
         </div>
       </ScrollAnimation>
     </div>

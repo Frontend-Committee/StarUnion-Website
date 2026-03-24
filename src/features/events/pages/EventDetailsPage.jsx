@@ -4,6 +4,8 @@ import picture from "@/assets/images/ProfilePage/portfolioImg.jpg";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import Sponsors from "@/features/home/components/Sponsers";
 import { Button } from "@/components/ui/button";
+import { useEventDetails } from "../hooks/useEventDetails";
+import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 
 const teamMembers = [
   { id: 1, name: "Lina Sophia", role: "UX Researcher", img: picture },
@@ -15,6 +17,9 @@ const teamMembers = [
 export default function EventDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const { data: event } = useEventDetails(id);
+
   return (
     <div className="container min-h-screen px-4 py-10 mx-auto text-white md:px-8">
       <ScrollAnimation variant="fade-right">
@@ -86,25 +91,29 @@ export default function EventDetailsPage() {
 
       <ScrollAnimation variant="fade-up" delay={100}>
         <h1 className="text-h2 text-tertiary mt-6">Featured Speakers</h1>
-        <div className="grid grid-cols-1 gap-6 mb-10 mt-6 sm:grid-cols-2 lg:grid-cols-4">
-          {teamMembers.map((member) => (
-            <div
-              key={member.id}
-              className="overflow-hidden shadow-md rounded-xl bg-white/5"
-            >
-              <img
-                src={member.img}
-                alt={member.name}
-                className="object-cover w-full h-[220px]"
-              />
-              <div className="p-4 bg-white">
-                <p className="font-bold text-lg text-[#452798]">
-                  {member.name}
-                </p>
-                <p className="text-sm font-medium text-black">{member.role}</p>
+        <div className="my-10">
+          <HorizontalScrollSection>
+            {teamMembers.map((member) => (
+              <div
+                key={member.id}
+                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5"
+              >
+                <img
+                  src={member.img}
+                  alt={member.name}
+                  className="object-cover w-full h-[220px]"
+                />
+                <div className="p-4 bg-white">
+                  <p className="font-bold text-lg text-[#452798]">
+                    {member.name}
+                  </p>
+                  <p className="text-sm font-medium text-black">
+                    {member.role}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </HorizontalScrollSection>
         </div>
       </ScrollAnimation>
       <Sponsors />

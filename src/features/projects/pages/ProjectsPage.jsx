@@ -12,7 +12,7 @@ export default function ProjectsPage() {
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const { data: projects = [], isLoading } = useProjects;
+  const { data: projects = [], isLoading } = useProjects();
 
   if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
@@ -21,9 +21,9 @@ export default function ProjectsPage() {
       const matchesSearch = project?.title
         ?.toLowerCase()
         .includes(search.toLowerCase());
-      const matchesTab =
-        activeFilter === "All" || project.year === activeFilter;
-      return matchesSearch && matchesTab;
+      // const matchesTab =
+      //   activeFilter === "All" || project.year === activeFilter;
+      return matchesSearch ;
     }) || [];
 
   return (

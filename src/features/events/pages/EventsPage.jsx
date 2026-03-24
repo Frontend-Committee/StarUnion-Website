@@ -21,8 +21,8 @@ export default function EventsPage() {
       const matchesSearch = event?.title
         ?.toLowerCase()
         .includes(search.toLowerCase());
-      const matchesTab = activeFilter === "All" || event.year === activeFilter;
-      return matchesSearch && matchesTab;
+      // const matchesTab = activeFilter === "All" || event.year === activeFilter;
+      return matchesSearch;
     }) || [];
 
   return (

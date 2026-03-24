@@ -1,11 +1,18 @@
 import React from "react";
 import MediaCard from "@/components/common/MediaCard";
-import { eventsData, servicesData, storiesData, workshopsData } from "../data";
+import { servicesData } from "../data";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import { Link } from "react-router-dom";
+import { useEvents } from "@/features/events/hooks/useEvents";
+import { useWorkshop } from "@/features/workshops/hooks/useWorkshop";
+import { useProjects } from "@/features/projects/hooks/useProjects";
 
 export default function UpcomingSection() {
+  const { data: events = [] } = useEvents();
+  const { data: workshops = [] } = useWorkshop();
+  const { data: projects = [] } = useProjects();
+
   return (
     <div className="flex flex-col w-full gap-12 my-10">
       {/* events */}
@@ -27,18 +34,20 @@ export default function UpcomingSection() {
         </ScrollAnimation>
 
         <HorizontalScrollSection>
-          {eventsData.map((event, index) => (
+          {events.map((event, index) => (
             <ScrollAnimation
               mode="popLayout"
               key={event.id}
               delay={(index % 4) * 100}
             >
-              <MediaCard
-                title={event.title}
-                image={event.image}
-                buttonText={event.buttonText}
-                date={event.date}
-              />
+              <Link to={`/events/${event.id}`}>
+                <MediaCard
+                  title={event.title}
+                  image={event.image}
+                  buttonText={event.buttonText}
+                  date={event.date}
+                />
+              </Link>
             </ScrollAnimation>
           ))}
         </HorizontalScrollSection>
@@ -63,18 +72,20 @@ export default function UpcomingSection() {
         </ScrollAnimation>
 
         <HorizontalScrollSection>
-          {workshopsData.map((workshop, index) => (
+          {workshops.map((workshop, index) => (
             <ScrollAnimation
               mode="popLayout"
               key={workshop.id}
               delay={(index % 4) * 100}
             >
-              <MediaCard
-                title={workshop.title}
-                image={workshop.image}
-                buttonText={workshop.buttonText}
-                date={workshop.date}
-              />
+              <Link to={`/workshops/${workshop.id}`}>
+                <MediaCard
+                  title={workshop.title}
+                  image={workshop.image}
+                  buttonText={workshop.buttonText}
+                  date={workshop.date}
+                />
+              </Link>
             </ScrollAnimation>
           ))}
         </HorizontalScrollSection>
@@ -105,11 +116,13 @@ export default function UpcomingSection() {
               key={service.id}
               delay={(index % 4) * 100}
             >
-              <MediaCard
-                title={service.title}
-                image={service.image}
-                buttonText={service.buttonText}
-              />
+              <Link to={`services/${service.id}`}>
+                <MediaCard
+                  title={service.title}
+                  image={service.image}
+                  buttonText={service.buttonText}
+                />
+              </Link>
             </ScrollAnimation>
           ))}
         </HorizontalScrollSection>
@@ -134,17 +147,19 @@ export default function UpcomingSection() {
         </ScrollAnimation>
 
         <HorizontalScrollSection>
-          {storiesData.map((story, index) => (
+          {projects.map((story, index) => (
             <ScrollAnimation
               mode="popLayout"
               key={story.id}
               delay={(index % 4) * 100}
             >
-              <MediaCard
-                title={story.title}
-                image={story.image}
-                buttonText={story.buttonText}
-              />
+              <Link to={`/projects/${story.id}`}>
+                <MediaCard
+                  title={story.title}
+                  image={story.image}
+                  buttonText={story.buttonText}
+                />
+              </Link>
             </ScrollAnimation>
           ))}
         </HorizontalScrollSection>

@@ -16,11 +16,11 @@ const ScrollArrow = ({ direction = "right" }) => (
   </svg>
 );
 
-/**
- * A reusable horizontal scroller with functional arrows for mobile and desktop.
- * centralizes the "Reach the Stars" scroll aesthetic.
- */
-export default function HorizontalScrollSection({ children, className = "", mobileOnly = false }) {
+export default function HorizontalScrollSection({
+  children,
+  className = "",
+  mobileOnly = false,
+}) {
   const containerRef = useRef(null);
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
@@ -28,9 +28,11 @@ export default function HorizontalScrollSection({ children, className = "", mobi
   const updateArrows = useCallback(() => {
     const el = containerRef.current;
     if (!el) return;
+
     const maxScrollLeft = el.scrollWidth - el.clientWidth;
-    setShowLeft(el.scrollLeft > 20);
-    setShowRight(maxScrollLeft - el.scrollLeft > 20);
+
+    setShowLeft(el.scrollLeft > 2);
+    setShowRight(maxScrollLeft > 2 && el.scrollLeft < maxScrollLeft - 2);
   }, []);
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export default function HorizontalScrollSection({ children, className = "", mobi
     updateArrows();
     const onResize = () => updateArrows();
     const resizeObserver = new ResizeObserver(updateArrows);
+
     resizeObserver.observe(el);
     el.addEventListener("scroll", updateArrows, { passive: true });
     window.addEventListener("resize", onResize);
@@ -54,20 +57,41 @@ export default function HorizontalScrollSection({ children, className = "", mobi
   const scrollByAmount = (direction) => {
     const el = containerRef.current;
     if (!el) return;
-    // Scroll by roughly one card or a fixed amount
     el.scrollBy({ left: direction * 300, behavior: "smooth" });
   };
+
+  let maskStyle = {};
+  if (showLeft && showRight) {
+    maskStyle = {
+      maskImage:
+        "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+      WebkitMaskImage:
+        "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
+    };
+  } else if (showLeft) {
+    maskStyle = {
+      maskImage: "linear-gradient(to right, transparent, black 5%, black 100%)",
+      WebkitMaskImage:
+        "linear-gradient(to right, transparent, black 5%, black 100%)",
+    };
+  } else if (showRight) {
+    maskStyle = {
+      maskImage: "linear-gradient(to right, black 0%, black 95%, transparent)",
+      WebkitMaskImage:
+        "linear-gradient(to right, black 0%, black 95%, transparent)",
+    };
+  }
 
   return (
     <div className="relative group/scroll px-1 overflow-visible">
       <div
         ref={containerRef}
-        className={`flex gap-5 pt-4 pb-8 overflow-x-auto scrollbar-hide px-4 -mx-4 ${className}`}
+        style={maskStyle}
+        className={`flex gap-5 pt-4 pb-8 overflow-x-auto scrollbar-hide px-4 -mx-4 transition-all duration-300 ${className}`}
       >
         {children}
       </div>
-      
-      {/* Scroll Arrows - Desktop */}
+
       {!mobileOnly && (
         <div className="hidden md:block">
           {showLeft && (
@@ -93,16 +117,15 @@ export default function HorizontalScrollSection({ children, className = "", mobi
         </div>
       )}
 
-      {/* Mobile-only functional arrow */}
       <div className="md:hidden">
         {showRight && (
-           <button
-             onClick={() => scrollByAmount(1)}
-             className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#452798]/60 backdrop-blur-md flex items-center justify-center text-white shadow-lg animate-pulse z-30 active:scale-90 transition-transform"
-             aria-label="Scroll right"
-           >
-              <ScrollArrow direction="right" />
-           </button>
+          <button
+            onClick={() => scrollByAmount(1)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#452798]/60 backdrop-blur-md flex items-center justify-center text-white shadow-lg animate-pulse z-30 active:scale-90 transition-transform"
+            aria-label="Scroll right"
+          >
+            <ScrollArrow direction="right" />
+          </button>
         )}
       </div>
     </div>
