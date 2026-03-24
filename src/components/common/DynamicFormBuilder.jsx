@@ -74,7 +74,7 @@ const ICON_MAP = {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      className="w-4 h-4"
+      className="w-5 h-5"
     >
       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
       <circle cx="12" cy="7" r="4" />
@@ -86,7 +86,7 @@ const ICON_MAP = {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      className="w-4 h-4"
+      className="w-5 h-5"
     >
       <rect width="20" height="16" x="2" y="4" rx="2" />
       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -98,7 +98,7 @@ const ICON_MAP = {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      className="w-4 h-4"
+      className="w-5 h-5"
     >
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92Z" />
     </svg>
@@ -109,7 +109,7 @@ const ICON_MAP = {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      className="w-4 h-4"
+      className="w-5 h-5"
     >
       <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
       <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
@@ -126,7 +126,7 @@ const ICON_MAP = {
       fill="none"
       stroke="currentColor"
       strokeWidth="2"
-      className="w-4 h-4"
+      className="w-5 h-5"
     >
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
     </svg>
@@ -138,7 +138,7 @@ const ICON_MAP = {
 
 function FieldIcon({ icon }) {
   const el = ICON_MAP[icon] || ICON_MAP.default;
-  return <span className="text-[#452798]/70">{el}</span>;
+  return <span className="text-[#452798]/70 ">{el}</span>;
 }
 
 // ─── Individual Field Components ─────────────────────────────────────────────
@@ -149,7 +149,7 @@ function FieldWrapper({ field, error, children }) {
       {field.label && (
         <label
           htmlFor={field.name}
-          className="flex items-center gap-2 font-bold text-[#452798] text-xs uppercase tracking-wider mb-2.5 ml-1"
+          className="flex items-center gap-2 font-bold text-[#452798] text-sm uppercase tracking-wider mb-2.5 ml-1"
         >
           {field.icon && <FieldIcon icon={field.icon} />}
           {field.label}
@@ -1089,7 +1089,7 @@ export default function DynamicFormBuilder({
                   type="submit"
                   disabled={isSubmitting}
                   whileTap={{ scale: 0.97 }}
-                  className="flex-1 md:flex-none px-8 h-12 rounded-xl bg-[#452798] hover:bg-[#683CE3] text-white text-lg font-bold transition-all duration-200 shadow-lg shadow-[#452798]/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
+                  className="flex-1 mx-auto  md:flex-none px-8 h-12 rounded-xl bg-[#452798] hover:bg-[#683CE3] text-white text-lg font-bold transition-all duration-200 shadow-lg shadow-[#452798]/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
                   {isSubmitting ? (
                     <>
