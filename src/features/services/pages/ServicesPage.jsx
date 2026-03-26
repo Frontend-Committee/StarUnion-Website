@@ -1,11 +1,10 @@
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { ECOSYSTEM_DATA, SERVICE_CATEGORIES } from "@/utils/constants";
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import ScrollAnimation from "@/components/ui/ScrollAnimation";
-import {
-  ECOSYSTEM_DATA,
-  SERVICE_CATEGORIES,
-  SERVICES_DATA,
-} from "@/utils/constants";
+import { getTechnicalFilterValue, listServices } from "../api/servicesService";
 import ServiceCard from "../components/ServiceCard";
 
 const FILTER_TABS = [
@@ -17,39 +16,48 @@ const FILTER_TABS = [
 export default function ServicesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState(SERVICE_CATEGORIES.ALL);
+  const [page, setPage] = useState(1);
+  const trimmedSearchQuery = searchQuery.trim();
+  const technicalFilter = getTechnicalFilterValue(activeFilter);
 
-  const filteredServices = useMemo(() => {
-    return SERVICES_DATA.filter((s) => {
-      const matchesSearch = s.title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
-      const matchesFilter =
-        activeFilter === SERVICE_CATEGORIES.ALL || s.category === activeFilter;
-      return matchesSearch && matchesFilter;
-    });
-  }, [searchQuery, activeFilter]);
+  const { data, isLoading, isFetching, isError, error } = useQuery({
+    queryKey: [
+      "services",
+      {
+        page,
+        search: trimmedSearchQuery,
+        isTechnical: technicalFilter,
+      },
+    ],
+    queryFn: () =>
+      listServices({
+        page,
+        search: trimmedSearchQuery || undefined,
+        is_technical: technicalFilter,
+      }),
+  });
 
-  // Ecosystem doesn't need category filtering — only search
+  const services = data?.results || [];
   const filteredEcosystem = useMemo(() => {
     if (!searchQuery) return ECOSYSTEM_DATA;
     return ECOSYSTEM_DATA.filter((e) =>
-      e.title.toLowerCase().includes(searchQuery.toLowerCase())
+      e.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [searchQuery]);
 
-  // hide ecosystem section when a category tab (not All) is active
   const showEcosystem = activeFilter === SERVICE_CATEGORIES.ALL;
+
+  if (isLoading) {
+    return <LoadingSpinner fullScreen={true} />;
+  }
 
   return (
     <section className="container min-h-screen px-4 py-10 md:px-8">
       <div className="max-w-[1200px] mx-auto">
-
-        {/* ── Page Title ── */}
         <ScrollAnimation variant="fade-down">
           <h1 className="mb-8 font-semibold text-h2 text-tertiary">Services</h1>
         </ScrollAnimation>
 
-        {/* ── Search Bar ── */}
         <ScrollAnimation variant="fade-up" delay={100}>
           <div className="relative mb-5">
             <div className="absolute inset-y-0 flex items-center pointer-events-none left-4">
@@ -72,20 +80,25 @@ export default function ServicesPage() {
               type="text"
               placeholder="Search Services..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setPage(1);
+              }}
               className="w-full pl-12 pr-4 py-3 rounded-lg border border-[#2a2050] focus:border-primary focus:outline-none placeholder-gray-500 text-body font-normal transition-colors"
             />
           </div>
         </ScrollAnimation>
 
-        {/* ── Filter Tabs ── */}
         <ScrollAnimation variant="fade-up" delay={200}>
           <div className="flex gap-3 mb-10">
             {FILTER_TABS.map((tab) => (
               <button
                 key={tab.value}
                 id={`service-filter-${tab.value}`}
-                onClick={() => setActiveFilter(tab.value)}
+                onClick={() => {
+                  setActiveFilter(tab.value);
+                  setPage(1);
+                }}
                 className={`p-2 md:px-6 md:py-2 w-48 rounded-full text-[14px] font-bold transition-all duration-300 ${
                   activeFilter === tab.value
                     ? "bg-primary text-white border border-white"
@@ -98,13 +111,40 @@ export default function ServicesPage() {
           </div>
         </ScrollAnimation>
 
-        {/* ── Services Grid ── */}
+        <ScrollAnimation variant="fade-up" delay={250}>
+          <div className="flex flex-col gap-3 mb-8 md:flex-row md:items-center md:justify-between">
+            <p className="text-sm text-white/70">
+              {data?.count || 0} services found
+            </p>
+            {isFetching && (
+              <p className="text-sm font-medium text-tertiary">
+                Updating results...
+              </p>
+            )}
+          </div>
+        </ScrollAnimation>
+
+        {isError && (
+          <ScrollAnimation variant="fade-up">
+            <div className="p-6 mb-8 border rounded-2xl border-red-400/20 bg-red-500/10">
+              <p className="font-semibold text-red-200">
+                Could not load services
+              </p>
+              <p className="mt-2 text-sm text-red-100/80">
+                {error?.response?.data?.detail ||
+                  error?.message ||
+                  "Something went wrong while fetching services."}
+              </p>
+            </div>
+          </ScrollAnimation>
+        )}
+
         <Motion.div
           layout
           className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
         >
           <AnimatePresence mode="popLayout">
-            {filteredServices.map((service, index) => (
+            {services.map((service, index) => (
               <Motion.div
                 key={service.id}
                 layout
@@ -113,17 +153,13 @@ export default function ServicesPage() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.25 }}
               >
-                <ServiceCard
-                  service={service}
-                  delay={(index % 4) * 100}
-                />
+                <ServiceCard service={service} delay={(index % 4) * 100} />
               </Motion.div>
             ))}
           </AnimatePresence>
         </Motion.div>
 
-        {/* Services empty state */}
-        {filteredServices.length === 0 && (
+        {!isError && services.length === 0 && (
           <ScrollAnimation variant="fade-up">
             <div className="py-16 text-center">
               <p className="text-gray-400 text-h4">No services found</p>
@@ -134,7 +170,32 @@ export default function ServicesPage() {
           </ScrollAnimation>
         )}
 
-        {/* ── Ecosystem Section ── */}
+        {!!data?.count && (
+          <ScrollAnimation variant="fade-up" delay={300}>
+            <div className="flex items-center justify-center gap-4 mt-12">
+              <button
+                type="button"
+                onClick={() =>
+                  setPage((currentPage) => Math.max(currentPage - 1, 1))
+                }
+                disabled={!data?.previous || page === 1 || isFetching}
+                className="px-5 py-2 text-sm font-semibold text-white transition rounded-full border border-primary disabled:cursor-not-allowed disabled:opacity-40 hover:bg-primary/10"
+              >
+                Previous
+              </button>
+              <span className="text-sm text-white/70">Page {page}</span>
+              <button
+                type="button"
+                onClick={() => setPage((currentPage) => currentPage + 1)}
+                disabled={!data?.next || isFetching}
+                className="px-5 py-2 text-sm font-semibold text-white transition rounded-full border border-primary disabled:cursor-not-allowed disabled:opacity-40 hover:bg-primary/10"
+              >
+                Next
+              </button>
+            </div>
+          </ScrollAnimation>
+        )}
+
         <AnimatePresence>
           {showEcosystem && (
             <Motion.div
@@ -143,23 +204,22 @@ export default function ServicesPage() {
               exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.35 }}
             >
-              {/* Ecosystem heading + description */}
               <div className="mt-16 mb-6">
                 <ScrollAnimation variant="fade-up">
                   <h2 className="text-h3 font-bold text-tertiary mb-4">
                     Ecosystem
                   </h2>
                   <p className="text-white/70 text-body font-normal leading-relaxed max-w-3xl">
-                    Our ecosystem is a connected set of digital solutions designed
-                    to support student growth and engagement. It includes an AI
-                    automation system to streamline processes, a mentorship
-                    platform to guide and develop members, and an attendance app
-                    to track participation and enhance commitment.
+                    Our ecosystem is a connected set of digital solutions
+                    designed to support student growth and engagement. It
+                    includes an AI automation system to streamline processes, a
+                    mentorship platform to guide and develop members, and an
+                    attendance app to track participation and enhance
+                    commitment.
                   </p>
                 </ScrollAnimation>
               </div>
 
-              {/* Ecosystem Grid */}
               <Motion.div
                 layout
                 className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
@@ -194,7 +254,6 @@ export default function ServicesPage() {
             </Motion.div>
           )}
         </AnimatePresence>
-
       </div>
     </section>
   );

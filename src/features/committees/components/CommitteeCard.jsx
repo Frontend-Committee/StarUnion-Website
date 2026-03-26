@@ -9,7 +9,10 @@ export default function CommitteeCard({ committee, delay = 0 }) {
 
   return (
     <ScrollAnimation variant="fade-up" delay={delay} className="h-full">
-      <Link to={`/committees/${committee.slug}`} className="block group h-full">
+      <Link
+        to={`/committees/${encodeURIComponent(committee.name)}`}
+        className="block group h-full"
+      >
         <Motion.div
           whileHover={{ scale: 1.04, y: -4 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -22,22 +25,29 @@ export default function CommitteeCard({ committee, delay = 0 }) {
         >
           <div className="flex-1 p-3 pb-2">
             <div className="w-full aspect-[4/5] rounded-xl overflow-hidden flex items-center justify-center relative">
-              <CommitteeBadge
-                name={committee.name}
-                icon={committee.icon}
-                color={color}
-              />
+              {committee.image ? (
+                <img
+                  src={committee.image}
+                  alt={committee.name}
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <CommitteeBadge
+                  name={committee.name}
+                  icon={committee.icon}
+                  color={color}
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
             </div>
           </div>
 
-          {/* View Details button */}
           <div className="px-3 pb-4 pt-1 mx-auto">
             <span className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
               View Details
             </span>
           </div>
 
-          {/* Hover glow effect */}
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-[16px]"
             style={{

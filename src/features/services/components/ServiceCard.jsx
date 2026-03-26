@@ -41,7 +41,7 @@ export default function ServiceCard({ service, delay = 0 }) {
         <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
           <div className="px-3 pt-1 pb-4 mx-auto">
             <Link
-              to={`/services/${service.slug}`}
+              to={`/services/${service.id}`}
               className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200"
             >
               View Details
