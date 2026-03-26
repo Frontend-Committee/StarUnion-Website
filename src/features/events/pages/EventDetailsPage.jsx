@@ -6,6 +6,7 @@ import Sponsors from "@/features/home/components/Sponsers";
 import { Button } from "@/components/ui/button";
 import { useEventDetails } from "../hooks/useEventDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
 const teamMembers = [
   { id: 1, name: "Lina Sophia", role: "UX Researcher", img: picture },
@@ -18,7 +19,8 @@ export default function EventDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: event } = useEventDetails(id);
+  const { data: event, isLoading } = useEventDetails(id);
+  if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
   return (
     <div className="container min-h-screen px-4 py-10 mx-auto text-white md:px-8">
@@ -51,14 +53,8 @@ export default function EventDetailsPage() {
         <h1 className="mb-6 font-bold text-h2 text-tertiary">Event Overview</h1>
 
         <div className="bg-[#7441FE] px-6 py-8 rounded-2xl leading-loose shadow-lg">
-          <h2 className="mb-3 font-bold text-h4 text-tertiary">
-            AI and Future
-          </h2>
-          <p className="mb-4 text-white/90">
-            Welcome to the Global Innovation Summit 2026. This year, we bring
-            together the brightest minds, industry leaders, and tech visionaries
-            to explore the boundaries of what’s possible.
-          </p>
+          <h2 className="mb-3 font-bold text-h4 text-tertiary">{event.name}</h2>
+          <p className="mb-4 text-white/90">{event.data.description}</p>
         </div>
       </ScrollAnimation>
 
@@ -68,7 +64,7 @@ export default function EventDetailsPage() {
             <Calendar className="w-6 h-6" />
           </div>
           <span className="text-white font-medium text-base md:text-lg">
-            Oct 24-26, 2026
+            {event.data.date}
           </span>
         </div>
         <div className="flex items-center gap-4">
@@ -76,7 +72,7 @@ export default function EventDetailsPage() {
             <MapPin className="w-6 h-6" />
           </div>
           <span className="text-white font-medium text-base md:text-lg">
-            FCAI - CU, Cairo
+            {event.data.location}
           </span>
         </div>
         <div className="flex items-center gap-4">
@@ -84,7 +80,7 @@ export default function EventDetailsPage() {
             <Clock className="w-6 h-6" />
           </div>
           <span className="text-white font-medium text-base md:text-lg">
-            09:00 AM - 06:00 PM
+            {event.data.time}
           </span>
         </div>
       </div>
@@ -96,7 +92,7 @@ export default function EventDetailsPage() {
             {teamMembers.map((member) => (
               <div
                 key={member.id}
-                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5"
+                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
                   src={member.img}

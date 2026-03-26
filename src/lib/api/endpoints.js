@@ -172,7 +172,7 @@ export const listSponsors = async (filters = {}) => {
     const response = await api.get("/sponsers/", {
       params: filters,
     });
-    return response.data;
+    return response.data.results;
   } catch (error) {
     console.error(
       "Error fetching sponsors:",

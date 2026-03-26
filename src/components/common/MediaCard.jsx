@@ -20,9 +20,8 @@ export default function MediaCard({ image, title, buttonText, date }) {
 
           {date && (
             <div className="bg-white border border-[#7441FF] text-black rounded-xl flex flex-col items-center justify-center w-10 h-10 shrink-0 shadow-sm leading-none">
-              <span className="font-bold text-sm">{date.day}</span>
-              <span className="text-[10px] font-semibold text-gray-600">
-                {date.month}
+              <span className="text-[10px] font-bold text-center text-[#452798]">
+                {date}
               </span>
             </div>
           )}

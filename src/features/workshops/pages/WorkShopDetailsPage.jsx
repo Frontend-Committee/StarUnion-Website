@@ -1,31 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom";
 import {
   FileText,
-  Monitor,
   Check,
   Calendar,
   MapPin,
   Clock,
   ArrowRight,
 } from "lucide-react";
-import picture from "@/assets/images/ProfilePage/portfolioImg.jpg";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import { Button } from "@/components/ui/button";
 import { useWorkshopDetails } from "../hooks/useWorkshopDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
-const teamMembers = [
-  { id: 1, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 2, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 3, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 4, name: "Lina Sophia", role: "UX Researcher", img: picture },
-];
 export default function WorkShopDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: workshop } = useWorkshopDetails(id);
-
+  const { data: workshop, isLoading } = useWorkshopDetails(id);
+  if (isLoading) return <LoadingSpinner fullScreen={true} />;
   return (
     <div className="container min-h-screen px-4 py-10 mx-auto text-white md:px-8">
       <ScrollAnimation variant="fade-right">
@@ -60,7 +53,7 @@ export default function WorkShopDetailsPage() {
 
         <div className="bg-[#7441FE] px-6 py-8 rounded-2xl leading-loose shadow-lg">
           <h2 className="mb-3 font-bold text-h4 text-tertiary">
-            Video Editing
+            {workshop.name}
           </h2>
           <p className="mb-4 text-white/90">
             Our workshops are designed to bridge the gap between theoretical
@@ -75,7 +68,7 @@ export default function WorkShopDetailsPage() {
               <Calendar className="w-6 h-6" />
             </div>
             <span className="text-white font-medium text-base md:text-lg">
-              Oct 24-26, 2026
+              {workshop.data.date}
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -83,7 +76,7 @@ export default function WorkShopDetailsPage() {
               <MapPin className="w-6 h-6" />
             </div>
             <span className="text-white font-medium text-base md:text-lg">
-              FCAI - CU, Cairo
+              {workshop.data.location}
             </span>
           </div>
           <div className="flex items-center gap-4">
@@ -91,7 +84,7 @@ export default function WorkShopDetailsPage() {
               <Clock className="w-6 h-6" />
             </div>
             <span className="text-white font-medium text-base md:text-lg">
-              09:00 AM - 06:00 PM
+              {workshop.data.time}
             </span>
           </div>
         </div>
@@ -101,19 +94,19 @@ export default function WorkShopDetailsPage() {
         <h1 className="text-h2 text-tertiary mt-6">Featured Instructors</h1>
         <div className="my-10">
           <HorizontalScrollSection>
-            {teamMembers.map((member) => (
+            {workshop.instructors.map((member) => (
               <div
                 key={member.id}
-                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5"
+                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
-                  src={member.img}
-                  alt={member.name}
+                  src={member.image}
+                  alt={member.user.full_name}
                   className="object-cover w-full h-[220px]"
                 />
                 <div className="p-4 bg-white">
                   <p className="font-bold text-lg text-[#452798]">
-                    {member.name}
+                    {member.user.full_name}
                   </p>
                   <p className="text-sm font-medium text-black">
                     {member.role}
@@ -127,19 +120,19 @@ export default function WorkShopDetailsPage() {
       <ScrollAnimation variant="fade-up" delay={100}>
         <h1 className="text-h2 text-tertiary mt-6">Top Members</h1>
         <div className="grid grid-cols-1 gap-6 mb-10 mt-6 sm:grid-cols-2 lg:grid-cols-4">
-          {teamMembers.map((member) => (
+          {workshop.top_members.map((member) => (
             <div
               key={member.id}
-              className="overflow-hidden shadow-md rounded-xl bg-white/5"
+              className="overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
             >
               <img
-                src={member.img}
-                alt={member.name}
+                src={member.image}
+                alt={member.user.full_name}
                 className="object-cover w-full h-[220px]"
               />
               <div className="p-4 bg-white">
                 <p className="font-bold text-lg text-[#452798]">
-                  {member.name}
+                  {member.user.full_name}
                 </p>
                 <p className="text-sm font-medium text-black">{member.role}</p>
               </div>
@@ -159,17 +152,9 @@ export default function WorkShopDetailsPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20 text-lg">
               <ol className="list-decimal list-inside space-y-2">
-                <li>UX Case Study</li>
-                <li>Website UI Design</li>
-                <li>Mobile App Interface</li>
-                <li>Final Presentation</li>
-              </ol>
-
-              <ol className="list-decimal list-inside space-y-2">
-                <li>UX Case Study</li>
-                <li>Website UI Design</li>
-                <li>Mobile App Interface</li>
-                <li>Final Presentation</li>
+                {workshop.data.what_we_will_build.map((item) => (
+                  <li>{item}</li>
+                ))}
               </ol>
             </div>
           </div>
@@ -197,48 +182,12 @@ export default function WorkShopDetailsPage() {
                     learning journey.
                   </p>
                   <ul className="space-y-1">
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      <Check className="w-4 h-4 text-white" /> 50+ Page Workbook
-                      PDF
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      <Check className="w-4 h-4 text-white" /> Case Study
-                      Templates
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      <Check className="w-4 h-4 text-white" /> Industry Research
-                      Reports
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white">
-                  <Monitor className="w-6 h-6" />
-                </div>
-
-                <div>
-                  <h3 className="text-[#FFE738] text-xl font-bold mb-2">
-                    Software and Tools
-                  </h3>
-                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                    Access to premium tools and software licenses for the
-                    duration of the workshop.
-                  </p>
-                  <ul className="space-y-1">
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      <Check className="w-4 h-4 text-white" /> Pro License for
-                      Design Tools
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      <Check className="w-4 h-4 text-white" /> Cloud Environment
-                      Access
-                    </li>
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      <Check className="w-4 h-4 text-white" /> Analytics
-                      Dashboard Account
-                    </li>
+                    {workshop.data.learning_materials.map((item) => (
+                      <li className="flex items-center gap-2 text-sm text-gray-200">
+                        <Check className="w-4 h-4 text-white" /> 50+ Page
+                        {item}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

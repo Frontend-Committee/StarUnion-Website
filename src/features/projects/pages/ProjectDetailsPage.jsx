@@ -1,58 +1,17 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  TrendingDown,
-  Clock,
-  BarChart2,
-  Search,
-  PenTool,
-  Rocket,
-  ArrowRight,
-} from "lucide-react";
-import picture from "@/assets/images/ProfilePage/portfolioImg.jpg";
+import { ArrowRight } from "lucide-react";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import { useProjectDetails } from "../hooks/useProjectDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
-
-const teamMembers = [
-  { id: 1, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 2, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 3, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 4, name: "Lina Sophia", role: "UX Researcher", img: picture },
-];
-
-const challenges = [
-  {
-    id: 1,
-    text: "Low Retention Rate",
-    icon: <TrendingDown className="w-5 h-5" />,
-  },
-  { id: 2, text: "Inefficient processes", icon: <Clock className="w-5 h-5" /> },
-  { id: 3, text: "Digital Growth", icon: <BarChart2 className="w-5 h-5" /> },
-];
-
-const approaches = [
-  { id: 1, text: "Discovery & Strategy", icon: <Search className="w-5 h-5" /> },
-  {
-    id: 2,
-    text: "Design & Development",
-    icon: <PenTool className="w-5 h-5" />,
-  },
-  {
-    id: 3,
-    text: "Launch & Optimization",
-    icon: <Rocket className="w-5 h-5" />,
-  },
-];
-
-const gallery = [picture, picture, picture, picture, picture, picture, picture];
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: project } = useProjectDetails(id);
+  const { data: project, isLoading } = useProjectDetails(id);
+  if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
   return (
     <div className="container min-h-screen px-4 py-10 mx-auto text-white md:px-8">
@@ -88,35 +47,32 @@ export default function ProjectDetailsPage() {
 
         <div className="bg-[#7A4BFF] px-6 py-8 rounded-2xl leading-loose shadow-lg">
           <h2 className="mb-3 font-bold text-h4 text-tertiary">
-            Attendance App
+            {project.name}
           </h2>
-          <p className="mb-4 text-white/90">
-            This project aims to enhance the members and heads experience in
-            registration for offline sessions.
-          </p>
+          <p className="mb-4 text-white/90">{project.description}</p>
           <div className="flex flex-col gap-2 font-medium text-white/90">
-            <p>Team Size : 4 Members</p>
-            <p>Duration : 2 Weeks</p>
+            <p>Team Size : {project.team_members.length} Members</p>
           </div>
         </div>
       </ScrollAnimation>
 
       <ScrollAnimation variant="fade-up" delay={100}>
+        <h1 className="text-h2 text-tertiary mt-6">Team Members</h1>
         <div className="my-10">
           <HorizontalScrollSection>
-            {teamMembers.map((member) => (
+            {project.team_members.map((member) => (
               <div
                 key={member.id}
-                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5"
+                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
-                  src={member.img}
-                  alt={member.name}
+                  src={member.image}
+                  alt={member.user.full_name}
                   className="object-cover w-full h-[220px]"
                 />
                 <div className="p-4 bg-white">
                   <p className="font-bold text-lg text-[#452798]">
-                    {member.name}
+                    {member.user.full_name}
                   </p>
                   <p className="text-sm font-medium text-black">
                     {member.role}
@@ -135,12 +91,9 @@ export default function ProjectDetailsPage() {
               The Challenge
             </h3>
             <div className="flex flex-col gap-4">
-              {challenges.map((item) => (
-                <div key={item.id} className="flex items-center gap-4">
-                  <div className="flex items-center justify-center p-3 rounded-lg bg-primary text-white">
-                    {item.icon}
-                  </div>
-                  <p className="text-lg text-white">{item.text}</p>
+              {project.data.challenges.map((item, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <p className="text-lg text-white">{item}</p>
                 </div>
               ))}
             </div>
@@ -151,12 +104,9 @@ export default function ProjectDetailsPage() {
               Our Approach
             </h3>
             <div className="flex flex-col gap-4">
-              {approaches.map((item) => (
-                <div key={item.id} className="flex items-center gap-4">
-                  <div className="flex items-center justify-center p-3 rounded-lg bg-primary text-white">
-                    {item.icon}
-                  </div>
-                  <p className="text-lg text-white">{item.text}</p>
+              {project.data.approach.map((item, index) => (
+                <div key={index} className="flex items-center gap-4">
+                  <p className="text-lg text-white">{item}</p>
                 </div>
               ))}
             </div>
@@ -176,14 +126,14 @@ export default function ProjectDetailsPage() {
         </div>
         <div className="mb-10">
           <HorizontalScrollSection>
-            {gallery.map((imgSrc, index) => (
+            {project.gallery.map((img) => (
               <div
-                key={index}
+                key={img.id}
                 className="shrink-0 w-[300px] md:w-[350px] overflow-hidden rounded-xl h-[300px] border border-white/10"
               >
                 <img
-                  src={imgSrc}
-                  alt={`Gallery ${index + 1}`}
+                  src={img.image}
+                  alt={img.caption}
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                 />
               </div>
