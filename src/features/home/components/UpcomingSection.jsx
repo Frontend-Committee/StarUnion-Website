@@ -9,9 +9,12 @@ import { useWorkshop } from "@/features/workshops/hooks/useWorkshop";
 import { useProjects } from "@/features/projects/hooks/useProjects";
 
 export default function UpcomingSection() {
-  const { data: events = [] } = useEvents();
-  const { data: workshops = [] } = useWorkshop();
-  const { data: projects = [] } = useProjects();
+  const { data: events = [], isLoading: isEventsLoading } = useEvents();
+  const { data: workshops = [], isLoading: isWorkshopsLoading } = useWorkshop();
+  const { data: projects = [], isLoading: isProjectsLoading } = useProjects();
+  const isAnySectionLoading =
+    isEventsLoading || isWorkshopsLoading || isProjectsLoading;
+  if (isAnySectionLoading) return <LoadingSpinner fullScreen={true} />;
 
   return (
     <div className="flex flex-col w-full gap-6">
