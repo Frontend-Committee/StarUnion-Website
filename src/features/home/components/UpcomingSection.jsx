@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useEvents } from "@/features/events/hooks/useEvents";
 import { useWorkshop } from "@/features/workshops/hooks/useWorkshop";
 import { useProjects } from "@/features/projects/hooks/useProjects";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
 export default function UpcomingSection() {
   const { data: events = [], isLoading: isEventsLoading } = useEvents();
