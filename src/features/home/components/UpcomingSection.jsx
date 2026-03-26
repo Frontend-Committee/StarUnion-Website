@@ -14,11 +14,11 @@ export default function UpcomingSection() {
   const { data: projects = [] } = useProjects();
 
   return (
-    <div className="flex flex-col w-full gap-12 my-10">
+    <div className="flex flex-col w-full gap-6">
       {/* events */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between">
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Upcoming Events
             </h2>
@@ -42,10 +42,10 @@ export default function UpcomingSection() {
             >
               <Link to={`/events/${event.id}`}>
                 <MediaCard
-                  title={event.title}
+                  title={event.name}
                   image={event.image}
-                  buttonText={event.buttonText}
-                  date={event.date}
+                  buttonText={"Apply Now"}
+                  date={event.data.date}
                 />
               </Link>
             </ScrollAnimation>
@@ -56,7 +56,7 @@ export default function UpcomingSection() {
       {/* workshops */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between ">
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Upcoming Workshops
             </h2>
@@ -80,10 +80,10 @@ export default function UpcomingSection() {
             >
               <Link to={`/workshops/${workshop.id}`}>
                 <MediaCard
-                  title={workshop.title}
+                  title={workshop.name}
                   image={workshop.image}
-                  buttonText={workshop.buttonText}
-                  date={workshop.date}
+                  buttonText={"Apply Now"}
+                  date={workshop.data.date}
                 />
               </Link>
             </ScrollAnimation>
@@ -94,7 +94,7 @@ export default function UpcomingSection() {
       {/* services */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between">
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               Services We Offer
             </h2>
@@ -118,9 +118,9 @@ export default function UpcomingSection() {
             >
               <Link to={`services/${service.id}`}>
                 <MediaCard
-                  title={service.title}
+                  title={service.name}
                   image={service.image}
-                  buttonText={service.buttonText}
+                  buttonText={"Learn More"}
                 />
               </Link>
             </ScrollAnimation>
@@ -131,7 +131,7 @@ export default function UpcomingSection() {
       {/* stories */}
       <section>
         <ScrollAnimation>
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between">
             <h2 className="text-xl md:text-2xl font-bold text-[#FFE738]">
               See Our Success Stories
             </h2>
@@ -155,9 +155,9 @@ export default function UpcomingSection() {
             >
               <Link to={`/projects/${story.id}`}>
                 <MediaCard
-                  title={story.title}
+                  title={story.name}
                   image={story.image}
-                  buttonText={story.buttonText}
+                  buttonText={"Learn More"}
                 />
               </Link>
             </ScrollAnimation>

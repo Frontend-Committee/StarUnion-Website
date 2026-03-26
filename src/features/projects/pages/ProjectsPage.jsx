@@ -18,7 +18,7 @@ export default function ProjectsPage() {
 
   const filteredProjects =
     projects?.filter((project) => {
-      const matchesSearch = project?.title
+      const matchesSearch = project?.name
         ?.toLowerCase()
         .includes(search.toLowerCase());
       // const matchesTab =

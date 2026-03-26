@@ -18,7 +18,7 @@ export default function WorkshopPage() {
 
   const filteredWorkshops =
     workshops?.filter((workshop) => {
-      const matchesSearch = workshop?.title
+      const matchesSearch = workshop?.name
         ?.toLowerCase()
         .includes(search.toLowerCase());
       // const matchesTab =

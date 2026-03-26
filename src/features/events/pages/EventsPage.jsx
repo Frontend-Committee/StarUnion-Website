@@ -18,7 +18,7 @@ export default function EventsPage() {
 
   const filteredEvents =
     events?.filter((event) => {
-      const matchesSearch = event?.title
+      const matchesSearch = event?.name
         ?.toLowerCase()
         .includes(search.toLowerCase());
       // const matchesTab = activeFilter === "All" || event.year === activeFilter;
