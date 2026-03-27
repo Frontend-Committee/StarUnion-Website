@@ -1039,6 +1039,7 @@ export default function DynamicFormBuilder({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onSubmit={handleSubmit}
+              className="max-w-lg mx-auto"
               noValidate
             >
               <div className={`grid gap-x-5 gap-y-6 grid-cols-1 ${gridClass}`}>
@@ -1073,31 +1074,32 @@ export default function DynamicFormBuilder({
 
               {/* Actions */}
               <div
-                className={`mt-8 flex gap-3 ${onCancel ? "justify-between" : "justify-end"}`}
+                className={`mt-8 flex gap-3 ${onCancel ? "justify-between" : "justify-center"}`}
               >
                 {onCancel && (
                   <button
                     type="button"
                     onClick={onCancel}
                     disabled={isSubmitting}
-                    className="px-6 h-12 rounded-xl border border-[#452798]/30 text-[#452798]/80 text-sm font-semibold hover:bg-[#452798]/10 hover:text-[#452798] transition-all disabled:opacity-40"
+                    className="px-6 h-11 rounded-lg border border-[#452798]/30 text-[#452798] text-sm font-semibold hover:bg-[#452798]/10 transition-all disabled:opacity-40"
                   >
                     {schema?.cancelLabel || "Cancel"}
                   </button>
                 )}
+
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
                   whileTap={{ scale: 0.97 }}
-                  className="flex-1 mx-auto  md:flex-none px-8 h-12 rounded-xl bg-[#452798] hover:bg-[#683CE3] text-white text-lg font-bold transition-all duration-200 shadow-lg shadow-[#452798]/20 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
+                  className="min-w-[200px] h-11 rounded-lg bg-[#7441FF] hover:bg-[#683CE3] text-white text-base font-bold transition-all duration-200 shadow-lg shadow-[#7441FF]/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      Submitting…
+                      Submitting...
                     </>
                   ) : (
-                    schema?.submitLabel || "Submit"
+                    schema?.submitLabel || "Submit Form"
                   )}
                 </motion.button>
               </div>
