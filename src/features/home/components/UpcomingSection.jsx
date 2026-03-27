@@ -49,7 +49,7 @@ export default function UpcomingSection() {
                   title={event.name}
                   image={event.image}
                   buttonText={"Apply Now"}
-                  date={event.data.date}
+                  date={event?.data?.date}
                 />
               </Link>
             </ScrollAnimation>
@@ -87,7 +87,7 @@ export default function UpcomingSection() {
                   title={workshop.name}
                   image={workshop.image}
                   buttonText={"Apply Now"}
-                  date={workshop.data.date}
+                  date={workshop?.data?.date}
                 />
               </Link>
             </ScrollAnimation>
