@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
-import picture from "@/assets/images/ProfilePage/portfolioImg.jpg";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import Sponsors from "@/features/home/components/Sponsers";
 import { Button } from "@/components/ui/button";
@@ -8,18 +7,13 @@ import { useEventDetails } from "../hooks/useEventDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
-const teamMembers = [
-  { id: 1, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 2, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 3, name: "Lina Sophia", role: "UX Researcher", img: picture },
-  { id: 4, name: "Lina Sophia", role: "UX Researcher", img: picture },
-];
 
 export default function EventDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { data: event, isLoading } = useEventDetails(id);
+  console.log(event)
   if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
   return (
@@ -89,13 +83,13 @@ export default function EventDetailsPage() {
         <h1 className="text-h2 text-tertiary mt-6">Featured Speakers</h1>
         <div className="my-10">
           <HorizontalScrollSection>
-            {teamMembers.map((member) => (
+            {event.speakers.map((member) => (
               <div
                 key={member.id}
                 className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
-                  src={member.img}
+                  src={member.photo}
                   alt={member.name}
                   className="object-cover w-full h-[220px]"
                 />
@@ -104,7 +98,7 @@ export default function EventDetailsPage() {
                     {member.name}
                   </p>
                   <p className="text-sm font-medium text-black">
-                    {member.role}
+                    {member.position}
                   </p>
                 </div>
               </div>
