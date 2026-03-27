@@ -173,50 +173,67 @@ export const getUserProfileById = async (userId) => {
   }
 };
 
-
 /* 
 ---------------------------------------
              Auth - JWT (Login)
  -------------------------------------- 
  */
 
- export const loginUser = async (credentials) => {
+export const loginUser = async (credentials) => {
   try {
-    const response = await api.post('/auth/jwt/create/', credentials);
-      return response.data; 
+    const response = await api.post("/auth/jwt/create/", credentials);
+
+    if (response.data.access) {
+      localStorage.setItem("access", response.data.access);
+      localStorage.setItem("refresh", response.data.refresh);
+    }
+
+    return response.data;
   } catch (error) {
-    console.error('Error logging in (Invalid credentials):', error.response?.data || error.message);
-    throw error; 
+    console.error(
+      "Error logging in (Invalid credentials):",
+      error.response?.data || error.message,
+    );
+    throw error;
   }
 };
 
 export const refreshAccessToken = async (tokenData) => {
   try {
-    const response = await api.post('/auth/jwt/refresh/', tokenData);
-      return response.data; 
+    const response = await api.post("/auth/jwt/refresh/", tokenData);
+    return response.data;
   } catch (error) {
-    console.error('Error refreshing token (Refresh token might be expired):', error.response?.data || error.message);
-    throw error; 
+    console.error(
+      "Error refreshing token (Refresh token might be expired):",
+      error.response?.data || error.message,
+    );
+    throw error;
   }
-}
+};
 
 export const verifyToken = async (tokenData) => {
   try {
-    const response = await api.post('/auth/jwt/verify/', tokenData);
-        return response.data; 
+    const response = await api.post("/auth/jwt/verify/", tokenData);
+    return response.data;
   } catch (error) {
-    console.error('Token verification failed:', error.response?.data || error.message);
-    throw error; 
+    console.error(
+      "Token verification failed:",
+      error.response?.data || error.message,
+    );
+    throw error;
   }
 };
 
 export const logoutUser = async (tokenData) => {
   try {
-    const response = await api.post('/auth/jwt/blacklist/', tokenData);
-      return response.data; 
+    const response = await api.post("/auth/jwt/blacklist/", tokenData);
+    return response.data;
   } catch (error) {
-    console.error('Logout failed (Token might already be blacklisted):', error.response?.data || error.message);
-    throw error; 
+    console.error(
+      "Logout failed (Token might already be blacklisted):",
+      error.response?.data || error.message,
+    );
+    throw error;
   }
 };
 
@@ -226,18 +243,21 @@ export const logoutUser = async (tokenData) => {
  -------------------------------------- 
  */
 
- export const startGoogleLogin = (redirectUri) => {
+export const startGoogleLogin = (redirectUri) => {
   const url = `/auth/o/google-oauth2/?redirect_uri=${encodeURIComponent(redirectUri)}`;
-  
+
   window.location.href = api.defaults.baseURL + url;
 };
 
 export const completeGoogleLogin = async (data) => {
   try {
-    const response = await api.post('/auth/o/google-oauth2/', data);
+    const response = await api.post("/auth/o/google-oauth2/", data);
     return response.data;
   } catch (error) {
-    console.error('Error completing Google Login:', error.response?.data || error.message);
+    console.error(
+      "Error completing Google Login:",
+      error.response?.data || error.message,
+    );
     throw error;
   }
 };

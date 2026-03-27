@@ -54,20 +54,19 @@ export default function FormDemoPage() {
   });
 
   const handleSubmit = async (values) => {
-    const formattedValues = Object.entries(values).map(([key, value]) => ({
-      field_id: parseInt(key, 10),
-      value: value?.toString() || "",
-    }));
+    const formattedValues = Object.entries(values)
+      .filter(([key, value]) => value !== undefined && value !== "") 
+      .map(([key, value]) => ({
+        field_id: parseInt(key, 10), 
+        value: String(value), 
+      }));
 
-    await submitMutation.mutateAsync({
+    const payload = {
       form: activeFormId,
       values: formattedValues,
-    });
+    };
+    return await submitMutation.mutateAsync(payload);
   };
-
-  if (isLoadingForms) {
-    return <LoadingSpinner />;
-  }
 
   return (
     <div className="min-h-screen px-4 py-12 mt-2 ">
