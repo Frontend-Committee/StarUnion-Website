@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/v1/:match*",
-      "destination": "https://staging.starunion.tech/api/v1/:match*"
+      "source": "/api/(.*)",
+      "destination": "https://staging.starunion.tech/api/$1"
     },
     {
       "source": "/(.*)",
