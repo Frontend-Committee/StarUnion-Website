@@ -36,7 +36,14 @@ export default function FormDemoPage() {
         fullWidth: field.type === "textarea",
         validation: {
           required: field.is_required,
-          pattern: field.regex ? new RegExp(field.regex) : undefined,
+          pattern: (() => {
+            try {
+              return field.regex ? new RegExp(field.regex) : undefined;
+            } catch (e) {
+              console.error("Invalid regex:", field.regex);
+              return undefined;
+            }
+          })(),
         },
       })),
     }),

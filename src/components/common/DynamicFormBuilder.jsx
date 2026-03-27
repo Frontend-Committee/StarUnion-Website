@@ -19,7 +19,7 @@ import { useCallback, useState } from "react";
 function validateField(field, value) {
   const rules = field.validation || {};
 
-  if (rules.required && !value && value !== 0 && value !== false) {
+  if (rules.pattern && !rules.pattern.test(value)) {
     return rules.requiredMessage || `${field.label} is required.`;
   }
 
