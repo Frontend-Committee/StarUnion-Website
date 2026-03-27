@@ -32,11 +32,12 @@ export default function AboutSection() {
 
       <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
         {statsData.map((stat, index) => (
-          <ScrollAnimation mode="popLayout" delay={(index % 4) * 150}>
-            <div
-              key={stat.id}
-              className="flex flex-row items-center justify-center gap-4 px-6 py-5 text-white transition-transform rounded-lg shadow-md bg-primary hover:scale-105"
-            >
+          <ScrollAnimation
+            key={stat.id}
+            mode="popLayout"
+            delay={(index % 4) * 150}
+          >
+            <div className="flex flex-row items-center justify-center gap-4 px-6 py-5 text-white transition-transform rounded-lg shadow-md bg-primary hover:scale-105">
               <div className="logo shrink-0">
                 <img
                   src={stat.icon}
