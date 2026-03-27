@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "/api/v1";
+
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -26,10 +27,9 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    
     if (
-      error.response?.status === 401 && 
-      !originalRequest.url.includes("/auth/jwt/create") && 
+      error.response?.status === 401 &&
+      !originalRequest.url.includes("/auth/jwt/create") &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
@@ -38,7 +38,6 @@ api.interceptors.response.use(
         const refresh = localStorage.getItem("refresh");
         if (!refresh) throw new Error("No refresh token");
 
-        
         const response = await axios.post(`${BASE_URL}/auth/jwt/refresh/`, {
           refresh: refresh,
         });
@@ -46,16 +45,17 @@ api.interceptors.response.use(
         const newAccessToken = response.data.access;
         localStorage.setItem("access", newAccessToken);
 
-        api.defaults.headers.common["Authorization"] = `Bearer ${newAccessToken}`;
+        api.defaults.headers.common["Authorization"] =
+          `Bearer ${newAccessToken}`;
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
         return api(originalRequest);
       } catch (refreshError) {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
-        
-        if (!window.location.pathname.includes("/login")) {
-            window.location.href = "/login";
+
+        if (!window.location.pathname.includes("/auth/login")) {
+          window.location.href = "/auth/login";
         }
         return Promise.reject(refreshError);
       }
@@ -63,4 +63,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
 export default api;
