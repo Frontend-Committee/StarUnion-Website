@@ -100,7 +100,7 @@ export default function WorkShopDetailsPage() {
                 className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
-                  src={member.image}
+                  src={member.user.profile_photo}
                   alt={member.user.full_name}
                   className="object-cover w-full h-[220px]"
                 />
