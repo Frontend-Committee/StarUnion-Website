@@ -6,50 +6,119 @@ import logo from "./../../../assets/images/AboutHero.jpg";
 import imgSrc1 from "./../../../assets/images/ProfilePage/2d3905db88064d93a2ebc114979738c00d8b2df2.jpg";
 import imgSrc2 from "./../../../assets/images/ProfilePage/36665f265adb2a4b8feaa41ec7a2b361cd2989fa.jpg";
 import imgSrc3 from "./../../../assets/images/ProfilePage/4614abb8f38efe719a43dfd420bb46d90a34ae8f.jpg";
+
+import * as authApi from "@/lib/api/authApi.js";
+import { useEffect, useRef, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+
 const ApplicationStatus = [
-  { title: "UI/UX Workshop", status: "Accepted", date: "March 2025", imgSrc:imgSrc1 },
-  { title: "Backend Workshop", status: "Pending", date: "March 2025",imgSrc:imgSrc2 },
-  { title: "Frontend Workshop", status: "Rejected", date: "March 2025", imgSrc:imgSrc3 },
-]
+  { title: "UI/UX Workshop", status: "Accepted", date: "March 2025", imgSrc: imgSrc1 },
+  { title: "Backend Workshop", status: "Pending", date: "March 2025", imgSrc: imgSrc2 },
+  { title: "Frontend Workshop", status: "Rejected", date: "March 2025", imgSrc: imgSrc3 },
+];
+
 const myActivities = [
-  { title: "UI/UX Workshop", role: "Attendee", date: "March 2025" , imgSrc:imgSrc3},
-  { title: "Tech Awareness Event", role: "Organizer", date: "March 2025",imgSrc:imgSrc1 },
-  { title: "UX Design Sprint", role: "Attendee", date: "April 2025" , imgSrc:imgSrc2},
-]
+  { title: "UI/UX Workshop", role: "Attendee", date: "March 2025", imgSrc: imgSrc3 },
+  { title: "Tech Awareness Event", role: "Organizer", date: "March 2025", imgSrc: imgSrc1 },
+  { title: "UX Design Sprint", role: "Attendee", date: "April 2025", imgSrc: imgSrc2 },
+];
+
 const attendedSessions = [
-  { title: "Figma", date: "March 2025", imgSrc:imgSrc2 ,rate:4.5},
-  { title: "wireframe", date: "March 2025",imgSrc:imgSrc1 ,rate:4.5},
-  { title: "Basic Design", date: "April 2025", imgSrc:imgSrc3,rate:4.5 },
-]
+  { title: "Figma", date: "March 2025", imgSrc: imgSrc2, rate: 4.5 },
+  { title: "wireframe", date: "March 2025", imgSrc: imgSrc1, rate: 4.5 },
+  { title: "Basic Design", date: "April 2025", imgSrc: imgSrc3, rate: 4.5 },
+];
+
 export default function ProfilePage() {
   const navigate = useNavigate();
+
+  const [bgImage, setBgImage] = useState(null);
+
+  const bgInputRef = useRef(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("access");
+
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          const res = await authApi.getUserProfileById(decoded.user_id);
+
+          if (res?.background_photo) {
+            setBgImage(res.background_photo);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleBgClick = () => {
+    bgInputRef.current.click();
+  };
+
+  const handleBgChange = async (event) => {
+    const file = event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setBgImage(e.target.result);
+    };
+    reader.readAsDataURL(file);
+
+    const formData = new FormData();
+    formData.append("background_photo", file);
+
+    try {
+      await authApi.updateCurrentUser(formData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="min-h-screen font-sans overflow-x-hidden">
       <div className="relative">
-        <div className="relative w-full min-h-[250px] flex flex-col items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${logo})` }}
+        <div
+          className="relative w-full min-h-[250px] flex flex-col items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${bgImage || logo})` }}
         >
           <div className="container mx-auto relative h-full w-full min-h-[250px]">
-            <button 
+            <button
               onClick={() => navigate("/")}
               className="absolute top-6 left-4 md:left-0 text-white border-2 border-white/40 hover:border-white hover:bg-white/10 transition-all cursor-pointer flex items-center justify-center p-1.5 rounded-full z-10 opacity-70 hover:opacity-100"
-              aria-label="Go back"
             >
-              <svg 
-                className="w-5 h-5 md:w-6 md:h-6" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="3" 
-                strokeLinecap="round" 
+              <svg
+                className="w-5 h-5 md:w-6 md:h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <path d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            <button className="absolute top-6 right-4 md:right-0 bg-white text-[#452798] p-1.5 rounded-lg shadow-xl hover:bg-white/90 transition-all cursor-pointer z-10">
+
+            <button
+              onClick={handleBgClick}
+              className="absolute top-6 right-4 md:right-0 bg-white text-[#452798] p-1.5 rounded-lg shadow-xl hover:bg-white/90 transition-all cursor-pointer z-10"
+            >
               <i className="fa-regular fa-pen-to-square text-base"></i>
             </button>
+
+            <input
+              type="file"
+              ref={bgInputRef}
+              onChange={handleBgChange}
+              className="hidden"
+              accept="image/*"
+            />
           </div>
         </div>
 
@@ -57,8 +126,8 @@ export default function ProfilePage() {
           <ProfileCard />
         </div>
       </div>
-      <div className="container mx-auto px-4 md:px-6">
 
+      <div className="container mx-auto px-4 md:px-6">
         <div className="mt-12">
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
@@ -78,7 +147,7 @@ export default function ProfilePage() {
 
           <section className="mb-12">
             <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Application Status</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 rounded-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {ApplicationStatus.map((item, index) => (
                 <Card
                   key={index}
@@ -86,18 +155,21 @@ export default function ProfilePage() {
                   status={item.status}
                   date={item.date}
                   dotColor={
-                    item.status === "Accepted" ? "bg-[#03DF20]" :
-                      item.status === "Pending" ? "bg-[#FCDD00]" :
-                        "bg-[#FF0505]"
+                    item.status === "Accepted"
+                      ? "bg-[#03DF20]"
+                      : item.status === "Pending"
+                      ? "bg-[#FCDD00]"
+                      : "bg-[#FF0505]"
                   }
                   imgSrc={item.imgSrc}
                 />
               ))}
             </div>
           </section>
+
           <section className="mb-12">
             <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">My Activities</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 rounded-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {myActivities.map((item, index) => (
                 <Card
                   key={index}
@@ -106,18 +178,21 @@ export default function ProfilePage() {
                   date={item.date}
                   role={item.role}
                   dotColor={
-                    item.status === "Accepted" ? "bg-[#03DF20]" :
-                      item.status === "Pending" ? "bg-[#FCDD00]" :
-                        "bg-[#FF0505]"
+                    item.status === "Accepted"
+                      ? "bg-[#03DF20]"
+                      : item.status === "Pending"
+                      ? "bg-[#FCDD00]"
+                      : "bg-[#FF0505]"
                   }
                   imgSrc={item.imgSrc}
                 />
               ))}
-            </div>  
+            </div>
           </section>
+
           <section className="mb-16">
             <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Attendee Sessions</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 rounded-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {attendedSessions.map((item, index) => (
                 <Card
                   key={index}
@@ -126,25 +201,25 @@ export default function ProfilePage() {
                   date={item.date}
                   rate={item.rate}
                   dotColor={
-                    item.status === "Accepted" ? "bg-[#03DF20]" :
-                      item.status === "Pending" ? "bg-[#FCDD00]" :
-                        "bg-[#FF0505]"
+                    item.status === "Accepted"
+                      ? "bg-[#03DF20]"
+                      : item.status === "Pending"
+                      ? "bg-[#FCDD00]"
+                      : "bg-[#FF0505]"
                   }
                   imgSrc={item.imgSrc}
                 />
               ))}
             </div>
-            <div className="icon text-center mt-10">
-              <i className="fa-solid fa-chevron-down fa-2xl text-[#FCDD00] cursor-pointer animate-bounce"></i>
-            </div>
           </section>
+
         </div>
       </div>
+
       <Footer />
     </div>
   );
 }
-
 const FeatureBox = ({ title, desc }) => (
   <div className="bg-[#7441FE] p-5 rounded-md text-white shadow-lg relative group cursor-pointer transition-transform hover:scale-[1.02]">
     <h4 className="text-[#FCDD00] font-bold text-lg">{title}</h4>
