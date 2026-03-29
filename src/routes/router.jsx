@@ -36,6 +36,7 @@ import ServiceDetailsPage from "../features/services/pages/ServiceDetailsPage";
 
 import WorkShopsPage from "../features/workshops/pages/WorkShopsPage";
 import WorkShopDetailsPage from "../features/workshops/pages/WorkShopDetailsPage";
+import NewPasswordPage from "@/features/auth/pages/NewPasswordPage";
 
 const NotFound = () => <div>404 - Not Found</div>;
 
@@ -81,8 +82,10 @@ export const router = createBrowserRouter([
           { path: PATHS.AUTH_PAGES.LOGIN, element: <LoginPage /> },
           { path: PATHS.AUTH_PAGES.REGISTER, element: <RegisterPage /> },
           {
-            path: PATHS.AUTH_PAGES.FORGOT_PASSWORD,
-            element: <ForgotPasswordPage />,
+            path: PATHS.AUTH_PAGES.FORGOT_PASSWORD,element: <ForgotPasswordPage />},
+          {
+            path: PATHS.AUTH_PAGES.NEW_PASSWORD,
+            element: <NewPasswordPage />,
           },
           { path: PATHS.AUTH_PAGES.OTP, element: <OTPVerificationPage /> },
         ],
