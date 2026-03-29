@@ -11,6 +11,9 @@ import high from "../../assets/icons/high.png";
 import services from "../../assets/icons/services.png";
 import contact from "../../assets/icons/contact.png";
 import projects from "../../assets/icons/projects.png";
+import { logoutUser } from "@/lib/api/authApi";
+import { useMutation } from "@tanstack/react-query";
+import LoadingSpinner from "../ui/LoadingSpinneer";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -29,7 +32,22 @@ export default function Navbar() {
 
   const handleLogin = () => navigate(`${PATHS.AUTH}/${PATHS.AUTH_PAGES.LOGIN}`);
   const handleProfile = () => navigate(PATHS.PROFILE);
-  const handleLogOut = ()=>{localStorage.clear(); navigate('/')}
+  const logoutMutation = useMutation({
+    mutationFn: logoutUser,
+    onSettled: () => {
+      localStorage.removeItem("access");
+      localStorage.removeItem("refresh");
+      localStorage.removeItem("token");
+
+      queryClient.clear();
+      navigate("/");
+    },
+  });
+  const handleLogout = () => {
+    const refreshToken = localStorage.getItem("refresh");
+
+    logoutMutation.mutate({ refresh: refreshToken });
+  };
   const navLinkClass = ({ isActive }) =>
     [
       "text-sm font-medium transition-colors duration-200",
@@ -182,31 +200,28 @@ export default function Navbar() {
               {!isAuth ? (
                 <button
                   onClick={handleLogin}
-                  className="hidden md:block px-4 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  className="hidden md:block px-3 py-3 rounded-lg bg-primary text-sm font-medium text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
                 >
                   Log In
                 </button>
               ) : (
-                <button
-                  
-                  className="hidden group md:block text-sm fixed"
-                >
-                  <div className="flex  bg-primary  rounded-full w-12 group-hover:w-24 justify-between items-center transition-all duration-75">
-                    <img src={user.profile_photo} className="size-12 rounded-full hover:scale-105 hover:overflow-hidden transition-all" alt="" />
-                    <i className="fa-solid fa-chevron-down opacity-0 group-hover:opacity-100 transition-all duration-75 text-[#FCDD00] fa-lg m-auto"></i>
-                  </div>
-                  <div className="fixed right-0   mt-3 w-52 text-md bg-gradientBg3 text-white rounded-xl shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
-
-                    <p onClick={handleProfile} className="px-5 py-3 hover:bg-white/10 cursor-pointer transition">
-                      My profile
-                    </p>
-
-                    <p onClick={handleLogOut} className="px-5 py-3 hover:bg-white/10 cursor-pointer transition">
-                      Log out
-                    </p>
-                  </div>
-                </button>
+                <div className="flex gap-5">
+                  <button
+                    onClick={handleProfile}
+                    className="hidden md:block px-3 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  >
+                    Profile
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    disabled={logoutMutation.isPending}
+                    className="hidden md:block px-3 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  >
+                    Logout
+                  </button>
+                </div>
               )}
+
               <button
                 onClick={() => setOpen(true)}
                 className="flex items-center justify-center p-2 text-white transition md:hidden hover:text-yellow-300"
@@ -300,19 +315,36 @@ export default function Navbar() {
                 Log In
               </button>
             ) : (
-              <button
-                onClick={() => {
-                  close();
-                  handleProfile();
-                }}
-                className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg hover:bg-[#683ce3]"
-              >
-                Profile
-              </button>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => {
+                    close();
+                    handleProfile();
+                  }}
+                  className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg hover:bg-[#542ebe] border border-white/10 bg-primary"
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={() => {
+                    close();
+                    handleLogout();
+                  }}
+                  disabled={logoutMutation.isPending}
+                  className="w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg hover:bg-[#542ebe] border border-white/10 bg-primary"
+                >
+                  Logout
+                </button>
+              </div>
             )}
           </div>
         </div>
       </aside>
+      {logoutMutation.isPending && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-bg33/80 backdrop-blur-sm">
+          <LoadingSpinner />
+        </div>
+      )}
     </>
   );
 }

@@ -1,45 +1,82 @@
-import { motion as Motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
-import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import CommitteeCard from "@/features/committees/components/CommitteeCard";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { useQuery } from "@tanstack/react-query";
+import { motion as Motion } from "framer-motion";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getServiceDetail } from "../api/servicesService";
 
 const OFFERING_ICONS = {
   mobile: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-5 h-5"
+    >
       <rect x="7" y="2" width="10" height="20" rx="2" />
       <path d="M12 18h.01" />
     </svg>
   ),
   web: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-5 h-5"
+    >
       <rect x="2" y="4" width="20" height="16" rx="2" />
       <path d="M8 4v16M2 9h20" />
     </svg>
   ),
   desktop: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-5 h-5"
+    >
       <rect x="2" y="3" width="20" height="14" rx="2" />
       <path d="M8 21h8M12 17v4" />
     </svg>
   ),
   prototype: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-5 h-5"
+    >
       <circle cx="12" cy="12" r="3" />
       <path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" />
     </svg>
   ),
   cart: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-5 h-5"
+    >
       <path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
       <line x1="3" y1="6" x2="21" y2="6" />
       <path d="M16 10a4 4 0 01-8 0" />
     </svg>
   ),
   consult: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-5 h-5"
+    >
       <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
       <circle cx="12" cy="7" r="4" />
     </svg>
@@ -64,7 +101,8 @@ const getServiceOfferings = (service) => {
     service?.committee,
   ];
 
-  const list = candidates.find((item) => Array.isArray(item) && item.length > 0) || [];
+  const list =
+    candidates.find((item) => Array.isArray(item) && item.length > 0) || [];
 
   return list.map((item, index) => {
     if (typeof item === "string") {
@@ -83,45 +121,7 @@ const getServiceOfferings = (service) => {
   });
 };
 
-const getGalleryItems = (service) => {
-  const candidates = [
-    service?.data?.gallery,
-    service?.data?.images,
-    service?.data?.showcase,
-  ];
-
-  const list = candidates.find((item) => Array.isArray(item) && item.length > 0);
-
-  if (list) {
-    return list.map((item, index) => {
-      if (typeof item === "string") {
-        return {
-          id: `gallery-${index}`,
-          title: service.title,
-          image: item,
-        };
-      }
-
-      return {
-        id: item.id || `gallery-${index}`,
-        title: item.caption || item.title || service.title,
-        image: item.image,
-      };
-    });
-  }
-
-  return service?.image
-    ? [
-        {
-          id: "service-image",
-          title: service.title,
-          image: service.image,
-        },
-      ]
-    : [];
-};
-
-const GalleryCard = ({ item, delay = 0 }) => (
+const ProjectServiceCard = ({ project, delay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
     <Motion.div
       whileHover={{ y: -8, scale: 1.02 }}
@@ -133,15 +133,36 @@ const GalleryCard = ({ item, delay = 0 }) => (
     >
       <div className="relative w-full aspect-[4/5] overflow-hidden">
         <img
-          src={item.image}
-          alt={item.title}
-          className="absolute inset-0 w-full h-full object-cover"
+          src={project.image}
+          alt={project.name}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B2E] via-transparent to-black/40" />
+        <div className="absolute top-4 right-4 text-white/30">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+          </svg>
+        </div>
         <div className="absolute top-6 left-0 right-0 px-4 text-center">
           <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
-            {item.title}
+            {project.name}
           </h4>
+        </div>
+      </div>
+      <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
+        <div className="px-3 pt-1 pb-4 mx-auto">
+          {/* {project.id ? (
+            <Link
+              to={`/projects/${project.id}`}
+              className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200"
+            >
+              View Details
+            </Link>
+          ) : (
+            <span className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium">
+              View Details
+            </span>
+          )} */}
         </div>
       </div>
     </Motion.div>
@@ -152,7 +173,12 @@ export default function ServiceDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: service, isLoading, isError, error } = useQuery({
+  const {
+    data: service,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
     queryKey: ["service", id],
     queryFn: () => getServiceDetail(id),
     enabled: Boolean(id),
@@ -186,7 +212,6 @@ export default function ServiceDetailsPage() {
 
   const description = getServiceDescription(service);
   const offerings = getServiceOfferings(service);
-  const galleryItems = getGalleryItems(service);
 
   return (
     <section className="min-h-screen px-4 py-12 bg-gradientBg3 md:px-8 md:py-16">
@@ -230,7 +255,7 @@ export default function ServiceDetailsPage() {
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
                 <span className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10">
-                  {service.category === "technical"
+                  {service.is_technical
                     ? "Technical Service"
                     : "Non-Technical Service"}
                 </span>
@@ -265,7 +290,9 @@ export default function ServiceDetailsPage() {
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-tertiary/80">
                 Service ID
               </p>
-              <p className="mt-3 text-lg font-semibold text-white">{service.id}</p>
+              <p className="mt-3 text-lg font-semibold text-white">
+                {service.id}
+              </p>
             </div>
             <div className="p-6 border rounded-3xl border-white/10 bg-white/5">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-tertiary/80">
@@ -289,17 +316,18 @@ export default function ServiceDetailsPage() {
         {service.committee.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={150}>
             <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-5">Associated Committees</h2>
-              <div className="flex flex-wrap gap-3">
-                {service.committee.map((committeeName) => (
-                  <span
-                    key={committeeName}
-                    className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-primary/20 border border-primary/30"
-                  >
-                    {committeeName}
-                  </span>
+              <h2 className="text-tertiary font-bold text-h3 mb-5">
+                Associated Committees
+              </h2>
+              <HorizontalScrollSection>
+                {service.committee.map((committee, index) => (
+                  <CommitteeCard
+                    key={committee.id || committee.name}
+                    committee={committee}
+                    delay={index * 70}
+                  />
                 ))}
-              </div>
+              </HorizontalScrollSection>
             </div>
           </ScrollAnimation>
         )}
@@ -307,7 +335,9 @@ export default function ServiceDetailsPage() {
         {offerings.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={200}>
             <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-6">Capabilities</h2>
+              <h2 className="text-tertiary font-bold text-h3 mb-6">
+                Capabilities
+              </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {offerings.map((item, index) => (
                   <Motion.div
@@ -321,7 +351,9 @@ export default function ServiceDetailsPage() {
                     <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary border border-primary/40 flex items-center justify-center text-white">
                       {OFFERING_ICONS[item.icon] || OFFERING_ICONS.web}
                     </span>
-                    <span className="text-white text-sm font-medium">{item.label}</span>
+                    <span className="text-white text-sm font-medium">
+                      {item.label}
+                    </span>
                   </Motion.div>
                 ))}
               </div>
@@ -332,28 +364,16 @@ export default function ServiceDetailsPage() {
         {service.projects.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={250}>
             <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-5">Project References</h2>
-              <div className="flex flex-wrap gap-3">
-                {service.projects.map((projectId) => (
-                  <span
-                    key={projectId}
-                    className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10"
-                  >
-                    Project #{projectId}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </ScrollAnimation>
-        )}
-
-        {galleryItems.length > 0 && (
-          <ScrollAnimation variant="fade-up" delay={300}>
-            <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-5">Gallery</h2>
+              <h2 className="text-tertiary font-bold text-h3 mb-5">
+                Project References
+              </h2>
               <HorizontalScrollSection>
-                {galleryItems.map((item, index) => (
-                  <GalleryCard key={item.id} item={item} delay={index * 70} />
+                {service.projects.map((project, index) => (
+                  <ProjectServiceCard
+                    key={project.id || project.name}
+                    project={project}
+                    delay={index * 70}
+                  />
                 ))}
               </HorizontalScrollSection>
             </div>

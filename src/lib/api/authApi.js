@@ -226,6 +226,7 @@ export const verifyToken = async (tokenData) => {
 
 export const logoutUser = async (tokenData) => {
   try {
+     await new Promise((resolve) => setTimeout(resolve, 1000));
     const response = await api.post("/auth/jwt/blacklist/", tokenData);
     return response.data;
   } catch (error) {

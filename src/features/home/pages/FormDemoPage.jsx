@@ -27,25 +27,38 @@ export default function FormDemoPage() {
       description: "Please fill out the form below.",
       submitLabel: "Submit Form",
       gridCols: 1,
-      fields: formData.fields.map((field) => ({
-        name: field.id.toString(),
-        type: field.type,
-        label: field.name.charAt(0).toUpperCase() + field.name.slice(1),
-        placeholder: field.placeholder,
-        options: field.options?.length ? field.options : undefined,
-        fullWidth: field.type === "textarea",
-        validation: {
-          required: field.is_required,
-          pattern: (() => {
-            try {
-              return field.regex ? new RegExp(field.regex) : undefined;
-            } catch (e) {
-              console.error("Invalid regex:", field.regex);
-              return undefined;
-            }
-          })(),
-        },
-      })),
+      fields: formData.fields.map((field) => {
+        const cleanRegexString = field.regex
+          ? field.regex.replace(/\\\\/g, "\\").replace(/\\+/g, "\\")
+          : null;
+
+        return {
+          name: field.id.toString(),
+          type: field.type,
+          label: field.name,
+          placeholder: field.placeholder,
+          options: field.options?.length > 0 ? field.options : undefined,
+          fullWidth: field.type === "textarea",
+          validation: {
+            required: field.is_required ? "This field is required" : false,
+            pattern: (() => {
+              if (!cleanRegexString) return undefined;
+              try {
+                return {
+                  value: new RegExp(cleanRegexString, "u"),
+                  message: `Invalid ${field.name} format`,
+                };
+              } catch (e) {
+                console.error(
+                  `Invalid Regex for ${field.name}:`,
+                  cleanRegexString,
+                );
+                return undefined;
+              }
+            })(),
+          },
+        };
+      }),
     }),
   });
 
@@ -55,7 +68,7 @@ export default function FormDemoPage() {
 
   const handleSubmit = async (values) => {
     const formattedValues = Object.entries(values)
-      .filter(([key, value]) => value !== undefined && value !== "")
+      .filter(([_, value]) => value !== undefined && value !== "")
       .map(([key, value]) => ({
         field_id: parseInt(key, 10),
         value: String(value),
@@ -65,6 +78,7 @@ export default function FormDemoPage() {
       form: activeFormId,
       values: formattedValues,
     };
+
     return await submitMutation.mutateAsync(payload);
   };
   if (isLoadingForms) {
