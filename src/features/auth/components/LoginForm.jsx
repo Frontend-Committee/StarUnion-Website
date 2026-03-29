@@ -30,6 +30,7 @@ function LoginForm() {
       const response = await authApi.loginUser(data); 
       loginUser(response.access);
       
+      localStorage.setItem("user" , JSON.stringify(await authApi.getCurrentUser()));
       navigate("/", { replace: true });
     } catch (error) {
       
@@ -40,6 +41,7 @@ function LoginForm() {
     }
   };
 
+  
   return (
     <div className="bg-white/60 backdrop-blur-xs border border-white/50 p-6 md:p-10 rounded-3xl shadow-2xl w-full max-w-md">
       <h1

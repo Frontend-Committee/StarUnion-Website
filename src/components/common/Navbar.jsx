@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const handleLogin = () => navigate(`${PATHS.AUTH}/${PATHS.AUTH_PAGES.LOGIN}`);
   const handleProfile = () => navigate(PATHS.PROFILE);
-
+  const handleLogOut = ()=>{localStorage.clear(); navigate('/')}
   const navLinkClass = ({ isActive }) =>
     [
       "text-sm font-medium transition-colors duration-200",
@@ -188,10 +188,23 @@ export default function Navbar() {
                 </button>
               ) : (
                 <button
-                  onClick={handleProfile}
-                  className="hidden md:block px-4 py-3 rounded-lg text-sm font-medium bg-primary text-white shadow-[0_10px_30px_rgba(0,0,0,0.35)] hover:bg-[#683ce3] transition"
+                  
+                  className="hidden group md:block text-sm fixed"
                 >
-                  Profile
+                  <div className="flex  bg-primary  rounded-full w-12 group-hover:w-24 justify-between items-center transition-all duration-75">
+                    <img src={user.profile_photo} className="size-12 rounded-full hover:scale-105 hover:overflow-hidden transition-all" alt="" />
+                    <i className="fa-solid fa-chevron-down opacity-0 group-hover:opacity-100 transition-all duration-75 text-[#FCDD00] fa-lg m-auto"></i>
+                  </div>
+                  <div className="fixed right-0   mt-3 w-52 text-md bg-gradientBg3 text-white rounded-xl shadow-lg opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-50 overflow-hidden">
+
+                    <p onClick={handleProfile} className="px-5 py-3 hover:bg-white/10 cursor-pointer transition">
+                      My profile
+                    </p>
+
+                    <p onClick={handleLogOut} className="px-5 py-3 hover:bg-white/10 cursor-pointer transition">
+                      Log out
+                    </p>
+                  </div>
                 </button>
               )}
               <button

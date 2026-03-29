@@ -33,7 +33,7 @@ export const getCurrentUser = async () => {
 
 export const updateCurrentUser = async (userData) => {
   try {
-    const response = await api.patch("/auth/users/me/", userData);
+    const response = await api.patch("/auth/users/me/", userData , {headers:{"Content-Type": "multipart/form-data"}});
     return response.data;
   } catch (error) {
     console.error(
