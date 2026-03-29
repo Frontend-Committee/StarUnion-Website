@@ -45,7 +45,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-[#B9A6FF]/80">
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.ABOUT}`}
                 >
                   About Us
@@ -53,7 +53,7 @@ export default function Footer() {
               </li>
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.CONTACT}`}
                 >
                   Contact Us
@@ -61,7 +61,7 @@ export default function Footer() {
               </li>
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.SERVICES}`}
                 >
                   Services
@@ -81,7 +81,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-[#B9A6FF]/80">
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.EVENTS}`}
                 >
                   Events
@@ -89,7 +89,7 @@ export default function Footer() {
               </li>
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.WORKSHOPS}`}
                 >
                   Workshops
@@ -97,7 +97,7 @@ export default function Footer() {
               </li>
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.PROJECTS}`}
                 >
                   Projects
@@ -105,7 +105,7 @@ export default function Footer() {
               </li>
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.COMMITTEES}`}
                 >
                   Committees
@@ -113,7 +113,7 @@ export default function Footer() {
               </li>
               <li>
                 <NavLink
-                  className="hover:text-[#E1D6FF] transition"
+                  className="hover:text-[#E1D6FF] transition bg-[linear-gradient(90deg,#E1D6FF_0%,#7441FF_100%)] bg-clip-text text-transparent"
                   to={`/${PATHS.PUBLIC.BOARD_HIGH}`}
                 >
                   High-Board

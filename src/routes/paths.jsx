@@ -16,6 +16,7 @@ export const PATHS = {
     WORKSHOP_DETAILS: "workshops/:id",
     CONTACT: "contact",
     BOARD_HIGH: "board/high",
+    FORM_DEMO: "form-demo",
   },
 
   AUTH_PAGES: {
@@ -27,5 +28,4 @@ export const PATHS = {
   },
 
   PROFILE: "/profile",
-  
 };
