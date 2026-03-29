@@ -19,31 +19,44 @@ import { useCallback, useState } from "react";
 function validateField(field, value) {
   const rules = field.validation || {};
 
-  if (rules.pattern && !rules.pattern.test(value)) {
-    return rules.requiredMessage || `${field.label} is required.`;
+  if (rules.required && (!value || value.toString().trim() === "")) {
+    return typeof rules.required === "string"
+      ? rules.required
+      : `${field.label} is required.`;
   }
 
-  if (typeof value === "string") {
-    if (rules.minLength && value.trim().length < rules.minLength)
-      return `${field.label} must be at least ${rules.minLength} characters.`;
-    if (rules.maxLength && value.trim().length > rules.maxLength)
-      return `${field.label} must be at most ${rules.maxLength} characters.`;
-    if (rules.pattern && !new RegExp(rules.pattern).test(value))
-      return rules.patternMessage || `${field.label} format is invalid.`;
-    if (rules.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+  if (value && rules.pattern) {
+    let patternObj;
+
+    if (rules.pattern.value) {
+      patternObj = rules.pattern.value;
+    } else {
+      patternObj = rules.pattern;
+    }
+
+    if (!(patternObj instanceof RegExp)) {
+      try {
+        patternObj = new RegExp(patternObj, "u");
+      } catch (e) {
+        console.error("Invalid Regex:", patternObj);
+        return null;
+      }
+    }
+
+    if (!patternObj.test(value)) {
+      return (
+        rules.pattern.message ||
+        rules.message ||
+        field.patternMessage ||
+        `${field.label} format is invalid.`
+      );
+    }
+  }
+
+  if (value && typeof value === "string") {
+    if (rules.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
       return "Please enter a valid email address.";
-    if (rules.phone && !/^\+?[\d\s\-().]{7,20}$/.test(value))
-      return "Please enter a valid phone number.";
-  }
-
-  if (rules.min !== undefined && Number(value) < rules.min)
-    return `${field.label} must be at least ${rules.min}.`;
-  if (rules.max !== undefined && Number(value) > rules.max)
-    return `${field.label} must be at most ${rules.max}.`;
-
-  if (rules.custom) {
-    const result = rules.custom(value);
-    if (result !== true) return result;
+    }
   }
 
   return null;
@@ -948,7 +961,6 @@ export default function DynamicFormBuilder({
   const onBlur = useCallback(
     (name) => {
       setTouched((prev) => ({ ...prev, [name]: true }));
-      // Validate single field on blur
       const allFields = [];
       const collect = (fields) =>
         fields?.forEach((f) => {
@@ -976,7 +988,6 @@ export default function DynamicFormBuilder({
 
     const allErrors = validateAll(schema, values);
 
-    // Touch all fields
     const allTouched = {};
     const collect = (fields) =>
       fields?.forEach((f) => {
@@ -984,22 +995,28 @@ export default function DynamicFormBuilder({
         else if (f.name) allTouched[f.name] = true;
       });
     collect(schema?.fields);
+
     setTouched(allTouched);
     setErrors(allErrors);
 
-    if (Object.keys(allErrors).length > 0) return;
+    if (Object.keys(allErrors).length > 0) {
+      return;
+    }
 
     setIsSubmitting(true);
     try {
       await onSubmit(values);
       setIsSuccess(true);
     } catch (err) {
-      setSubmitError(err?.message || "Something went wrong. Please try again.");
+      setSubmitError(
+        err?.response?.data?.message ||
+          err?.message ||
+          "Something went wrong. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
-
   const cols = schema?.gridCols || 2;
   const gridClass =
     cols === 3
