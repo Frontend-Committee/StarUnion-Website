@@ -1,6 +1,7 @@
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
-import { ECOSYSTEM_DATA, SERVICE_CATEGORIES } from "@/utils/constants";
+import { listProjects } from "@/lib/api/endpoints";
+import { SERVICE_CATEGORIES } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useMemo, useState } from "react";
@@ -37,13 +38,22 @@ export default function ServicesPage() {
       }),
   });
 
+  const {
+    data: ecosystemProjects = [],
+    isLoading: isEcosystemLoading,
+    isError: isEcosystemError,
+  } = useQuery({
+    queryKey: ["ecosystem-projects"],
+    queryFn: () => listProjects({ is_ecosystem: true }),
+  });
+
   const services = data?.results || [];
   const filteredEcosystem = useMemo(() => {
-    if (!searchQuery) return ECOSYSTEM_DATA;
-    return ECOSYSTEM_DATA.filter((e) =>
-      e.title.toLowerCase().includes(searchQuery.toLowerCase()),
+    if (!searchQuery) return ecosystemProjects;
+    return ecosystemProjects.filter((project) =>
+      project.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-  }, [searchQuery]);
+  }, [ecosystemProjects, searchQuery]);
 
   const showEcosystem = activeFilter === SERVICE_CATEGORIES.ALL;
 
@@ -235,19 +245,40 @@ export default function ServicesPage() {
                       transition={{ duration: 0.25 }}
                     >
                       <ServiceCard
-                        service={item}
+                        service={{
+                          ...item,
+                          title: item.name,
+                        }}
                         delay={(index % 4) * 100}
-                        basePath="/services/ecosystem"
+                        basePath="/projects"
                       />
                     </Motion.div>
                   ))}
                 </AnimatePresence>
               </Motion.div>
 
-              {filteredEcosystem.length === 0 && searchQuery && (
+              {!isEcosystemLoading &&
+                !isEcosystemError &&
+                filteredEcosystem.length === 0 && (
+                  <div className="py-10 text-center">
+                    <p className="text-gray-500 text-body font-normal">
+                      No ecosystem projects match your search
+                    </p>
+                  </div>
+                )}
+
+              {isEcosystemLoading && (
                 <div className="py-10 text-center">
-                  <p className="text-gray-500 text-body font-normal">
-                    No ecosystem items match your search
+                  <p className="text-white/70 text-body font-normal">
+                    Loading ecosystem projects...
+                  </p>
+                </div>
+              )}
+
+              {isEcosystemError && (
+                <div className="py-10 text-center">
+                  <p className="text-red-200 text-body font-semibold">
+                    Could not load ecosystem projects
                   </p>
                 </div>
               )}
