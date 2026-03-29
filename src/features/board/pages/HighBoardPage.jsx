@@ -53,29 +53,48 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
     <Motion.div
       whileHover={{ y: -3, boxShadow: "0 20px 50px rgba(116,65,255,0.18)" }}
       transition={{ type: "spring", stiffness: 280, damping: 24 }}
-      className="w-full rounded-[16px] overflow-hidden bg-white flex flex-col md:flex-row primary-card-hover"
-      style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.10)", minHeight: 210 }}
+      className="w-full rounded-[16px] overflow-hidden bg-white flex flex-row primary-card-hover"
+      style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.10)", minHeight: 140 }}
     >
-      <div className="w-full md:w-[240px] h-[280px] md:h-auto flex-shrink-0 relative overflow-hidden md:order-2">
+      {/* Image — small square on mobile, tall fixed panel on md+ */}
+      <div className="w-[120px] h-auto md:w-[240px] flex-shrink-0 relative overflow-hidden order-2">
         {member.photo ? (
           <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
         ) : (
-          <div className="w-full h-full" style={{ background: "linear-gradient(135deg,#241352 0%,#4D3398 60%,#1E1A2B 100%)" }} />
+          <div
+            className="w-full h-full min-h-[140px]"
+            style={{
+              background:
+                "linear-gradient(135deg,#241352 0%,#4D3398 60%,#1E1A2B 100%)",
+            }}
+          />
         )}
-        <div className="hidden md:block absolute inset-y-0 left-0 w-14 pointer-events-none" style={{ background: "linear-gradient(to right,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)" }} />
-        <div className="md:hidden absolute inset-x-0 bottom-0 h-14 pointer-events-none" style={{ background: "linear-gradient(to top,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)" }} />
+        {/* Fade edge toward text — left side on all screen sizes */}
+        <div
+          className="absolute inset-y-0 left-0 w-10 md:w-14 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to right,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
+          }}
+        />
       </div>
-      <div className="flex-1 px-6 py-6 md:px-8 md:py-8 flex flex-col justify-center min-w-0 md:order-1 text-center md:text-left">
-        <h3 className="text-primary font-bold text-[20px] md:text-[24px] leading-tight">{member.name}</h3>
-        <p className="text-[#111] font-bold text-[15px] md:text-[17px] mt-1">{member.role}</p>
-        <p className="text-gray-500 text-[13px] md:text-[15px] leading-relaxed mt-2 md:mt-3 max-w-sm mx-auto md:mx-0 truncate-4-lines">
+
+      {/* Text */}
+      <div className="flex-1 px-4 py-4 md:px-8 md:py-8 flex flex-col justify-center min-w-0 order-1 text-left">
+        <h3 className="text-primary font-bold text-[18px] md:text-[24px] leading-tight">
+          {member.name}
+        </h3>
+        <p className="text-[#111] font-bold text-[13px] md:text-[17px] mt-1">
+          {member.role}
+        </p>
+        <p className="text-gray-500 text-[12px] md:text-[15px] leading-relaxed mt-1 md:mt-3 truncate-4-lines">
           {member.description}
         </p>
-        <div className="mt-4 md:mt-5 flex justify-center md:justify-start">
+        <div className="mt-3 md:mt-5">
           <Socials socials={member.socials} />
         </div>
       </div>
-    </Motion.div>
+    </motion.div>
   </ScrollAnimation>
 );
 
