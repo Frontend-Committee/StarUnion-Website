@@ -94,7 +94,7 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
           <Socials socials={member.socials} />
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   </ScrollAnimation>
 );
 
