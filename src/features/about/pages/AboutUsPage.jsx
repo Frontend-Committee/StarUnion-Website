@@ -186,15 +186,12 @@ export default function AboutUsPage() {
   return (
     <div className="w-full min-h-screen overflow-x-hidden ">
       {/* ══════ 1. HERO (With Parallax Effect) ══════ */}
-      <section className="absolute top-0 left-0 w-full h-[300px] md:h-[475px] bg-[#0d0d1a] overflow-hidden flex items-center justify-center z-0">
-        {/* Animated container for the hero background */}
+      <section className="absolute top-0 left-0 w-full h-[300px] md:h-[375px] bg-[#0d0d1a] overflow-hidden flex items-center justify-center z-0">
         <motion.div
           style={{ y: yHero, opacity: opacityHero }}
           className="absolute inset-0"
         >
-          <div className="absolute top-0 right-0 z-10 w-1/2 h-full opacity-60 bg-gradient-to-l from-secondary/30 to-transparent blur-3xl" />
-          <div className="absolute bottom-0 left-0 z-10 w-1/2 h-full opacity-60 bg-gradient-to-r from-primary/30 to-transparent blur-3xl" />
-          <div
+          <motion.div
             className="absolute inset-0 z-0 pointer-events-none"
             style={{
               backgroundImage: `url(${AboutHero})`,
@@ -202,13 +199,29 @@ export default function AboutUsPage() {
               backgroundPosition: "center 37%",
               backgroundRepeat: "no-repeat",
             }}
+            animate={{
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 20,
+              ease: "easeInOut",
+              repeat: Infinity,
+            }}
           />
+
+          <div className="absolute inset-0 bg-[#130c24]/40 mix-blend-overlay z-[1]" />
+
+          <div className="absolute top-0 right-0 z-[2] w-1/2 h-full opacity-60 bg-gradient-to-l from-secondary/20 to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 z-[2] w-1/2 h-full opacity-60 bg-gradient-to-r from-primary/30 to-transparent blur-3xl pointer-events-none" />
+
+          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0d0d1a] to-transparent z-[3] pointer-events-none" />
+
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_#0d0d1a_110%)] z-[4] pointer-events-none" />
         </motion.div>
-        <div className="absolute inset-0 bg-black/10 z-[5]" />
       </section>
 
       {/* Hero Spacer */}
-      <div className="h-[250px] md:h-[400px]" />
+      <div className="h-[250px] md:h-[250px]" />
 
       {/* ══════ 2. WHO WE ARE (Smooth Fade Entrance) ══════ */}
       <section className="py-12 md:py-20">

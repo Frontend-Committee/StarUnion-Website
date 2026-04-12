@@ -101,20 +101,121 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-@layer base {
-  body {
-    background: 
-      radial-gradient(
-        circle at 10% 20%,
-        rgba(116, 65, 255, 0.15),
-        transparent 45%
-      ),
-      linear-gradient(145deg, #130c24 0%, #1e1a2b 35%, #241352 70%, #4d3398 100%) !important;
-    
-    background-attachment: fixed; 
-    min-height: 100vh;
-    color: white;
+.starry-night-bg {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    #130c24 0%,
+    #1e1a2b 35%,
+    #241352 65%,
+    #4d3398 90%,
+    #7441ff 100%
+  );
+  z-index: 1;
+}
+
+.starry-night-bg::before,
+.starry-night-bg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.starry-night-bg::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 25px 5px, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 50px 25px, #e1d6ff 50%, transparent 100%),
+    radial-gradient(2px 2px at 90px 40px, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 130px 80px, #e1d6ff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 160px 120px, #ffffff 50%, transparent 100%),
+    radial-gradient(2px 2px at 200px 180px, #e1d6ff 50%, transparent 100%),
+    radial-gradient(1px 1px at 250px 45px, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 280px 150px, #e1d6ff 50%, transparent 100%);
+  background-size: 300px 300px;
+  animation: starsUp 40s linear infinite;
+}
+
+.starry-night-bg::after {
+  background-image:
+    radial-gradient(2px 2px at 15px 15px, #ffffff 50%, transparent 100%),
+    radial-gradient(1px 1px at 70px 60px, #e1d6ff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 110px 130px, #ffffff 50%, transparent 100%),
+    radial-gradient(2px 2px at 180px 70px, #e1d6ff 50%, transparent 100%),
+    radial-gradient(1px 1px at 220px 110px, #ffffff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 260px 190px, #e1d6ff 50%, transparent 100%);
+  background-size: 400px 400px;
+  animation: starsUp 70s linear infinite;
+}
+
+@keyframes starsUp {
+  0% {
+    transform: translateY(0);
   }
+  100% {
+    transform: translateY(-25%);
+  }
+}
+.shooting-stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shooting-stars span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: linear-gradient(90deg, #fff, transparent);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.shooting-stars span:nth-child(1) { top: 0%; left: 80%; animation: shoot-tr 4s linear infinite; animation-delay: 0s; }
+.shooting-stars span:nth-child(2) { top: 20%; left: 100%; animation: shoot-tr 6s linear infinite; animation-delay: 3s; }
+
+.shooting-stars span:nth-child(3) { top: 0%; left: 20%; animation: shoot-tl 5s linear infinite; animation-delay: 1.5s; }
+.shooting-stars span:nth-child(4) { top: 10%; left: 0%; animation: shoot-tl 7s linear infinite; animation-delay: 4.5s; }
+
+.shooting-stars span:nth-child(5) { top: 100%; left: 30%; animation: shoot-bl 6s linear infinite; animation-delay: 2.5s; }
+.shooting-stars span:nth-child(6) { top: 100%; left: 70%; animation: shoot-br 8s linear infinite; animation-delay: 5.5s; }
+
+@keyframes shoot-tr {
+  0% { transform: rotate(200deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; width: 120px; }
+  30% { transform: rotate(200deg) translateX(-1500px); opacity: 0; }
+  100% { transform: rotate(200deg) translateX(-1500px); opacity: 0; }
+}
+
+@keyframes shoot-tl {
+  0% { transform: rotate(-20deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; width: 120px; }
+  30% { transform: rotate(-20deg) translateX(1500px); opacity: 0; }
+  100% { transform: rotate(-20deg) translateX(1500px); opacity: 0; }
+}
+
+@keyframes shoot-bl {
+  0% { transform: rotate(-45deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; width: 120px; }
+  30% { transform: rotate(-45deg) translateX(1500px); opacity: 0; }
+  100% { transform: rotate(-45deg) translateX(1500px); opacity: 0; }
+}
+
+@keyframes shoot-br {
+  0% { transform: rotate(-135deg) translateX(0); opacity: 0; }
+  10% { opacity: 1; width: 120px; }
+  30% { transform: rotate(-135deg) translateX(1500px); opacity: 0; }
+  100% { transform: rotate(-135deg) translateX(1500px); opacity: 0; }
 }
 /* index.css */
 

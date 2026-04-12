@@ -8,7 +8,7 @@ export default function AuthLayout({ children }) {
   const isNavigating = navigation.state === "loading";
 
   return (
-    <div className="relative flex flex-col min-h-screen">
+    <div className="relative flex flex-col min-h-screen starry-night-bg">
       {isNavigating && <LoadingSpinner fullScreen={true} />}
 
       <main
