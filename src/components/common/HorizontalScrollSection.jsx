@@ -83,11 +83,11 @@ export default function HorizontalScrollSection({
   }
 
   return (
-    <div className="relative group/scroll px-1 overflow-visible">
+    <div className="relative px-1 overflow-visible group/scroll ">
       <div
         ref={containerRef}
         style={maskStyle}
-        className={`flex gap-5 pt-4 pb-8 overflow-x-auto scrollbar-hide px-4 -mx-4 transition-all duration-300 ${className}`}
+        className={`flex gap-5 pt-4 pb-8 overflow-x-auto scrollbar-hide px-4 -mx-4  no-scrollbar transition-all duration-300 ${className}`}
       >
         {children}
       </div>

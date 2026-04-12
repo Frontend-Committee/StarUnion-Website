@@ -27,11 +27,11 @@ const ProjectCard = ({ project, delay = 0 }) => (
         <img
           src={project.image}
           alt={project.title}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 object-cover w-full h-full"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B2E] via-transparent to-black/40" />
-        <div className="absolute top-6 left-0 right-0 px-4 text-center">
-          <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
+        <div className="absolute left-0 right-0 px-4 text-center top-6">
+          <h4 className="text-xl font-black tracking-wider text-white uppercase drop-shadow-md">
             {project.title}
           </h4>
         </div>
@@ -85,7 +85,7 @@ export default function CommitteeDetailsPage() {
           <button
             type="button"
             onClick={() => navigate("/committees")}
-            className="px-5 py-2 mt-6 text-sm font-semibold text-white transition rounded-full border border-primary hover:bg-primary/10"
+            className="px-5 py-2 mt-6 text-sm font-semibold text-white transition border rounded-full border-primary hover:bg-primary/10"
           >
             Back to Committees
           </button>
@@ -97,15 +97,15 @@ export default function CommitteeDetailsPage() {
   const description = getCommitteeDescription(committee);
 
   return (
-    <section className="min-h-screen px-4 py-12 bg-gradientBg3 md:px-8 md:py-20">
-      <div className="max-w-[1200px] mx-auto">
+    <section className="min-h-screen px-4 py-12 md:px-8 md:py-20">
+      <div className="max-w-[1100px] mx-auto">
         <ScrollAnimation variant="fade-right">
           <button
             onClick={() => navigate("/committees")}
             className="flex items-center gap-2 mb-12 text-white transition-colors cursor-pointer hover:text-tertiary group"
             id="back-to-committees"
           >
-            <div className="p-2 rounded-full border border-white/20 group-hover:bg-white/10 transition-colors">
+            <div className="p-2 transition-colors border rounded-full border-white/20 group-hover:bg-white/10">
               <svg
                 className="w-6 h-6 transition-transform group-hover:-translate-x-1"
                 viewBox="0 0 24 24"
@@ -118,7 +118,7 @@ export default function CommitteeDetailsPage() {
                 <path d="M15 19l-7-7 7-7" />
               </svg>
             </div>
-            <span className="font-semibold uppercase tracking-widest text-xs">
+            <span className="text-xs font-semibold tracking-widest uppercase">
               Back to Committees
             </span>
           </button>
@@ -133,16 +133,16 @@ export default function CommitteeDetailsPage() {
               <h1 className="mt-4 font-semibold leading-tight text-tertiary text-h2">
                 {committee.name}
               </h1>
-              <p className="mt-6 max-w-2xl leading-relaxed text-white/85 text-body">
+              <p className="max-w-2xl mt-6 leading-relaxed text-white/85 ">
                 {description}
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
-                <span className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10">
+                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
                   {committee.type === "technical"
                     ? "Technical Committee"
                     : "Non-Technical Committee"}
                 </span>
-                <span className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10">
+                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
                   {committee.projects.length} Projects
                 </span>
               </div>
@@ -196,7 +196,7 @@ export default function CommitteeDetailsPage() {
         <ScrollAnimation variant="fade-up" delay={150}>
           <div className="mt-14">
             <h2 className="font-semibold text-tertiary text-h3">Projects</h2>
-            <p className="mt-3 max-w-2xl leading-relaxed text-white/70">
+            <p className="max-w-2xl mt-3 leading-relaxed text-white/70">
               Projects linked to this committee come directly from the committee
               detail endpoint.
             </p>

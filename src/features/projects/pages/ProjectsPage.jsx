@@ -27,7 +27,7 @@ export default function ProjectsPage() {
     }) || [];
 
   return (
-    <section className="container min-h-screen px-4 py-10 md:px-8">
+    <section className="container min-h-screen px-4 py-10 md:px-8 ">
       <div className="max-w-[1200px] mx-auto">
         {/* Page Title */}
         <ScrollAnimation variant="fade-down">

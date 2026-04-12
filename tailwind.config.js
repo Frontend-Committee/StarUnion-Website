@@ -36,7 +36,7 @@ module.exports = {
 
       backgroundImage: {
         gradientBg3:
-          "radial-gradient(circle at 50% 35%, rgba(77,51,152,0.35) 0%, rgba(77,51,152,0) 60%), linear-gradient(to bottom, #1E1A2B 0%, #241352 45%, #4D3398 100%)",
+          "radial-gradient(circle at 10% 20%, rgba(116, 65, 255, 0.15), transparent 45%), linear-gradient(145deg, #130C24 0%, #1E1A2B 35%, #241352 70%, #4D3398 100%)",
         gradientFooter: "linear-gradient(135deg, #E1D6FF 0%, #7441FF 100%)",
         gradientBrand:
           "linear-gradient(135deg, #7441FF 0%, #11EDA4 50%, #EFD830 100%)",

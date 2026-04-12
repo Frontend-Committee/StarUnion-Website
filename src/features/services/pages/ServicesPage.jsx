@@ -62,8 +62,8 @@ export default function ServicesPage() {
   }
 
   return (
-    <section className="container min-h-screen px-4 py-10 md:px-8">
-      <div className="max-w-[1200px] mx-auto">
+    <section className="container min-h-screen px-4 py-10 md:px-8 ">
+      <div className="max-w-[1200px] mx-auto ">
         <ScrollAnimation variant="fade-down">
           <h1 className="mb-8 font-semibold text-h2 text-tertiary">Services</h1>
         </ScrollAnimation>
@@ -189,7 +189,7 @@ export default function ServicesPage() {
                   setPage((currentPage) => Math.max(currentPage - 1, 1))
                 }
                 disabled={!data?.previous || page === 1 || isFetching}
-                className="px-5 py-2 text-sm font-semibold text-white transition rounded-full border border-primary disabled:cursor-not-allowed disabled:opacity-40 hover:bg-primary/10"
+                className="px-5 py-2 text-sm font-semibold text-white transition border rounded-full border-primary disabled:cursor-not-allowed disabled:opacity-40 hover:bg-primary/10"
               >
                 Previous
               </button>
@@ -198,7 +198,7 @@ export default function ServicesPage() {
                 type="button"
                 onClick={() => setPage((currentPage) => currentPage + 1)}
                 disabled={!data?.next || isFetching}
-                className="px-5 py-2 text-sm font-semibold text-white transition rounded-full border border-primary disabled:cursor-not-allowed disabled:opacity-40 hover:bg-primary/10"
+                className="px-5 py-2 text-sm font-semibold text-white transition border rounded-full border-primary disabled:cursor-not-allowed disabled:opacity-40 hover:bg-primary/10"
               >
                 Next
               </button>
@@ -216,10 +216,10 @@ export default function ServicesPage() {
             >
               <div className="mt-16 mb-6">
                 <ScrollAnimation variant="fade-up">
-                  <h2 className="text-h3 font-bold text-tertiary mb-4">
+                  <h2 className="mb-4 font-bold text-h3 text-tertiary">
                     Ecosystem
                   </h2>
-                  <p className="text-white/70 text-body font-normal leading-relaxed max-w-3xl">
+                  <p className="max-w-3xl font-normal leading-relaxed text-white/70 text-body">
                     Our ecosystem is a connected set of digital solutions
                     designed to support student growth and engagement. It
                     includes an AI automation system to streamline processes, a
@@ -261,7 +261,7 @@ export default function ServicesPage() {
                 !isEcosystemError &&
                 filteredEcosystem.length === 0 && (
                   <div className="py-10 text-center">
-                    <p className="text-gray-500 text-body font-normal">
+                    <p className="font-normal text-gray-500 text-body">
                       No ecosystem projects match your search
                     </p>
                   </div>
@@ -269,7 +269,7 @@ export default function ServicesPage() {
 
               {isEcosystemLoading && (
                 <div className="py-10 text-center">
-                  <p className="text-white/70 text-body font-normal">
+                  <p className="font-normal text-white/70 text-body">
                     Loading ecosystem projects...
                   </p>
                 </div>
@@ -277,7 +277,7 @@ export default function ServicesPage() {
 
               {isEcosystemError && (
                 <div className="py-10 text-center">
-                  <p className="text-red-200 text-body font-semibold">
+                  <p className="font-semibold text-red-200 text-body">
                     Could not load ecosystem projects
                   </p>
                 </div>
