@@ -2,7 +2,7 @@ import Footer from "@/components/common/Footer";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./../components/ProfileCard";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
-import logo from "./../../../assets/images/AboutHero.jpg";
+import logo from "./../../../assets/images/AboutHero.png";
 import imgSrc1 from "./../../../assets/images/ProfilePage/2d3905db88064d93a2ebc114979738c00d8b2df2.jpg";
 import imgSrc2 from "./../../../assets/images/ProfilePage/36665f265adb2a4b8feaa41ec7a2b361cd2989fa.jpg";
 import imgSrc3 from "./../../../assets/images/ProfilePage/4614abb8f38efe719a43dfd420bb46d90a34ae8f.jpg";
@@ -81,7 +81,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen font-sans overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden font-sans">
       <div className="relative">
         <div
           className="relative w-full min-h-[250px] flex flex-col items-center justify-center overflow-hidden bg-cover bg-center bg-no-repeat"
@@ -109,7 +109,7 @@ export default function ProfilePage() {
               onClick={handleBgClick}
               className="absolute top-6 right-4 md:right-0 bg-white text-[#452798] p-1.5 rounded-lg shadow-xl hover:bg-white/90 transition-all cursor-pointer z-10"
             >
-              <i className="fa-regular fa-pen-to-square text-base"></i>
+              <i className="text-base fa-regular fa-pen-to-square"></i>
             </button>
 
             <input
@@ -127,10 +127,10 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container px-4 mx-auto md:px-6">
         <div className="mt-12">
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 gap-6 mb-16 sm:grid-cols-2 md:grid-cols-3">
             <FeatureBox
               title="Join the Community"
               desc="Be part of a supportive student community and start your journey with STAR Union."
@@ -147,7 +147,7 @@ export default function ProfilePage() {
 
           <section className="mb-12">
             <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Application Status</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {ApplicationStatus.map((item, index) => (
                 <Card
                   key={index}
@@ -169,7 +169,7 @@ export default function ProfilePage() {
 
           <section className="mb-12">
             <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">My Activities</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {myActivities.map((item, index) => (
                 <Card
                   key={index}
@@ -192,7 +192,7 @@ export default function ProfilePage() {
 
           <section className="mb-16">
             <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Attendee Sessions</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {attendedSessions.map((item, index) => (
                 <Card
                   key={index}
@@ -223,9 +223,9 @@ export default function ProfilePage() {
 const FeatureBox = ({ title, desc }) => (
   <div className="bg-[#7441FE] p-5 rounded-md text-white shadow-lg relative group cursor-pointer transition-transform hover:scale-[1.02]">
     <h4 className="text-[#FCDD00] font-bold text-lg">{title}</h4>
-    <div className="flex mt-2 items-start justify-between">
-      <p className="mt-1 opacity-90 text-sm leading-relaxed pr-4">{desc}</p>
-      <div className="shrink-0 mt-1">
+    <div className="flex items-start justify-between mt-2">
+      <p className="pr-4 mt-1 text-sm leading-relaxed opacity-90">{desc}</p>
+      <div className="mt-1 shrink-0">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -234,7 +234,7 @@ const FeatureBox = ({ title, desc }) => (
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-6 w-6 group-hover:translate-x-1 transition-transform"
+          className="w-6 h-6 transition-transform group-hover:translate-x-1"
         >
           <path d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
@@ -244,9 +244,9 @@ const FeatureBox = ({ title, desc }) => (
 );
 
 const Card = ({ title, status, date, dotColor, imgSrc, rate, role }) => (
-  <div className="transition-all overflow-hidden rounded-xl text-white shadow-2xl relative group cursor-pointer border border-white/5">
+  <div className="relative overflow-hidden text-white transition-all border shadow-2xl cursor-pointer rounded-xl group border-white/5">
     <div 
-      className="bg-center bg-cover transition-transform duration-700 group-hover:scale-110" 
+      className="transition-transform duration-700 bg-center bg-cover group-hover:scale-110" 
       style={{ backgroundImage: `url(${imgSrc || ""})` }}
     >
       <div className="p-8 backdrop-blur-[2px] bg-[#452798]/40 h-full flex flex-col justify-center min-h-[220px]">
@@ -254,7 +254,7 @@ const Card = ({ title, status, date, dotColor, imgSrc, rate, role }) => (
           {title}
         </h4>
         
-        <div className="space-y-3 font-semibold text-lg">
+        <div className="space-y-3 text-lg font-semibold">
           {status && (
             <div className="flex items-center gap-3">
               <span>Status: {status}</span>

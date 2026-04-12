@@ -18,7 +18,7 @@ export default function UpcomingSection() {
   if (isAnySectionLoading) return <LoadingSpinner fullScreen={true} />;
 
   return (
-    <div className="flex flex-col w-full gap-6">
+    <div className="flex flex-col w-full gap-6 ">
       {/* events */}
       <section>
         <ScrollAnimation>
@@ -29,7 +29,7 @@ export default function UpcomingSection() {
             <Link to={"/events"}>
               <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
                 See More
-                <span className="group-hover:translate-x-1 transition-transform">
+                <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
               </p>
@@ -67,7 +67,7 @@ export default function UpcomingSection() {
             <Link to={"/workshops"}>
               <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
                 See More
-                <span className="group-hover:translate-x-1 transition-transform">
+                <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
               </p>
@@ -105,7 +105,7 @@ export default function UpcomingSection() {
             <Link to={"/services"}>
               <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
                 See More
-                <span className="group-hover:translate-x-1 transition-transform">
+                <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
               </p>
@@ -142,7 +142,7 @@ export default function UpcomingSection() {
             <Link to={"/projects"}>
               <p className="text-white transition-colors cursor-pointer hover:underline hover:text-blue-400">
                 See More
-                <span className="group-hover:translate-x-1 transition-transform">
+                <span className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
               </p>

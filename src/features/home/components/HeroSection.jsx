@@ -6,12 +6,11 @@ import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export default function HeroSection() {
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] w-full py-10 md:py-0">
+    <div className="flex items-center  justify-center min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] w-full py-10 md:py-0">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-[1200px] mx-auto gap-10 md:gap-20 lg:gap-24 px-6 md:px-8">
-        
         {/* Left: Centered Text Content */}
         <ScrollAnimation variant="fade-right" delay={50} className="flex-1">
-          <div className="flex flex-col items-center text-center gap-6 md:gap-8">
+          <div className="flex flex-col items-center gap-6 text-center md:gap-8">
             <h1 className="text-[#FCDD00] font-bold text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight">
               Reach The Stars
             </h1>
@@ -26,22 +25,25 @@ export default function HeroSection() {
         </ScrollAnimation>
 
         {/* Right: Large Floating Logo aligned right */}
-        <ScrollAnimation variant="fade-left" delay={50} className="flex-1 w-full">
-          <Motion.div 
+        <ScrollAnimation
+          variant="fade-left"
+          delay={50}
+          className="flex-1 w-full"
+        >
+          <Motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex items-center justify-center md:justify-end w-full"
+            className="flex items-center justify-center w-full md:justify-end"
           >
-            <div className="relative group flex justify-center md:justify-end w-full">
+            <div className="relative flex justify-center w-full group md:justify-end ">
               <img
                 src={starLogo}
                 alt="Star Union"
-                className="relative object-contain w-[90%] md:w-full max-w-[550px] md:max-w-[650px] drop-shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+                className="relative object-contain w-[90%] md:w-full max-w-[550px] md:max-w-[650px] drop-shadow-[0_20px_60px_rgba(0,0,0,0.5)] "
               />
             </div>
           </Motion.div>
         </ScrollAnimation>
-
       </div>
     </div>
   );

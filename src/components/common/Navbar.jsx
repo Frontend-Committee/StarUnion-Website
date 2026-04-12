@@ -145,7 +145,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 backdrop-blur-sm">
+      <nav className="sticky top-0 left-0 z-50 w-full backdrop-blur-sm ">
         <div className="bg-transparent">
           <div className="container flex items-center justify-between py-5 mt-6">
             <button

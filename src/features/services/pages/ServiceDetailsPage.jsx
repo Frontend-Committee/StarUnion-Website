@@ -135,7 +135,7 @@ const ProjectServiceCard = ({ project, delay = 0 }) => (
         <img
           src={project.image}
           alt={project.name}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="absolute inset-0 object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#1A0B2E] via-transparent to-black/40" />
         <div className="absolute top-4 right-4 text-white/30">
@@ -143,8 +143,8 @@ const ProjectServiceCard = ({ project, delay = 0 }) => (
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
           </svg>
         </div>
-        <div className="absolute top-6 left-0 right-0 px-4 text-center">
-          <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
+        <div className="absolute left-0 right-0 px-4 text-center top-6">
+          <h4 className="text-xl font-black tracking-wider text-white uppercase drop-shadow-md">
             {project.name}
           </h4>
         </div>
@@ -190,7 +190,7 @@ export default function ServiceDetailsPage() {
 
   if (isError || !service) {
     return (
-      <div className="flex items-center justify-center min-h-screen px-4 bg-gradientBg3">
+      <div className="flex items-center justify-center min-h-screen px-4">
         <div className="w-full max-w-lg p-8 text-center border rounded-3xl border-white/10 bg-white/5">
           <p className="text-white text-h3">Service not found</p>
           <p className="mt-3 text-white/70">
@@ -201,7 +201,7 @@ export default function ServiceDetailsPage() {
           <button
             type="button"
             onClick={() => navigate("/services")}
-            className="px-5 py-2 mt-6 text-sm font-semibold text-white transition rounded-full border border-primary hover:bg-primary/10"
+            className="px-5 py-2 mt-6 text-sm font-semibold text-white transition border rounded-full border-primary hover:bg-primary/10"
           >
             Back to Services
           </button>
@@ -214,15 +214,15 @@ export default function ServiceDetailsPage() {
   const offerings = getServiceOfferings(service);
 
   return (
-    <section className="min-h-screen px-4 py-12 bg-gradientBg3 md:px-8 md:py-16">
-      <div className="max-w-[1000px] mx-auto">
+    <section className="min-h-screen px-4 py-12 md:px-8 md:py-16">
+      <div className="max-w-[1100px] mx-auto">
         <ScrollAnimation variant="fade-right">
           <button
             onClick={() => navigate("/services")}
             className="flex items-center gap-2 mb-8 text-white transition-colors cursor-pointer hover:text-tertiary group"
             id="back-to-services"
           >
-            <div className="p-2 rounded-full border border-white/20 group-hover:bg-white/10 transition-colors">
+            <div className="p-2 transition-colors border rounded-full border-white/20 group-hover:bg-white/10">
               <svg
                 className="w-5 h-5 transition-transform group-hover:-translate-x-1"
                 viewBox="0 0 24 24"
@@ -235,14 +235,14 @@ export default function ServiceDetailsPage() {
                 <path d="M15 19l-7-7 7-7" />
               </svg>
             </div>
-            <span className="font-semibold uppercase tracking-widest text-xs">
+            <span className="text-xs font-semibold tracking-widest uppercase">
               Back to Services
             </span>
           </button>
         </ScrollAnimation>
 
         <ScrollAnimation variant="fade-up">
-          <div className="grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+          <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr] md:items-center">
             <div>
               <p className="text-sm font-semibold tracking-[0.3em] uppercase text-tertiary/80">
                 Service Overview
@@ -250,19 +250,19 @@ export default function ServiceDetailsPage() {
               <h1 className="mt-4 font-bold text-h2 text-tertiary">
                 {service.title}
               </h1>
-              <p className="mt-6 leading-relaxed text-white/85 text-body">
+              <p className="max-w-2xl mt-6 leading-relaxed text-white/85 ">
                 {description}
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
-                <span className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10">
+                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
                   {service.is_technical
                     ? "Technical Service"
                     : "Non-Technical Service"}
                 </span>
-                <span className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10">
+                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
                   {service.committee.length} Committees
                 </span>
-                <span className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-white/10 border border-white/10">
+                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
                   {service.projects.length} Related Projects
                 </span>
               </div>
@@ -316,7 +316,7 @@ export default function ServiceDetailsPage() {
         {service.committee.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={150}>
             <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-5">
+              <h2 className="mb-5 font-bold text-tertiary text-h3">
                 Associated Committees
               </h2>
               <HorizontalScrollSection>
@@ -335,7 +335,7 @@ export default function ServiceDetailsPage() {
         {offerings.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={200}>
             <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-6">
+              <h2 className="mb-6 font-bold text-tertiary text-h3">
                 Capabilities
               </h2>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -348,10 +348,10 @@ export default function ServiceDetailsPage() {
                     transition={{ delay: index * 0.06, duration: 0.3 }}
                     className="flex items-center gap-3 px-4 py-4 border rounded-2xl border-white/10 bg-white/5"
                   >
-                    <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary border border-primary/40 flex items-center justify-center text-white">
+                    <span className="flex items-center justify-center flex-shrink-0 text-white border rounded-lg w-9 h-9 bg-primary border-primary/40">
                       {OFFERING_ICONS[item.icon] || OFFERING_ICONS.web}
                     </span>
-                    <span className="text-white text-sm font-medium">
+                    <span className="text-sm font-medium text-white">
                       {item.label}
                     </span>
                   </Motion.div>
@@ -364,7 +364,7 @@ export default function ServiceDetailsPage() {
         {service.projects.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={250}>
             <div className="mt-14">
-              <h2 className="text-tertiary font-bold text-h3 mb-5">
+              <h2 className="mb-5 font-bold text-tertiary text-h3">
                 Project References
               </h2>
               <HorizontalScrollSection>
