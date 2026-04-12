@@ -16,8 +16,6 @@ import { logoutUser } from "@/lib/api/authApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../ui/LoadingSpinneer";
 
-const MotionNavLink = motion(NavLink);
-
 export default function Navbar() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -55,7 +53,7 @@ export default function Navbar() {
 
   const navLinkClass = ({ isActive }) =>
     [
-      "relative text-sm font-medium transition-colors duration-300 py-2",
+      "relative text-sm font-medium transition-colors duration-300 py-2 inline-block",
       "after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-yellow-300 after:transition-all after:duration-300 hover:after:w-full",
       isActive
         ? "text-yellow-300 after:w-full"
@@ -157,7 +155,7 @@ export default function Navbar() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.8 },
+      transition: { staggerChildren: 0.2, delayChildren: 0.7 },
     },
   };
 
@@ -175,16 +173,16 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="fixed top-0 left-0 z-50 w-full bg-transparent backdrop-blur-sm"
       >
-        <div className="container flex items-center justify-between py-5 mt-4 md:mt-6">
+        <div className="container flex items-center justify-between px-4 py-5 mx-auto mt-4 md:mt-6">
           <motion.button
             initial={{ opacity: 0, scale: 0.85, rotate: -10 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{
-              duration: 1.4,
-              delay: 2,
+              duration: 1.5,
+              delay: 1,
               ease: [0.22, 1, 0.36, 1],
             }}
             whileTap={{
@@ -206,63 +204,61 @@ export default function Navbar() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="hidden md:flex items-center md:gap-4 lg:gap-7 px-5 py-1.5 rounded-xl bg-primary backdrop-blur-xl ring-1  ring-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+            className="hidden md:flex items-center md:gap-4 lg:gap-7 px-5 py-1.5 rounded-xl bg-primary backdrop-blur-xl ring-1 ring-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
           >
-            <MotionNavLink
-              variants={itemVariants}
-              to="/"
-              className={navLinkClass}
-            >
-              Home
-            </MotionNavLink>
-            <MotionNavLink
-              variants={itemVariants}
-              to={`/${PATHS.PUBLIC.ABOUT}`}
-              className={navLinkClass}
-            >
-              About Us
-            </MotionNavLink>
-            <MotionNavLink
-              variants={itemVariants}
-              to={`/${PATHS.PUBLIC.COMMITTEES}`}
-              className={navLinkClass}
-            >
-              Committees
-            </MotionNavLink>
-            <MotionNavLink
-              variants={itemVariants}
-              to={`/${PATHS.PUBLIC.BOARD_HIGH}`}
-              className={navLinkClass}
-            >
-              High-Board
-            </MotionNavLink>
-            <MotionNavLink
-              variants={itemVariants}
-              to={`/${PATHS.PUBLIC.SERVICES}`}
-              className={navLinkClass}
-            >
-              Services
-            </MotionNavLink>
-            <MotionNavLink
-              variants={itemVariants}
-              to={`/${PATHS.PUBLIC.CONTACT}`}
-              className={navLinkClass}
-            >
-              Contact us
-            </MotionNavLink>
-            <MotionNavLink
-              variants={itemVariants}
-              to={`/${PATHS.PUBLIC.PROJECTS}`}
-              className={navLinkClass}
-            >
-              Portfolio
-            </MotionNavLink>
+            <motion.div variants={itemVariants}>
+              <NavLink to="/" className={navLinkClass}>
+                Home
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink to={`/${PATHS.PUBLIC.ABOUT}`} className={navLinkClass}>
+                About Us
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink
+                to={`/${PATHS.PUBLIC.COMMITTEES}`}
+                className={navLinkClass}
+              >
+                Committees
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink
+                to={`/${PATHS.PUBLIC.BOARD_HIGH}`}
+                className={navLinkClass}
+              >
+                High-Board
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink
+                to={`/${PATHS.PUBLIC.SERVICES}`}
+                className={navLinkClass}
+              >
+                Services
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink to={`/${PATHS.PUBLIC.CONTACT}`} className={navLinkClass}>
+                Contact us
+              </NavLink>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <NavLink
+                to={`/${PATHS.PUBLIC.PROJECTS}`}
+                className={navLinkClass}
+              >
+                Portfolio
+              </NavLink>
+            </motion.div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.5, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-4"
           >
             {!isAuth ? (
@@ -321,7 +317,7 @@ export default function Navbar() {
       </motion.nav>
 
       <div
-        className="w-full h-[104px] md:h-[90px] shrink-0 pointer-events-none"
+        className="w-full h-[100px] md:h-[90px] shrink-0 pointer-events-none"
         aria-hidden="true"
       />
       <AnimatePresence>
@@ -368,7 +364,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{
-                    delay: 0.2,
+                    delay: 0.1,
                     type: "spring",
                     stiffness: 300,
                     damping: 25,
@@ -409,7 +405,7 @@ export default function Navbar() {
                       initial={{ opacity: 0, x: 30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{
-                        delay: 0.3 + i * 0.06,
+                        delay: 0.2 + i * 0.05,
                         type: "spring",
                         stiffness: 300,
                         damping: 25,
@@ -433,7 +429,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.8,
+                    delay: 0.4,
                     type: "spring",
                     stiffness: 300,
                     damping: 25,

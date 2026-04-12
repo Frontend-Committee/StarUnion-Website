@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function HeroSection() {
   return (
-    <div className="flex items-center  justify-center min-h-[calc(100vh-100px)] md:min-h-[calc(100vh-120px)] w-full py-10 md:py-0">
+    <div className="flex items-center  justify-center  md:min-h-[calc(100vh-140px)] w-full py-5 md:py-0 mb-24 md:mb-12">
       <div className="flex flex-col-reverse md:flex-row items-center justify-between w-full max-w-[1200px] mx-auto gap-10 md:gap-20 lg:gap-24 px-6 md:px-8">
         {/* Left: Centered Text Content */}
         <ScrollAnimation variant="fade-right" delay={50} className="flex-1">
