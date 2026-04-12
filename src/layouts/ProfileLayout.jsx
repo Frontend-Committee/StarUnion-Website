@@ -8,16 +8,14 @@ export default function ProfileLayout() {
   const isNavigating = navigation.state === "loading";
 
   return (
-    <div className="relative min-h-screen bg-gradientBg3">
+    <div className="relative min-h-screen starry-night-bg">
       {isNavigating && <LoadingSpinner fullScreen={true} />}
 
       <ScrollTop />
 
       <div
         className={
-          isNavigating
-            ? "opacity-50 pointer-events-none bg-gradientBg3"
-            : "opacity-100"
+          isNavigating ? "opacity-50 pointer-events-none " : "opacity-100"
         }
       >
         {/* <div className="container px-6 py-8"> */}

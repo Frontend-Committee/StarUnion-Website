@@ -2,6 +2,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import DynamicFormBuilder from "@/components/common/DynamicFormBuilder";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import { listAllForms, getFormDetail, submitForm } from "@/lib/api/endpoints";
+import { motion } from "framer-motion";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export default function ContactUsPage() {
   const { data: formsData, isLoading: isLoadingList } = useQuery({
@@ -70,23 +72,48 @@ export default function ContactUsPage() {
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.4,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", stiffness: 300, damping: 24 },
+    },
+  };
+
   return (
-    <section className="container py-12 text-white ">
-      <div className="mb-8 md:mb-10 ">
+    <motion.section
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="container py-12 text-white"
+    >
+        <ScrollAnimation variant="fade-down">
         <h1 className="mb-5 font-semibold text-h2 text-tertiary">Contact us</h1>
         <p className="text-sm font-semibold text-white">
           Contact us 24 hours a day and speak with specialized Members
         </p>
-      </div>
+      </ScrollAnimation>
 
-      <div className="max-w-3xl mx-auto">
+        <ScrollAnimation variant="fade-up" delay={100}>
         {contactSchema ? (
           <DynamicFormBuilder schema={contactSchema} onSubmit={handleSubmit} />
         ) : (
-          <p className="text-center text-gray-400">Contact form not found.</p>
+          <p className="mt-3 text-center text-gray-400">Contact form not found.</p>
         )}
-      </div>
-    </section>
+      </ScrollAnimation>
+    </motion.section>
   );
 }
 
