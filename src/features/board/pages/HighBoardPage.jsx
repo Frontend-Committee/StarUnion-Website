@@ -74,29 +74,11 @@ const TeamCard = ({ member, delay = 0 }) => (
         className="relative w-full bg-[#111827] overflow-hidden"
         style={{ height: 230 }}
       >
-        {member.photo ? (
-          <img
-            src={member.photo}
-            alt={member.name}
-            className="object-cover object-top w-full h-full"
-          />
-        ) : (
-          <div
-            className="flex flex-col justify-end w-full h-full p-3"
-            style={{
-              background:
-                "linear-gradient(170deg,#122112 0%,#0a1f0a 35%,#1a1030 100%)",
-            }}
-          >
-            <div className="absolute top-0 left-0 w-1 h-full bg-[#11EDA4]/40" />
-            <p className="text-white font-extrabold text-[10px] leading-tight mb-0.5">
-              Developer Student Community
-            </p>
-            <p className="text-white/50 text-[8px] leading-tight">
-              Learn | Build | Grow
-            </p>
-          </div>
-        )}
+        <img
+          src={member.photo}
+          alt={member.name}
+          className="object-cover object-top w-full h-full"
+        />
       </div>
       <div className="flex flex-col items-start gap-1 px-4 pt-4 pb-5 bg-white">
         <h4 className="text-primary font-bold text-[16px] leading-tight line-clamp-1">
@@ -123,21 +105,11 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
       style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.10)", minHeight: 140 }}
     >
       <div className="w-[120px] h-auto md:w-[240px] flex-shrink-0 relative overflow-hidden order-2">
-        {member.photo ? (
-          <img
-            src={member.photo}
-            alt={member.name}
-            className="object-cover object-top w-full h-full"
-          />
-        ) : (
-          <div
-            className="w-full h-full min-h-[140px]"
-            style={{
-              background:
-                "linear-gradient(135deg,#241352 0%,#4D3398 60%,#1E1A2B 100%)",
-            }}
-          />
-        )}
+        <img
+          src={member.photo}
+          alt={member.name}
+          className="object-cover object-top w-full h-full"
+        />
         <div
           className="absolute inset-y-0 left-0 w-10 pointer-events-none md:w-14"
           style={{
@@ -245,7 +217,7 @@ export default function HighBoardPage() {
               ? m.user.profile_photo.startsWith("http")
                 ? m.user.profile_photo
                 : `https://staging.starunion.tech${m.user.profile_photo}`
-              : null,
+              : `https://ui-avatars.com/api/?name=${encodeURIComponent(m.user?.full_name || "User")}&background=7A4BFF&color=fff`,
             socials: {
               facebook: m.user?.facebook,
               linkedin: m.user?.linkedin,
