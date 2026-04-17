@@ -5,6 +5,7 @@ import ScrollAnimation from "../../../components/ui/ScrollAnimation";
 import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
 import * as authApi from "@/lib/api/authApi";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
+import defaultAvatar from "@/assets/images/ProfilePage/defaultImg.png";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared social icons helper
@@ -217,7 +218,7 @@ export default function HighBoardPage() {
               ? m.user.profile_photo.startsWith("http")
                 ? m.user.profile_photo
                 : `https://staging.starunion.tech${m.user.profile_photo}`
-              : `https://ui-avatars.com/api/?name=${encodeURIComponent(m.user?.full_name || "User")}&background=7A4BFF&color=fff`,
+              : defaultAvatar,
             socials: {
               facebook: m.user?.facebook,
               linkedin: m.user?.linkedin,

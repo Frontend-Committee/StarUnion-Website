@@ -5,6 +5,7 @@ import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import { useProjectDetails } from "../hooks/useProjectDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
+import defaultAvatar from "@/assets/images/ProfilePage/defaultImg.png";
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
@@ -71,7 +72,7 @@ export default function ProjectDetailsPage() {
                       ? (member.image.startsWith("http") ? member.image : `https://staging.starunion.tech${member.image}`)
                       : member.user?.profile_photo
                         ? (member.user.profile_photo.startsWith("http") ? member.user.profile_photo : `https://staging.starunion.tech${member.user.profile_photo}`)
-                        : `https://ui-avatars.com/api/?name=${encodeURIComponent(member.user?.full_name || "User")}&background=7A4BFF&color=fff`
+                        : defaultAvatar
                   }
                   alt={member.user?.full_name || "Team Member"}
                   className="object-cover w-full h-[220px]"
