@@ -97,8 +97,15 @@ export default function ProfileCard({ userData, isOwnProfile }) {
               </p>              
               <p className="text-white mt-1">{university} {college ? `• ${college}` : ""}</p>
 
+              <div className="flex gap-4 items-center justify-center md:justify-start mt-4">
+                {facebook && <a href={facebook} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-facebook text-2xl"></i></a>}
+                {linkedin && <a href={linkedin} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-linkedin text-2xl"></i></a>}
+                {github && <a href={github} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-github text-2xl"></i></a>}
+                {whatsapp && <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-whatsapp text-2xl"></i></a>}
+              </div>
+
               <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
-                {isOwnProfile ? (
+                {isOwnProfile && (
                   <>
                     <Button onClick={() => setOpen(true)} className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
                       Edit Profile
@@ -107,13 +114,6 @@ export default function ProfileCard({ userData, isOwnProfile }) {
                       Settings
                     </Button>
                   </>
-                ) : (
-                  <div className="flex gap-4 items-center mt-2">
-                     {facebook && <a href={facebook} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-facebook text-2xl"></i></a>}
-                     {linkedin && <a href={linkedin} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-linkedin text-2xl"></i></a>}
-                     {github && <a href={github} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-github text-2xl"></i></a>}
-                     {whatsapp && <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-whatsapp text-2xl"></i></a>}
-                  </div>
                 )}
               </div>
             </div>

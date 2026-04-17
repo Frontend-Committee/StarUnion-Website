@@ -1,7 +1,7 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
 import { useState, useEffect } from "react";
+// Removed unused facebookIcon
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
-import facebookIcon from "../../../assets/icons/facebookIcon.png";
 import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
 import * as authApi from "@/lib/api/authApi";
 
@@ -9,9 +9,31 @@ import * as authApi from "@/lib/api/authApi";
    Shared social icons helper
 ───────────────────────────────────────────────────────────────────────────── */
 const Socials = ({ socials }) => (
-  <div className="flex gap-[5px]">
+  <div className="flex gap-4 items-center mt-2">
     {socials?.facebook && (
-      <img src={facebookIcon} alt="" className="w-6 h-6 object-cover" />
+      <a href={socials.facebook} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#1877F2] transition-all transform hover:scale-110">
+        <i className="fa-brands fa-facebook text-[18px]"></i>
+      </a>
+    )}
+    {socials?.linkedin && (
+      <a href={socials.linkedin} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#0A66C2] transition-all transform hover:scale-110">
+        <i className="fa-brands fa-linkedin text-[18px]"></i>
+      </a>
+    )}
+    {socials?.github && (
+      <a href={socials.github} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#181717] transition-all transform hover:scale-110">
+        <i className="fa-brands fa-github text-[18px]"></i>
+      </a>
+    )}
+    {socials?.instagram && (
+      <a href={socials.instagram} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#E4405F] transition-all transform hover:scale-110">
+        <i className="fa-brands fa-instagram text-[18px]"></i>
+      </a>
+    )}
+    {socials?.whatsapp && (
+      <a href={`https://wa.me/${socials.whatsapp}`} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#25D366] transition-all transform hover:scale-110">
+        <i className="fa-brands fa-whatsapp text-[18px]"></i>
+      </a>
     )}
   </div>
 );
@@ -117,19 +139,30 @@ export default function HighBoardPage() {
     const fetchBoard = async () => {
       setLoading(true);
       try {
-        // Prepare parameters: only include non-empty values
         const params = {
           is_highboard: true,
           year: `${activeYear}-09-30`,
         };
 
         const res = await authApi.getMemberships(params);
+        const allMembersRaw = res.results || res || [];
 
-        console.log("High Board Data Response:", res);
+        // Fetch full profiles for each member to get social links
+        const enrichedMembers = await Promise.all(
+          allMembersRaw.map(async (m) => {
+            try {
+              if (m.user?.id) {
+                const fullUser = await authApi.getUserProfileById(m.user.id);
+                return { ...m, user: { ...m.user, ...fullUser } };
+              }
+            } catch {
+              console.warn(`Could not fetch full profile for user ${m.user?.id}`);
+            }
+            return m;
+          })
+        );
 
-        const allMembers = res.results || res || [];
-        
-        const formatted = allMembers.map(m => {
+        const formatted = enrichedMembers.map(m => {
           let description = m.committee || "High Board Member";
           if (m.data && typeof m.data === 'object' && m.data.description) {
             description = m.data.description;
@@ -151,6 +184,7 @@ export default function HighBoardPage() {
               linkedin: m.user?.linkedin,
               github: m.user?.github,
               instagram: m.user?.instagram,
+              whatsapp: m.user?.whatsapp,
             }
           };
         });

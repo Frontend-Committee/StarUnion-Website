@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion as Motion } from "framer-motion";
 import {
   AlertCircle,
   Calendar,
@@ -37,7 +37,7 @@ function validateField(field, value) {
     if (!(patternObj instanceof RegExp)) {
       try {
         patternObj = new RegExp(patternObj, "u");
-      } catch (e) {
+      } catch {
         console.error("Invalid Regex:", patternObj);
         return null;
       }
@@ -174,14 +174,14 @@ function FieldWrapper({ field, error, children }) {
       {children}
       <AnimatePresence>
         {error && (
-          <motion.p
+          <Motion.p
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             className="text-rose-600 font-medium text-xs mt-1.5 ml-1"
           >
             {error}
-          </motion.p>
+          </Motion.p>
         )}
       </AnimatePresence>
       {field.hint && !error && (
@@ -286,18 +286,18 @@ function SelectField({ field, value, onChange, onBlur, error }) {
           } ${error ? errorBorder : ""} ${field.disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
         >
           <span className="truncate">{displayLabel}</span>
-          <motion.span
+          <Motion.span
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.2 }}
             className="flex-shrink-0 ml-2 text-white/70"
           >
             <ChevronDown className="w-4 h-4" />
-          </motion.span>
+          </Motion.span>
         </button>
 
         <AnimatePresence>
           {open && (
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0, y: -8, scaleY: 0.9 }}
               animate={{ opacity: 1, y: 0, scaleY: 1 }}
               exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
@@ -329,7 +329,7 @@ function SelectField({ field, value, onChange, onBlur, error }) {
                   </button>
                 );
               })}
-            </motion.div>
+            </Motion.div>
           )}
         </AnimatePresence>
       </div>
@@ -406,7 +406,7 @@ function CheckboxField({ field, value, onChange, onBlur, error }) {
           }`}
         >
           {value && (
-            <motion.svg
+            <Motion.svg
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               viewBox="0 0 12 10"
@@ -420,7 +420,7 @@ function CheckboxField({ field, value, onChange, onBlur, error }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-            </motion.svg>
+            </Motion.svg>
           )}
         </div>
         <input
@@ -584,7 +584,7 @@ function RangeField({ field, value, onChange, onBlur, error }) {
 }
 
 // File Upload
-function FileField({ field, value, onChange, onBlur, error }) {
+function FileField({ field, onChange, onBlur, error }) {
   const [fileName, setFileName] = useState(null);
   const [dragging, setDragging] = useState(false);
 
@@ -713,7 +713,7 @@ function ToggleField({ field, value, onChange, onBlur, error }) {
           value ? "bg-[#452798]" : "bg-[#452798]/20 border border-[#452798]/30"
         }`}
       >
-        <motion.span
+        <Motion.span
           layout
           className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow"
           animate={{ x: value ? 24 : 0 }}
@@ -862,19 +862,19 @@ function renderField({ field, values, errors, touched, onChange, onBlur }) {
 
 function SuccessScreen({ schema }) {
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       className="flex flex-col items-center justify-center gap-6 py-16 text-center"
     >
-      <motion.div
+      <Motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.1 }}
         className="w-20 h-20 rounded-full bg-[#452798]/10 border border-[#452798]/25 flex items-center justify-center shadow-[0_0_30px_rgba(69,39,152,0.18)]"
       >
         <CheckCircle className="w-10 h-10 text-[#452798]" />
-      </motion.div>
+      </Motion.div>
       <div>
         <h3 className="text-2xl font-bold text-[#452798] mb-2">
           {schema.successTitle || "Submitted Successfully!"}
@@ -884,7 +884,7 @@ function SuccessScreen({ schema }) {
             "Your form has been submitted. We'll get back to you soon."}
         </p>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -1050,7 +1050,7 @@ export default function DynamicFormBuilder({
           {isSuccess ? (
             <SuccessScreen key="success" schema={schema} />
           ) : (
-            <motion.form
+            <Motion.form
               key="form"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -1075,7 +1075,7 @@ export default function DynamicFormBuilder({
               {/* Submit error */}
               <AnimatePresence>
                 {submitError && (
-                  <motion.div
+                  <Motion.div
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
@@ -1085,7 +1085,7 @@ export default function DynamicFormBuilder({
                     <span className="text-sm font-medium text-rose-600">
                       {submitError}
                     </span>
-                  </motion.div>
+                  </Motion.div>
                 )}
               </AnimatePresence>
 
@@ -1104,7 +1104,7 @@ export default function DynamicFormBuilder({
                   </button>
                 )}
 
-                <motion.button
+                <Motion.button
                   type="submit"
                   disabled={isSubmitting}
                   whileTap={{ scale: 0.97 }}
@@ -1118,9 +1118,9 @@ export default function DynamicFormBuilder({
                   ) : (
                     schema?.submitLabel || "Submit Form"
                   )}
-                </motion.button>
+                </Motion.button>
               </div>
-            </motion.form>
+            </Motion.form>
           )}
         </AnimatePresence>
       </div>

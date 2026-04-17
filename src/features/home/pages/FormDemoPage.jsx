@@ -1,22 +1,17 @@
 import DynamicFormBuilder from "@/components/common/DynamicFormBuilder";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { listAllForms, getFormDetail, submitForm } from "@/lib/api/endpoints";
 
 export default function FormDemoPage() {
-  const [activeFormId, setActiveFormId] = useState(null);
-
   const { data: formsData, isLoading: isLoadingForms } = useQuery({
     queryKey: ["formsList"],
     queryFn: () => listAllForms(),
   });
 
-  useEffect(() => {
-    if (formsData?.results?.length > 0 && !activeFormId) {
-      setActiveFormId(formsData.results[0].id);
-    }
-  }, [formsData, activeFormId]);
+  const [selectedFormId, setSelectedFormId] = useState(null);
+  const activeFormId = selectedFormId || formsData?.results?.[0]?.id;
 
   const { data: currentSchema, isFetching: isFetchingSchema } = useQuery({
     queryKey: ["formDetail", activeFormId],
@@ -48,7 +43,7 @@ export default function FormDemoPage() {
                   value: new RegExp(cleanRegexString, "u"),
                   message: `Invalid ${field.name} format`,
                 };
-              } catch (e) {
+              } catch {
                 console.error(
                   `Invalid Regex for ${field.name}:`,
                   cleanRegexString,
@@ -68,7 +63,7 @@ export default function FormDemoPage() {
 
   const handleSubmit = async (values) => {
     const formattedValues = Object.entries(values)
-      .filter(([_, value]) => value !== undefined && value !== "")
+      .filter(([, value]) => value !== undefined && value !== "")
       .map(([key, value]) => ({
         field_id: parseInt(key, 10),
         value: String(value),
@@ -105,7 +100,7 @@ export default function FormDemoPage() {
               {formsData.results.map((form) => (
                 <button
                   key={form.id}
-                  onClick={() => setActiveFormId(form.id)}
+                  onClick={() => setSelectedFormId(form.id)}
                   className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                     activeFormId === form.id
                       ? "bg-[#7441FF] text-white shadow-[0_4px_16px_rgba(116,65,255,0.4)]"
