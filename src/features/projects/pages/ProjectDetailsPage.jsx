@@ -66,8 +66,14 @@ export default function ProjectDetailsPage() {
                 className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
-                  src={member.image}
-                  alt={member.user.full_name}
+                  src={
+                    member.image
+                      ? (member.image.startsWith("http") ? member.image : `https://staging.starunion.tech${member.image}`)
+                      : member.user?.profile_photo
+                        ? (member.user.profile_photo.startsWith("http") ? member.user.profile_photo : `https://staging.starunion.tech${member.user.profile_photo}`)
+                        : "/default-avatar.png" 
+                  }
+                  alt={member.user?.full_name || "Team Member"}
                   className="object-cover w-full h-[220px]"
                 />
                 <div className="p-4 bg-white">
@@ -132,8 +138,12 @@ export default function ProjectDetailsPage() {
                 className="shrink-0 w-[300px] md:w-[350px] overflow-hidden rounded-xl h-[300px] border border-white/10"
               >
                 <img
-                  src={img.image}
-                  alt={img.caption}
+                  src={
+                    img.image?.startsWith("http")
+                      ? img.image
+                      : `https://staging.starunion.tech${img.image}`
+                  }
+                  alt={img.caption || "Project Gallery Image"}
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                 />
               </div>
