@@ -28,4 +28,5 @@ export const PATHS = {
   },
 
   PROFILE: "/profile",
+  PROFILE_VIEW: "/profile/:id",
 };

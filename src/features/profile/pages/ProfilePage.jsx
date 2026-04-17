@@ -10,6 +10,7 @@ import imgSrc3 from "./../../../assets/images/ProfilePage/4614abb8f38efe719a43df
 import * as authApi from "@/lib/api/authApi.js";
 import { useEffect, useRef, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useParams } from "react-router-dom";
 
 const ApplicationStatus = [
   { title: "UI/UX Workshop", status: "Accepted", date: "March 2025", imgSrc: imgSrc1 },
@@ -17,45 +18,48 @@ const ApplicationStatus = [
   { title: "Frontend Workshop", status: "Rejected", date: "March 2025", imgSrc: imgSrc3 },
 ];
 
-const myActivities = [
-  { title: "UI/UX Workshop", role: "Attendee", date: "March 2025", imgSrc: imgSrc3 },
-  { title: "Tech Awareness Event", role: "Organizer", date: "March 2025", imgSrc: imgSrc1 },
-  { title: "UX Design Sprint", role: "Attendee", date: "April 2025", imgSrc: imgSrc2 },
-];
-
-const attendedSessions = [
-  { title: "Figma", date: "March 2025", imgSrc: imgSrc2, rate: 4.5 },
-  { title: "wireframe", date: "March 2025", imgSrc: imgSrc1, rate: 4.5 },
-  { title: "Basic Design", date: "April 2025", imgSrc: imgSrc3, rate: 4.5 },
-];
-
 export default function ProfilePage() {
   const navigate = useNavigate();
-
+  const { id } = useParams();
+  const [userData, setUserData] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [bgImage, setBgImage] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const bgInputRef = useRef(null);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+  const fetchProfile = async () => {
+    setLoading(true);
+    try {
+      let loggedInId = null;
       const token = localStorage.getItem("access");
-
       if (token) {
-        try {
-          const decoded = jwtDecode(token);
-          const res = await authApi.getUserProfileById(decoded.user_id);
-
-          if (res?.background_photo) {
-            setBgImage(res.background_photo);
-          }
-        } catch (err) {
-          console.log(err);
-        }
+        const decoded = jwtDecode(token);
+        loggedInId = decoded.user_id;
+        setCurrentUserId(loggedInId);
       }
-    };
+
+      const targetUserId = id || loggedInId;
+
+      if (targetUserId) {
+        const res = await authApi.getUserProfileById(targetUserId);
+        setUserData(res);
+        if (res?.background_photo) {
+          setBgImage(res.background_photo);
+        }
+      } else {
+        navigate("/auth/login");
+      }
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     fetchProfile();
-  }, []);
+  }, [id, navigate]);
 
   const handleBgClick = () => {
     bgInputRef.current.click();
@@ -79,6 +83,14 @@ export default function ProfilePage() {
       console.log(err);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#452798]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCDD00]"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden font-sans">
@@ -123,7 +135,10 @@ export default function ProfilePage() {
         </div>
 
         <div className="container mx-auto">
-          <ProfileCard />
+          <ProfileCard 
+            userData={userData} 
+            isOwnProfile={!id || (currentUserId && id == currentUserId)} 
+          />
         </div>
       </div>
 
@@ -168,49 +183,28 @@ export default function ProfilePage() {
           </section>
 
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">My Activities</h3>
+            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">My Memberships & Activities</h3>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {myActivities.map((item, index) => (
-                <Card
-                  key={index}
-                  title={item.title}
-                  status={item.status}
-                  date={item.date}
-                  role={item.role}
-                  dotColor={
-                    item.status === "Accepted"
-                      ? "bg-[#03DF20]"
-                      : item.status === "Pending"
-                      ? "bg-[#FCDD00]"
-                      : "bg-[#FF0505]"
-                  }
-                  imgSrc={item.imgSrc}
-                />
-              ))}
+              {userData?.memberships?.length > 0 ? (
+                userData.memberships.map((m, index) => (
+                  <Card
+                    key={m.id || index}
+                    title={`${m.committee || "Member"}`}
+                    status={m.is_highboard ? "High Board" : "Member"}
+                    date={m.year?.split("-")[0] || "N/A"}
+                    role={m.role}
+                    dotColor="bg-[#03DF20]"
+                    // You can add logic here to match logos/images based on committee
+                    imgSrc={logo} 
+                  />
+                ))
+              ) : (
+                <p className="text-white/60 text-lg italic">No membership activities records found.</p>
+              )}
             </div>
           </section>
 
           <section className="mb-16">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Attendee Sessions</h3>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-              {attendedSessions.map((item, index) => (
-                <Card
-                  key={index}
-                  title={item.title}
-                  status={item.status}
-                  date={item.date}
-                  rate={item.rate}
-                  dotColor={
-                    item.status === "Accepted"
-                      ? "bg-[#03DF20]"
-                      : item.status === "Pending"
-                      ? "bg-[#FCDD00]"
-                      : "bg-[#FF0505]"
-                  }
-                  imgSrc={item.imgSrc}
-                />
-              ))}
-            </div>
           </section>
 
         </div>

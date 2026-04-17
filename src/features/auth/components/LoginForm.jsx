@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useAuth } from "@/hooks/useAuth";
 import * as authApi from "@/lib/api/authApi.js"
-import { emailValidation, passwordValidation } from "@/utils/validators.js";
+import { emailValidation, loginPasswordValidation } from "@/utils/validators.js";
 import { useState } from "react";
 
 function LoginForm() {
@@ -92,7 +92,7 @@ function LoginForm() {
             id="pass"
             placeholder="••••••••"
             className="bg-[#452798] border-none text-white placeholder:text-white/40 h-12 px-4 rounded-xl transition-all outline-none ring-0 focus:ring-2 focus:ring-[#452798]/50"
-            {...register("password", passwordValidation)}
+            {...register("password", loginPasswordValidation)}
           />
 
           {errors.password && (

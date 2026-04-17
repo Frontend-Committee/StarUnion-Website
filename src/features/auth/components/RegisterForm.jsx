@@ -15,34 +15,36 @@ function RegisterForm() {
     const [isGenderOpen, setIsGenderOpen] = useState(false);
     const [selectedGender, setSelectedGender] = useState("");
     const [status, setStatus] = useState("");
-    const [loading , setLoading] = useState("");
-    const [serverError , setServerError] = useState("");
-useEffect(() => {
-    if (status) {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
-}, [status]);
+    const [loading, setLoading] = useState(false);
+    const [serverError, setServerError] = useState("");
+
+    useEffect(() => {
+        if (status) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    }, [status]);
+
     const onSubmit = async(data)=>{
         console.log(data);
+        const { confirmPassword: _, ...registerData } = data;
         try {
             setStatus(null);
             setLoading(true);
-            const response =await authApi.registerUser(data);
+            await authApi.registerUser(registerData);
             setStatus("success");
             setTimeout(() => {
-            navigate("/auth/login", { replace: true });
-        }, 2000);
+                navigate("/auth/login", { replace: true });
+            }, 2000);
         } catch (error) {
             setStatus("error");
-            setServerError(Object.values(error.response.data).flat().join(", "));
+            setServerError(error.response?.data ? Object.values(error.response.data).flat().join(", ") : error.message);
         }
         finally {
-        setLoading(false);
-    }
-        
+            setLoading(false);
+        }
     }
 
     const {
@@ -59,7 +61,7 @@ useEffect(() => {
 
     const handleGenderSelect = (value, label) => {
         setSelectedGender(label);
-        setValue("gender", value);
+        setValue("gender", value, { shouldValidate: true });
         setIsGenderOpen(false);
     };
 
@@ -263,7 +265,7 @@ useEffect(() => {
           disabled={loading}
           className="text-lg w-full h-12 bg-[#452798] text-white hover:bg-[#683CE3] active:scale-[0.98] transition-all font-bold rounded-xl shadow-lg"
         >
-          {loading ? "Logging in..." : "Register"}
+          {loading ? "Registering..." : "Register"}
                     </Button>
                     
                     <button 

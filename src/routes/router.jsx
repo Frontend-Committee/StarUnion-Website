@@ -90,7 +90,10 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <ProfileLayout />,
-        children: [{ path: PATHS.PROFILE, element: <ProfilePage /> }],
+        children: [
+          { path: PATHS.PROFILE, element: <ProfilePage /> },
+          { path: PATHS.PROFILE_VIEW, element: <ProfilePage /> },
+        ],
       },
     ],
   },

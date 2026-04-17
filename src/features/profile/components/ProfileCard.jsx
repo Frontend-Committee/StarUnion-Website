@@ -1,45 +1,15 @@
-import * as jwtDecode from "jwt-decode";
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import userImg from "./../../../assets/images/ProfilePage/defaultImg.png"
 import { Button } from '@/components/ui/button';
 import * as authApi from "@/lib/api/authApi.js";
 import EditProfileForm from "./EditProfileForm";
-import { current } from "@reduxjs/toolkit";
 
-export default function ProfileCard() {
-  const [image, setImage] = useState(userImg);
-  const [fullName, setFullName] = useState("");
-  const [college, setCollege] = useState("");
-  const [university, setUniversity] = useState("");
-  const [memberships, setMemberships] = useState([]);
+export default function ProfileCard({ userData, isOwnProfile }) {
+  const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
- const [open , setOpen] = useState(false);
-    
-    
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const decoded = jwtDecode.jwtDecode(token);
-          const res = await authApi.getUserProfileById(decoded.user_id);
-          if (res) {
-            setFullName(res.full_name || "");
-            setCollege(res.college || "");
-            setUniversity(res.university || "");
-            if (res.memberships.length !== 0) {
-              setMemberships(res.memberships);
-            }
-            if (res.profile_photo) setImage(res.profile_photo);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-    fetchProfile();
-  }, []);
+  const displayImage = previewImage || userData?.profile_photo || userImg;
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -53,7 +23,7 @@ export default function ProfileCard() {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        setImage(e.target.result);
+        setPreviewImage(e.target.result);
       };
       reader.readAsDataURL(file);
 
@@ -68,6 +38,18 @@ export default function ProfileCard() {
       }
     }
   };
+    const {
+    full_name: fullName = "",
+    college = "",
+    university = "",
+    memberships = [],
+    facebook,
+    linkedin,
+    github,
+    whatsapp,
+    skills = []
+  } = userData;
+
   return (
     <>
     <div className="w-full">
@@ -76,7 +58,7 @@ export default function ProfileCard() {
 
           <div className="flex flex-col items-center md:items-start w-full md:w-auto">
             <div
-              className="size-48 md:size-60 aspect-square rounded-full gradient-content overflow-hidden shadow-2xl mb-4 cursor-pointer group relative"
+              className={`size-48 md:size-60 aspect-square rounded-full overflow-hidden shadow-2xl mb-4 relative ${isOwnProfile ? "cursor-pointer group" : ""}`}
               onClick={handleImageClick}
               style={{
                 background: `
@@ -87,36 +69,52 @@ export default function ProfileCard() {
               }}
             >
               <img
-                src={image}
+                src={displayImage}
                 alt="User"
                 className="w-full h-full object-cover group-hover:opacity-75 transition-opacity"
               />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <i className="fa-solid fa-camera text-white text-2xl"></i>
-              </div>
+              {isOwnProfile && (
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <i className="fa-solid fa-camera text-white text-2xl"></i>
+                </div>
+              )}
             </div>
 
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImageChange}
-              className="hidden"
-              accept="image/*"
+            {isOwnProfile && (
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageChange}
+                className="hidden"
+                accept="image/*"
               />
+            )}
 
             <div className="text-center md:text-left">
               <h2 className="text-2xl md:text-3xl font-bold text-[#FCDD00]">{fullName}</h2>
-<p className="text-white opacity-90">
-  {memberships?.[0]?.committee || "no committee"}
-</p>              <p className="text-white mt-1">Egypt, Cairo</p>
+              <p className="text-white opacity-90">
+                {memberships?.[0]?.committee || "General Member"}
+              </p>              
+              <p className="text-white mt-1">{university} {college ? `• ${college}` : ""}</p>
 
               <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
-                <Button onClick ={()=>setOpen(true)} className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
-                  Edit Profile
-                </Button>
-                <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
-                  Setting
-                </Button>
+                {isOwnProfile ? (
+                  <>
+                    <Button onClick={() => setOpen(true)} className="bg-white text-[#452798] rounded-md shadow-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
+                      Edit Profile
+                    </Button>
+                    <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
+                      Settings
+                    </Button>
+                  </>
+                ) : (
+                  <div className="flex gap-4 items-center mt-2">
+                     {facebook && <a href={facebook} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-facebook text-2xl"></i></a>}
+                     {linkedin && <a href={linkedin} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-linkedin text-2xl"></i></a>}
+                     {github && <a href={github} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-github text-2xl"></i></a>}
+                     {whatsapp && <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noreferrer" className="text-white hover:text-[#FCDD00] transition-colors"><i className="fa-brands fa-whatsapp text-2xl"></i></a>}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -124,7 +122,7 @@ export default function ProfileCard() {
           <div className="flex flex-col items-center md:items-end gap-5 w-full md:w-auto mt-6 md:mt-0">
             <div className="text-center md:text-right">
               <span className="text-white flex items-center justify-center md:justify-end gap-2 mb-2">
-                current role
+                Current Role
 
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -149,18 +147,30 @@ export default function ProfileCard() {
                     {memberships[0].committee} - {memberships[0].role}
                   </span>
                 ) : (
-                  <span>No memberships</span>
+                  <span>No active memberships</span>
                 )}
               </div>
             </div>
 
             <div className="text-center md:text-right">
-              <span className="text-white block mb-2">
+              <span className="text-white block mb-2 font-semibold">
                 Skills <i className="fa-regular fa-star ml-1 text-yellow-300"></i>
               </span>
-              <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap">
-                Add Your Skills
-              </Button>
+              <div className="flex flex-wrap gap-2 justify-center md:justify-end max-w-xs">
+                {skills?.length > 0 ? (
+                  skills.map((skill, idx) => (
+                    <span key={idx} className="bg-white/20 text-white px-3 py-1 rounded-full text-xs">
+                      {skill}
+                    </span>
+                  ))
+                ) : (
+                  isOwnProfile && (
+                    <Button className="text-[#452798] bg-white rounded-md hover:bg-white/90 border-2 border-[#7A4BFF] whitespace-nowrap text-xs h-8">
+                      Add Your Skills
+                    </Button>
+                  )
+                )}
+              </div>
             </div>
           </div>
 
@@ -178,14 +188,9 @@ export default function ProfileCard() {
     >
 
       <EditProfileForm
-        fullName={fullName}
-        college={college}
-        university={university}
-        onSuccess={(data) => {
-          setFullName(data.full_name);
-          setCollege(data.college);
-          setUniversity(data.university);
-          setOpen(false);
+        userData={userData}
+        onSuccess={() => {
+          window.location.reload();
         }}
       />
 

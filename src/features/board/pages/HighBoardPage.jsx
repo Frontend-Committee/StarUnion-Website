@@ -1,12 +1,9 @@
 import { AnimatePresence, motion as Motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
-import {
-  HIGH_BOARD_FEATURED,
-  HIGH_BOARD_SECTIONS,
-} from "../../../utils/constants";
 import facebookIcon from "../../../assets/icons/facebookIcon.png";
 import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
+import * as authApi from "@/lib/api/authApi";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared social icons helper
@@ -36,10 +33,10 @@ const TeamCard = ({ member, delay = 0 }) => (
           </div>
         )}
       </div>
-      <div className="bg-white px-4 pt-4 pb-5 flex flex-col">
-        <h4 className="text-primary font-bold text-[16px] leading-tight">{member.name}</h4>
-        <p className="text-[#111] text-[14px] font-bold mt-[4px]">{member.role}</p>
-        <p className="text-gray-500 text-[13px] leading-snug mt-[4px] truncate-2-lines">{member.description}</p>
+      <div className="bg-white px-4 pt-4 pb-5 flex flex-col items-start gap-1">
+        <h4 className="text-primary font-bold text-[16px] leading-tight line-clamp-1">{member.name}</h4>
+        <p className="text-[#111] text-[14px] font-bold">{member.role}</p>
+        <p className="text-gray-500 text-[13px] leading-snug truncate-2-lines">{member.description}</p>
         <div className="mt-3">
           <Socials socials={member.socials} />
         </div>
@@ -56,7 +53,6 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
       className="w-full rounded-[16px] overflow-hidden bg-white flex flex-row primary-card-hover"
       style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.10)", minHeight: 140 }}
     >
-      {/* Image — small square on mobile, tall fixed panel on md+ */}
       <div className="w-[120px] h-auto md:w-[240px] flex-shrink-0 relative overflow-hidden order-2">
         {member.photo ? (
           <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
@@ -69,7 +65,6 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
             }}
           />
         )}
-        {/* Fade edge toward text — left side on all screen sizes */}
         <div
           className="absolute inset-y-0 left-0 w-10 md:w-14 pointer-events-none"
           style={{
@@ -79,7 +74,6 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
         />
       </div>
 
-      {/* Text */}
       <div className="flex-1 px-4 py-4 md:px-8 md:py-8 flex flex-col justify-center min-w-0 order-1 text-left">
         <h3 className="text-primary font-bold text-[18px] md:text-[24px] leading-tight">
           {member.name}
@@ -87,7 +81,7 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
         <p className="text-[#111] font-bold text-[13px] md:text-[17px] mt-1">
           {member.role}
         </p>
-        <p className="text-gray-500 text-[12px] md:text-[15px] leading-relaxed mt-1 md:mt-3 truncate-4-lines">
+        <p className="text-gray-500 text-[12px] md:text-[15px] leading-relaxed mt-1 md:mt-3 line-clamp-3">
           {member.description}
         </p>
         <div className="mt-3 md:mt-5">
@@ -98,9 +92,6 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
   </ScrollAnimation>
 );
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   BoardSection — yellow heading + horizontal scrollable TeamCard list
-───────────────────────────────────────────────────────────────────────────── */
 const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={sectionDelay}>
     <div className="mb-12">
@@ -114,23 +105,100 @@ const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   </ScrollAnimation>
 );
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   Year tabs available
-───────────────────────────────────────────────────────────────────────────── */
-const YEARS = [2026, 2025, 2024];
+const YEARS = [2025, 2024, 2023];
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   HighBoardPage — main export
-───────────────────────────────────────────────────────────────────────────── */
 export default function HighBoardPage() {
-  const [activeYear, setActiveYear] = useState(2026);
+  const [activeYear, setActiveYear] = useState(2025);
+  const [featured, setFeatured] = useState([]);
+  const [sections, setSections] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBoard = async () => {
+      setLoading(true);
+      try {
+        // Prepare parameters: only include non-empty values
+        const params = {
+          is_highboard: true,
+          year: `${activeYear}-01-01`,
+        };
+
+        const res = await authApi.getMemberships(params);
+
+        console.log("High Board Data Response:", res);
+
+        const allMembers = res.results || res || [];
+        
+        const formatted = allMembers.map(m => {
+          let description = m.committee || "High Board Member";
+          if (m.data && typeof m.data === 'object' && m.data.description) {
+            description = m.data.description;
+          }
+
+          return {
+            id: m.id,
+            name: m.user?.full_name || "Anonymous",
+            role: m.role,
+            description: description,
+            committee: m.committee,
+            photo: m.user?.profile_photo,
+            socials: {
+              facebook: m.user?.facebook,
+              linkedin: m.user?.linkedin,
+              github: m.user?.github,
+              instagram: m.user?.instagram,
+            }
+          };
+        });
+
+        // Grouping logic
+        const getRoleMembers = (roleName, exact = false) => 
+          formatted.filter(m => exact 
+            ? m.role?.toLowerCase() === roleName.toLowerCase()
+            : m.role?.toLowerCase().includes(roleName.toLowerCase())
+          );
+
+        const president = getRoleMembers("President", true);
+        const vPresident = getRoleMembers("Vice President");
+        const genManager = getRoleMembers("General Manager");
+        
+        setFeatured([...president, ...vPresident, ...genManager]);
+
+        const managers = formatted.filter(m => 
+          m.role?.toLowerCase().includes("manager") && 
+          !m.role?.toLowerCase().includes("general")
+        );
+        const heads = getRoleMembers("Head", true);
+        const viceHeads = getRoleMembers("Vice Head");
+
+        // Catch members not in the main groups
+        const categorizedIds = new Set([
+          ...president, ...vPresident, ...genManager, ...managers, ...heads, ...viceHeads
+        ].map(m => m.id));
+        
+        const otherMembers = formatted.filter(m => !categorizedIds.has(m.id));
+
+        const boardSections = [];
+        if (managers.length > 0) boardSections.push({ label: "Managers", members: managers });
+        if (heads.length > 0) boardSections.push({ label: "Heads", members: heads });
+        if (viceHeads.length > 0) boardSections.push({ label: "Vice Heads", members: viceHeads });
+        if (otherMembers.length > 0) boardSections.push({ label: "Board Members", members: otherMembers });
+
+        setSections(boardSections);
+      } catch (err) {
+        console.error("Error loading board:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBoard();
+  }, [activeYear]);
 
   return (
-    <section className="container py-6 md:py-10 px-4 md:px-8">
-      {/* ── Year navigation bar ── */}
+    <section className="container py-6 md:py-10 px-4 md:px-8 min-h-[600px]">
       <ScrollAnimation variant="fade-down">
         <div className="flex items-center justify-center gap-2 flex-wrap mb-10 w-full md:w-fit mx-auto">
-          {/* Year pills */}
           {YEARS.map((year) => {
             const isActive = year === activeYear;
             return (
@@ -142,7 +210,7 @@ export default function HighBoardPage() {
                 className={`relative px-8 py-[10px] rounded-full text-[18px] font-bold transition duration-300 overflow-hidden ${
                   isActive
                     ? "bg-primary text-white border border-white"
-                    : "border border-primary  text-white hover:bg-white/10"
+                    : "border border-primary text-white hover:bg-white/10"
                 }`}
               >
                 {isActive && (
@@ -160,36 +228,53 @@ export default function HighBoardPage() {
         </div>
       </ScrollAnimation>
 
-      {/* ── Year content (fade-swap on year change) ── */}
       <AnimatePresence mode="wait">
-        <Motion.div
-          key={activeYear}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.28 }}
-        >
-          {/* Featured: President + General Manager */}
-          <div className="flex flex-col gap-5 mb-14">
-            {HIGH_BOARD_FEATURED.map((leader, i) => (
-              <FeaturedLeaderCard
-                key={leader.id + "-" + activeYear}
-                member={leader}
-                delay={i * 100}
+        {loading ? (
+          <Motion.div
+            key="loader"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex justify-center items-center py-20"
+          >
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCDD00]"></div>
+          </Motion.div>
+        ) : (
+          <Motion.div
+            key={activeYear}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.28 }}
+          >
+            {featured.length > 0 && (
+              <div className="flex flex-col gap-5 mb-14">
+                {featured.map((leader, i) => (
+                  <FeaturedLeaderCard
+                    key={leader.id}
+                    member={leader}
+                    delay={i * 100}
+                  />
+                ))}
+              </div>
+            )}
+
+            {sections.map((section, i) => (
+              <BoardSection
+                key={section.label}
+                label={section.label}
+                members={section.members}
+                sectionDelay={i * 80}
               />
             ))}
-          </div>
-
-          {/* Role sections */}
-          {HIGH_BOARD_SECTIONS.map((section, i) => (
-            <BoardSection
-              key={section.label + "-" + activeYear}
-              label={section.label}
-              members={section.members}
-              sectionDelay={i * 80}
-            />
-          ))}
-        </Motion.div>
+            
+            {!featured.length && !sections.length && (
+              <p className="text-white/60 text-center py-20 text-xl font-semibold">
+                No high board members found for this year.
+              </p>
+            )}
+          </Motion.div>
+        )}
       </AnimatePresence>
     </section>
   );

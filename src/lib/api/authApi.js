@@ -33,7 +33,8 @@ export const getCurrentUser = async () => {
 
 export const updateCurrentUser = async (userData) => {
   try {
-    const response = await api.patch("/auth/users/me/", userData , {headers:{"Content-Type": "multipart/form-data"}});
+    // Let axios handle headers automatically for FormData
+    const response = await api.patch("/auth/users/me/", userData);
     return response.data;
   } catch (error) {
     console.error(
@@ -169,6 +170,31 @@ export const getUserProfileById = async (userId) => {
       `Error fetching profile for user ${userId}:`,
       error.response?.data || error.message,
     );
+    throw error;
+  }
+};
+
+/* 
+---------------------------------------
+             Memberships
+ -------------------------------------- 
+ */
+export const getMemberships = async (params) => {
+  try {
+    const response = await api.get("/memberships/", { params });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching memberships:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getMembershipById = async (membershipId) => {
+  try {
+    const response = await api.get(`/memberships/${membershipId}/`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching membership ${membershipId}:`, error.response?.data || error.message);
     throw error;
   }
 };
