@@ -127,7 +127,7 @@ const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   </ScrollAnimation>
 );
 
-const YEARS = [2025, 2024, 2023];
+const YEARS = [2025, 2023];
 
 export default function HighBoardPage() {
   const [activeYear, setActiveYear] = useState(2025);
