@@ -65,11 +65,7 @@ export default function ContactUsPage() {
   };
 
   if (isLoadingList || (contactFormId && isLoadingDetail)) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner fullScreen={true} />;
   }
 
   const containerVariants = {
@@ -97,20 +93,22 @@ export default function ContactUsPage() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="container py-12 text-white"
+      className=" max-w-[1100px] mx-auto px-4 py-5 md:px-1 md:py-3"
     >
-        <ScrollAnimation variant="fade-down">
+      <ScrollAnimation variant="fade-down">
         <h1 className="mb-5 font-semibold text-h2 text-tertiary">Contact us</h1>
         <p className="text-sm font-semibold text-white">
           Contact us 24 hours a day and speak with specialized Members
         </p>
       </ScrollAnimation>
 
-        <ScrollAnimation variant="fade-up" delay={100}>
+      <ScrollAnimation variant="fade-up" delay={100}>
         {contactSchema ? (
           <DynamicFormBuilder schema={contactSchema} onSubmit={handleSubmit} />
         ) : (
-          <p className="mt-3 text-center text-gray-400">Contact form not found.</p>
+          <p className="mt-3 text-center text-gray-400">
+            Contact form not found.
+          </p>
         )}
       </ScrollAnimation>
     </motion.section>

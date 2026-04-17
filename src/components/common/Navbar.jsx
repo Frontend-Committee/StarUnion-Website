@@ -19,7 +19,7 @@ import LoadingSpinner from "../ui/LoadingSpinneer";
 export default function Navbar() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const isAuth = Boolean(localStorage.getItem("token"));
+  const isAuth = Boolean(localStorage.getItem("access"));
   const [open, setOpen] = useState(false);
 
   const user = (() => {
@@ -372,9 +372,9 @@ export default function Navbar() {
                   className="flex items-center gap-4 pb-6 border-b border-white/10"
                 >
                   <div className="overflow-hidden rounded-full shadow-lg w-14 h-14 bg-white/10 ring-2 ring-primary/50">
-                    {user?.avatar ? (
+                    {user?.profile_photo ? (
                       <img
-                        src={user.avatar}
+                        src={user.profile_photo}
                         alt="avatar"
                         className="object-cover w-full h-full"
                       />
@@ -388,7 +388,7 @@ export default function Navbar() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-base font-bold text-white truncate">
-                      {isAuth ? user?.name || "Your Name" : "Guest"}
+                      {isAuth ? user?.full_name || "Your Name" : "Guest"}
                     </p>
                     <p className="truncate text-[13px] font-medium text-yellow-300">
                       {isAuth

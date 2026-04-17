@@ -4,34 +4,60 @@ import { useState, useEffect } from "react";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
 import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
 import * as authApi from "@/lib/api/authApi";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Shared social icons helper
 ───────────────────────────────────────────────────────────────────────────── */
 const Socials = ({ socials }) => (
-  <div className="flex gap-4 items-center mt-2">
+  <div className="flex items-center gap-4 mt-2">
     {socials?.facebook && (
-      <a href={socials.facebook} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#1877F2] transition-all transform hover:scale-110">
+      <a
+        href={socials.facebook}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[#452798]/60 hover:text-[#1877F2] transition-all transform hover:scale-110"
+      >
         <i className="fa-brands fa-facebook text-[18px]"></i>
       </a>
     )}
     {socials?.linkedin && (
-      <a href={socials.linkedin} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#0A66C2] transition-all transform hover:scale-110">
+      <a
+        href={socials.linkedin}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[#452798]/60 hover:text-[#0A66C2] transition-all transform hover:scale-110"
+      >
         <i className="fa-brands fa-linkedin text-[18px]"></i>
       </a>
     )}
     {socials?.github && (
-      <a href={socials.github} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#181717] transition-all transform hover:scale-110">
+      <a
+        href={socials.github}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[#452798]/60 hover:text-[#181717] transition-all transform hover:scale-110"
+      >
         <i className="fa-brands fa-github text-[18px]"></i>
       </a>
     )}
     {socials?.instagram && (
-      <a href={socials.instagram} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#E4405F] transition-all transform hover:scale-110">
+      <a
+        href={socials.instagram}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[#452798]/60 hover:text-[#E4405F] transition-all transform hover:scale-110"
+      >
         <i className="fa-brands fa-instagram text-[18px]"></i>
       </a>
     )}
     {socials?.whatsapp && (
-      <a href={`https://wa.me/${socials.whatsapp}`} target="_blank" rel="noreferrer" className="text-[#452798]/60 hover:text-[#25D366] transition-all transform hover:scale-110">
+      <a
+        href={`https://wa.me/${socials.whatsapp}`}
+        target="_blank"
+        rel="noreferrer"
+        className="text-[#452798]/60 hover:text-[#25D366] transition-all transform hover:scale-110"
+      >
         <i className="fa-brands fa-whatsapp text-[18px]"></i>
       </a>
     )}
@@ -44,21 +70,42 @@ const TeamCard = ({ member, delay = 0 }) => (
       className="w-[220px] h-[380px] rounded-[14px] overflow-hidden border border-gray-200 bg-white flex flex-col primary-card-hover"
       style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}
     >
-      <div className="relative w-full bg-[#111827] overflow-hidden" style={{ height: 230 }}>
+      <div
+        className="relative w-full bg-[#111827] overflow-hidden"
+        style={{ height: 230 }}
+      >
         {member.photo ? (
-          <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
+          <img
+            src={member.photo}
+            alt={member.name}
+            className="object-cover object-top w-full h-full"
+          />
         ) : (
-          <div className="w-full h-full flex flex-col justify-end p-3" style={{ background: "linear-gradient(170deg,#122112 0%,#0a1f0a 35%,#1a1030 100%)" }}>
+          <div
+            className="flex flex-col justify-end w-full h-full p-3"
+            style={{
+              background:
+                "linear-gradient(170deg,#122112 0%,#0a1f0a 35%,#1a1030 100%)",
+            }}
+          >
             <div className="absolute top-0 left-0 w-1 h-full bg-[#11EDA4]/40" />
-            <p className="text-white font-extrabold text-[10px] leading-tight mb-0.5">Developer Student Community</p>
-            <p className="text-white/50 text-[8px] leading-tight">Learn | Build | Grow</p>
+            <p className="text-white font-extrabold text-[10px] leading-tight mb-0.5">
+              Developer Student Community
+            </p>
+            <p className="text-white/50 text-[8px] leading-tight">
+              Learn | Build | Grow
+            </p>
           </div>
         )}
       </div>
-      <div className="bg-white px-4 pt-4 pb-5 flex flex-col items-start gap-1">
-        <h4 className="text-primary font-bold text-[16px] leading-tight line-clamp-1">{member.name}</h4>
+      <div className="flex flex-col items-start gap-1 px-4 pt-4 pb-5 bg-white">
+        <h4 className="text-primary font-bold text-[16px] leading-tight line-clamp-1">
+          {member.name}
+        </h4>
         <p className="text-[#111] text-[14px] font-bold">{member.role}</p>
-        <p className="text-gray-500 text-[13px] leading-snug truncate-2-lines">{member.description}</p>
+        <p className="text-gray-500 text-[13px] leading-snug truncate-2-lines">
+          {member.description}
+        </p>
         <div className="mt-3">
           <Socials socials={member.socials} />
         </div>
@@ -77,7 +124,11 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
     >
       <div className="w-[120px] h-auto md:w-[240px] flex-shrink-0 relative overflow-hidden order-2">
         {member.photo ? (
-          <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
+          <img
+            src={member.photo}
+            alt={member.name}
+            className="object-cover object-top w-full h-full"
+          />
         ) : (
           <div
             className="w-full h-full min-h-[140px]"
@@ -88,7 +139,7 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
           />
         )}
         <div
-          className="absolute inset-y-0 left-0 w-10 md:w-14 pointer-events-none"
+          className="absolute inset-y-0 left-0 w-10 pointer-events-none md:w-14"
           style={{
             background:
               "linear-gradient(to right,rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)",
@@ -96,7 +147,7 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
         />
       </div>
 
-      <div className="flex-1 px-4 py-4 md:px-8 md:py-8 flex flex-col justify-center min-w-0 order-1 text-left">
+      <div className="flex flex-col justify-center flex-1 order-1 min-w-0 px-4 py-4 text-left md:px-8 md:py-8">
         <h3 className="text-primary font-bold text-[18px] md:text-[24px] leading-tight">
           {member.name}
         </h3>
@@ -117,7 +168,9 @@ const FeaturedLeaderCard = ({ member, delay = 0 }) => (
 const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   <ScrollAnimation variant="fade-up" delay={sectionDelay}>
     <div className="mb-12">
-      <h2 className="text-tertiary font-bold text-3xl md:text-4xl mb-6 px-4 md:px-0">{label}</h2>
+      <h2 className="px-4 mb-6 text-3xl font-bold text-tertiary md:text-4xl md:px-0">
+        {label}
+      </h2>
       <HorizontalScrollSection className="px-4 md:px-0">
         {members.map((member, i) => (
           <TeamCard key={member.id} member={member} delay={i * 70} />
@@ -156,15 +209,17 @@ export default function HighBoardPage() {
                 return { ...m, user: { ...m.user, ...fullUser } };
               }
             } catch {
-              console.warn(`Could not fetch full profile for user ${m.user?.id}`);
+              console.warn(
+                `Could not fetch full profile for user ${m.user?.id}`,
+              );
             }
             return m;
-          })
+          }),
         );
 
-        const formatted = enrichedMembers.map(m => {
+        const formatted = enrichedMembers.map((m) => {
           let description = m.committee || "High Board Member";
-          if (m.data && typeof m.data === 'object' && m.data.description) {
+          if (m.data && typeof m.data === "object" && m.data.description) {
             description = m.data.description;
           }
 
@@ -174,10 +229,10 @@ export default function HighBoardPage() {
             role: m.role,
             description: description,
             committee: m.committee,
-            photo: m.user?.profile_photo 
-              ? (m.user.profile_photo.startsWith('http') 
-                  ? m.user.profile_photo 
-                  : `https://staging.starunion.tech${m.user.profile_photo}`)
+            photo: m.user?.profile_photo
+              ? m.user.profile_photo.startsWith("http")
+                ? m.user.profile_photo
+                : `https://staging.starunion.tech${m.user.profile_photo}`
               : null,
             socials: {
               facebook: m.user?.facebook,
@@ -185,42 +240,55 @@ export default function HighBoardPage() {
               github: m.user?.github,
               instagram: m.user?.instagram,
               whatsapp: m.user?.whatsapp,
-            }
+            },
           };
         });
 
         // Grouping logic
-        const getRoleMembers = (roleName, exact = false) => 
-          formatted.filter(m => exact 
-            ? m.role?.toLowerCase() === roleName.toLowerCase()
-            : m.role?.toLowerCase().includes(roleName.toLowerCase())
+        const getRoleMembers = (roleName, exact = false) =>
+          formatted.filter((m) =>
+            exact
+              ? m.role?.toLowerCase() === roleName.toLowerCase()
+              : m.role?.toLowerCase().includes(roleName.toLowerCase()),
           );
 
         const president = getRoleMembers("President", true);
         const vPresident = getRoleMembers("Vice President");
         const genManager = getRoleMembers("General Manager");
-        
+
         setFeatured([...president, ...vPresident, ...genManager]);
 
-        const managers = formatted.filter(m => 
-          m.role?.toLowerCase().includes("manager") && 
-          !m.role?.toLowerCase().includes("general")
+        const managers = formatted.filter(
+          (m) =>
+            m.role?.toLowerCase().includes("manager") &&
+            !m.role?.toLowerCase().includes("general"),
         );
         const heads = getRoleMembers("Head", true);
         const viceHeads = getRoleMembers("Vice Head");
 
         // Catch members not in the main groups
-        const categorizedIds = new Set([
-          ...president, ...vPresident, ...genManager, ...managers, ...heads, ...viceHeads
-        ].map(m => m.id));
-        
-        const otherMembers = formatted.filter(m => !categorizedIds.has(m.id));
+        const categorizedIds = new Set(
+          [
+            ...president,
+            ...vPresident,
+            ...genManager,
+            ...managers,
+            ...heads,
+            ...viceHeads,
+          ].map((m) => m.id),
+        );
+
+        const otherMembers = formatted.filter((m) => !categorizedIds.has(m.id));
 
         const boardSections = [];
-        if (managers.length > 0) boardSections.push({ label: "Managers", members: managers });
-        if (heads.length > 0) boardSections.push({ label: "Heads", members: heads });
-        if (viceHeads.length > 0) boardSections.push({ label: "Vice Heads", members: viceHeads });
-        if (otherMembers.length > 0) boardSections.push({ label: "Board Members", members: otherMembers });
+        if (managers.length > 0)
+          boardSections.push({ label: "Managers", members: managers });
+        if (heads.length > 0)
+          boardSections.push({ label: "Heads", members: heads });
+        if (viceHeads.length > 0)
+          boardSections.push({ label: "Vice Heads", members: viceHeads });
+        if (otherMembers.length > 0)
+          boardSections.push({ label: "Board Members", members: otherMembers });
 
         setSections(boardSections);
       } catch (err) {
@@ -236,7 +304,7 @@ export default function HighBoardPage() {
   return (
     <section className="container py-6 md:py-10 px-4 md:px-8 min-h-[600px]">
       <ScrollAnimation variant="fade-down">
-        <div className="flex items-center justify-center gap-2 flex-wrap mb-10 w-full md:w-fit mx-auto">
+        <div className="flex flex-wrap items-center justify-center w-full gap-2 mx-auto mb-10 md:w-fit">
           {YEARS.map((year) => {
             const isActive = year === activeYear;
             return (
@@ -268,15 +336,7 @@ export default function HighBoardPage() {
 
       <AnimatePresence mode="wait">
         {loading ? (
-          <Motion.div
-            key="loader"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex justify-center items-center py-20"
-          >
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCDD00]"></div>
-          </Motion.div>
+          <LoadingSpinner fullScreen={true} />
         ) : (
           <Motion.div
             key={activeYear}
@@ -305,9 +365,9 @@ export default function HighBoardPage() {
                 sectionDelay={i * 80}
               />
             ))}
-            
+
             {!featured.length && !sections.length && (
-              <p className="text-white/60 text-center py-20 text-xl font-semibold">
+              <p className="py-20 text-xl font-semibold text-center text-white/60">
                 No high board members found for this year.
               </p>
             )}
