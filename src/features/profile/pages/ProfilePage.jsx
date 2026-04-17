@@ -6,16 +6,31 @@ import logo from "./../../../assets/images/AboutHero.png";
 import imgSrc1 from "./../../../assets/images/ProfilePage/2d3905db88064d93a2ebc114979738c00d8b2df2.jpg";
 import imgSrc2 from "./../../../assets/images/ProfilePage/36665f265adb2a4b8feaa41ec7a2b361cd2989fa.jpg";
 import imgSrc3 from "./../../../assets/images/ProfilePage/4614abb8f38efe719a43dfd420bb46d90a34ae8f.jpg";
-
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import * as authApi from "@/lib/api/authApi.js";
 import { useEffect, useRef, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useParams } from "react-router-dom";
 
 const ApplicationStatus = [
-  { title: "UI/UX Workshop", status: "Accepted", date: "March 2025", imgSrc: imgSrc1 },
-  { title: "Backend Workshop", status: "Pending", date: "March 2025", imgSrc: imgSrc2 },
-  { title: "Frontend Workshop", status: "Rejected", date: "March 2025", imgSrc: imgSrc3 },
+  {
+    title: "UI/UX Workshop",
+    status: "Accepted",
+    date: "March 2025",
+    imgSrc: imgSrc1,
+  },
+  {
+    title: "Backend Workshop",
+    status: "Pending",
+    date: "March 2025",
+    imgSrc: imgSrc2,
+  },
+  {
+    title: "Frontend Workshop",
+    status: "Rejected",
+    date: "March 2025",
+    imgSrc: imgSrc3,
+  },
 ];
 
 export default function ProfilePage() {
@@ -29,34 +44,34 @@ export default function ProfilePage() {
   const bgInputRef = useRef(null);
 
   useEffect(() => {
-  const fetchProfile = async () => {
-    setLoading(true);
-    try {
-      let loggedInId = null;
-      const token = localStorage.getItem("access");
-      if (token) {
-        const decoded = jwtDecode(token);
-        loggedInId = decoded.user_id;
-        setCurrentUserId(loggedInId);
-      }
-
-      const targetUserId = id || loggedInId;
-
-      if (targetUserId) {
-        const res = await authApi.getUserProfileById(targetUserId);
-        setUserData(res);
-        if (res?.background_photo) {
-          setBgImage(res.background_photo);
+    const fetchProfile = async () => {
+      setLoading(true);
+      try {
+        let loggedInId = null;
+        const token = localStorage.getItem("access");
+        if (token) {
+          const decoded = jwtDecode(token);
+          loggedInId = decoded.user_id;
+          setCurrentUserId(loggedInId);
         }
-      } else {
-        navigate("/auth/login");
+
+        const targetUserId = id || loggedInId;
+
+        if (targetUserId) {
+          const res = await authApi.getUserProfileById(targetUserId);
+          setUserData(res);
+          if (res?.background_photo) {
+            setBgImage(res.background_photo);
+          }
+        } else {
+          navigate("/auth/login");
+        }
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      console.error("Error fetching profile:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
     fetchProfile();
   }, [id, navigate]);
@@ -85,11 +100,7 @@ export default function ProfilePage() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#452798]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCDD00]"></div>
-      </div>
-    );
+    return <LoadingSpinner fullScreen={true} />;
   }
 
   return (
@@ -136,9 +147,9 @@ export default function ProfilePage() {
 
         <div className="container mx-auto">
           {userData && (
-            <ProfileCard 
-              userData={userData} 
-              isOwnProfile={!id || String(id) === String(currentUserId)} 
+            <ProfileCard
+              userData={userData}
+              isOwnProfile={!id || String(id) === String(currentUserId)}
             />
           )}
         </div>
@@ -146,7 +157,6 @@ export default function ProfilePage() {
 
       <div className="container px-4 mx-auto md:px-6">
         <div className="mt-12">
-
           <div className="grid grid-cols-1 gap-6 mb-16 sm:grid-cols-2 md:grid-cols-3">
             <FeatureBox
               title="Join the Community"
@@ -163,7 +173,9 @@ export default function ProfilePage() {
           </div>
 
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">Application Status</h3>
+            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">
+              Application Status
+            </h3>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {ApplicationStatus.map((item, index) => (
                 <Card
@@ -175,8 +187,8 @@ export default function ProfilePage() {
                     item.status === "Accepted"
                       ? "bg-[#03DF20]"
                       : item.status === "Pending"
-                      ? "bg-[#FCDD00]"
-                      : "bg-[#FF0505]"
+                        ? "bg-[#FCDD00]"
+                        : "bg-[#FF0505]"
                   }
                   imgSrc={item.imgSrc}
                 />
@@ -185,7 +197,9 @@ export default function ProfilePage() {
           </section>
 
           <section className="mb-12">
-            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">My Memberships & Activities</h3>
+            <h3 className="text-[#FCDD00] font-semibold text-2xl mb-6">
+              My Memberships & Activities
+            </h3>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
               {userData?.memberships?.length > 0 ? (
                 userData.memberships.map((m, index) => (
@@ -197,18 +211,18 @@ export default function ProfilePage() {
                     role={m.role}
                     dotColor="bg-[#03DF20]"
                     // You can add logic here to match logos/images based on committee
-                    imgSrc={logo} 
+                    imgSrc={logo}
                   />
                 ))
               ) : (
-                <p className="text-white/60 text-lg italic">No membership activities records found.</p>
+                <p className="text-lg italic text-white/60">
+                  No membership activities records found.
+                </p>
               )}
             </div>
           </section>
 
-          <section className="mb-16">
-          </section>
-
+          <section className="mb-16"></section>
         </div>
       </div>
 
@@ -241,25 +255,27 @@ const FeatureBox = ({ title, desc }) => (
 
 const Card = ({ title, status, date, dotColor, imgSrc, rate, role }) => (
   <div className="relative overflow-hidden text-white transition-all border shadow-2xl cursor-pointer rounded-xl group border-white/5">
-    <div 
-      className="transition-transform duration-700 bg-center bg-cover group-hover:scale-110" 
+    <div
+      className="transition-transform duration-700 bg-center bg-cover group-hover:scale-110"
       style={{ backgroundImage: `url(${imgSrc || ""})` }}
     >
       <div className="p-8 backdrop-blur-[2px] bg-[#452798]/40 h-full flex flex-col justify-center min-h-[220px]">
         <h4 className="text-[#FCDD00] text-center font-bold text-2xl mb-4 group-hover:scale-105 transition-transform">
           {title}
         </h4>
-        
+
         <div className="space-y-3 text-lg font-semibold">
           {status && (
             <div className="flex items-center gap-3">
               <span>Status: {status}</span>
-              <span className={`w-6 h-6 rounded-full ${dotColor || "bg-[#03DF20]"} shadow-[0_0_15px_rgba(255,255,255,0.2)]`}></span>
+              <span
+                className={`w-6 h-6 rounded-full ${dotColor || "bg-[#03DF20]"} shadow-[0_0_15px_rgba(255,255,255,0.2)]`}
+              ></span>
             </div>
           )}
           {date && (
             <p className="flex items-center gap-2">
-              <span className="opacity-80">Date:</span> 
+              <span className="opacity-80">Date:</span>
               <span>{date}</span>
             </p>
           )}
