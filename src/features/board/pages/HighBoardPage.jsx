@@ -196,9 +196,21 @@ export default function HighBoardPage() {
           is_highboard: true,
           year: `${activeYear}-09-30`,
         };
+        let allMembersRaw = [];
+        let page = 1;
+        let hasMore = true;
 
-        const res = await authApi.getMemberships(params);
-        const allMembersRaw = res.results || res || [];
+        while (hasMore) {
+          const res = await authApi.getMemberships({ ...params, page });
+          const results = res.results || (Array.isArray(res) ? res : []);
+          allMembersRaw = [...allMembersRaw, ...results];
+
+          if (res.next && results.length > 0 && page < 10) {
+            page++;
+          } else {
+            hasMore = false;
+          }
+        }
 
         // Fetch full profiles for each member to get social links
         const enrichedMembers = await Promise.all(
