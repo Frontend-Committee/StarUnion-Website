@@ -135,10 +135,12 @@ export default function ProfilePage() {
         </div>
 
         <div className="container mx-auto">
-          <ProfileCard 
-            userData={userData} 
-            isOwnProfile={!id || (currentUserId && id == currentUserId)} 
-          />
+          {userData && (
+            <ProfileCard 
+              userData={userData} 
+              isOwnProfile={!id || String(id) === String(currentUserId)} 
+            />
+          )}
         </div>
       </div>
 

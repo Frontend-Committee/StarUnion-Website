@@ -19,6 +19,10 @@ export default defineConfig({
         target: "https://staging.starunion.tech",
         changeOrigin: true, 
       },
+      "/media": {
+        target: "https://staging.starunion.tech",
+        changeOrigin: true,
+      },
     },
   },
 });

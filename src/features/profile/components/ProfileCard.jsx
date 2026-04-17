@@ -38,7 +38,7 @@ export default function ProfileCard({ userData, isOwnProfile }) {
       }
     }
   };
-    const {
+  const {
     full_name: fullName = "",
     college = "",
     university = "",
@@ -48,7 +48,7 @@ export default function ProfileCard({ userData, isOwnProfile }) {
     github,
     whatsapp,
     skills = []
-  } = userData;
+  } = userData || {};
 
   return (
     <>

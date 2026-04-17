@@ -120,7 +120,7 @@ export default function HighBoardPage() {
         // Prepare parameters: only include non-empty values
         const params = {
           is_highboard: true,
-          year: `${activeYear}-01-01`,
+          year: `${activeYear}-09-30`,
         };
 
         const res = await authApi.getMemberships(params);
@@ -141,7 +141,11 @@ export default function HighBoardPage() {
             role: m.role,
             description: description,
             committee: m.committee,
-            photo: m.user?.profile_photo,
+            photo: m.user?.profile_photo 
+              ? (m.user.profile_photo.startsWith('http') 
+                  ? m.user.profile_photo 
+                  : `https://staging.starunion.tech${m.user.profile_photo}`)
+              : null,
             socials: {
               facebook: m.user?.facebook,
               linkedin: m.user?.linkedin,
