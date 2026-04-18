@@ -14,9 +14,11 @@ export default function MediaCard({ image, title, buttonText, date }) {
 
       <div className="relative z-10 w-full h-full flex flex-col justify-between p-4">
         <div className="flex justify-between items-start">
-          <h3 className="font-bold text-white text-base drop-shadow-md mt-1 max-w-[130px] leading-tight">
-            {title}
-          </h3>
+          {title && (
+            <h3 className="font-bold text-white text-base drop-shadow-md mt-1 max-w-[130px] leading-tight">
+              {title}
+            </h3>
+          )}
 
           {date && (
             <div className="bg-white border border-[#7441FF] text-black rounded-xl flex flex-col items-center justify-center w-10 h-10 shrink-0 shadow-sm leading-none">

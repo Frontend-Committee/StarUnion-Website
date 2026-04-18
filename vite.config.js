@@ -9,6 +9,8 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
+  const targetUrl = env.VITE_API_URL || "https://starunion.tech";
+
   return {
     plugins: [react()],
     resolve: {
@@ -19,11 +21,11 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: "https://starunion.tech/",
+          target: targetUrl,
           changeOrigin: true, 
         },
         "/media": {
-          target: "https://starunion.tech/",
+          target: targetUrl,
           changeOrigin: true,
         },
       },

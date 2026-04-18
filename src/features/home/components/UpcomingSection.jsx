@@ -1,7 +1,8 @@
 import React from "react";
 import MediaCard from "@/components/common/MediaCard";
-import { servicesData } from "../data";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { useQuery } from "@tanstack/react-query";
+import { listServices } from "@/features/services/api/servicesService";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import { Link } from "react-router-dom";
 import { useEvents } from "@/features/events/hooks/useEvents";
@@ -29,8 +30,15 @@ export default function UpcomingSection() {
   const { data: events = [], isLoading: isEventsLoading } = useEvents();
   const { data: workshops = [], isLoading: isWorkshopsLoading } = useWorkshop();
   const { data: projects = [], isLoading: isProjectsLoading } = useProjects();
+  const { data: servicesResp = {}, isLoading: isServicesLoading } = useQuery({
+    queryKey: ["services"],
+    queryFn: () => listServices(),
+  });
+  
+  const services = servicesResp?.results || [];
+
   const isAnySectionLoading =
-    isEventsLoading || isWorkshopsLoading || isProjectsLoading;
+    isEventsLoading || isWorkshopsLoading || isProjectsLoading || isServicesLoading;
 
   if (isAnySectionLoading) return <LoadingSpinner fullScreen={true} />;
 
@@ -110,15 +118,14 @@ export default function UpcomingSection() {
         </ScrollAnimation>
 
         <HorizontalScrollSection>
-          {servicesData.map((service, index) => (
+          {services.map((service, index) => (
             <ScrollAnimation
               mode="popLayout"
               key={service.id}
               delay={(index % 4) * 100}
             >
-              <Link to={`services/${service.id}`}>
+              <Link to={`/services/${service.id}`}>
                 <MediaCard
-                  title={service.name}
                   image={service.image}
                   buttonText={"Learn More"}
                 />
