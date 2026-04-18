@@ -4,7 +4,10 @@ import { motion as Motion } from "framer-motion";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import HorizontalScrollSection from "../../../components/common/HorizontalScrollSection";
 import ScrollAnimation from "../../../components/ui/ScrollAnimation";
-import { getCommitteeDetail } from "../api/committeesService";
+import {
+  getCommitteeDetail,
+  listCommittees,
+} from "../api/committeesService";
 
 const getCommitteeDescription = (committee) =>
   committee?.data?.description ||
@@ -67,6 +70,28 @@ export default function CommitteeDetailsPage() {
     queryFn: () => getCommitteeDetail(committeeName),
     enabled: Boolean(committeeName),
   });
+
+  // Fetch specifically using technical filter to determine status
+  const { data: technicalCheck, isLoading: isCheckingTechnical } = useQuery({
+    queryKey: ["committee-tech-check", committeeName],
+    queryFn: () => listCommittees({ is_technical: true, search: committeeName }),
+    enabled: Boolean(committeeName),
+  });
+
+  const isTechnical = technicalCheck?.results?.some(
+    (c) =>
+      c.name.toLowerCase() === committeeName.toLowerCase() ||
+      committeeName.toLowerCase().includes(c.name.toLowerCase()) ||
+      c.name.toLowerCase().includes(committeeName.toLowerCase()),
+  );
+
+  // If we have results from the technical check, we know the type.
+  // Otherwise, if the check finished and no results, it's non-technical.
+  const committeeType = isCheckingTechnical
+    ? undefined
+    : isTechnical
+      ? "technical"
+      : "non-technical";
 
   if (isLoading) {
     return <LoadingSpinner fullScreen={true} />;
@@ -137,11 +162,13 @@ export default function CommitteeDetailsPage() {
                 {description}
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
-                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
-                  {committee.type === "technical"
-                    ? "Technical Committee"
-                    : "Non-Technical Committee"}
-                </span>
+                {committeeType && (
+                  <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
+                    {committeeType === "technical"
+                      ? "Technical Committee"
+                      : "Non-Technical Committee"}
+                  </span>
+                )}
                 <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
                   {committee.projects.length} Projects
                 </span>
@@ -179,7 +206,7 @@ export default function CommitteeDetailsPage() {
                 Type
               </p>
               <p className="mt-3 text-lg font-semibold text-white capitalize">
-                {committee.type.replace("-", " ")}
+                {committeeType.replace("-", " ")}
               </p>
             </div>
             <div className="p-6 border rounded-3xl border-white/10 bg-white/5">
