@@ -126,6 +126,7 @@ export default function UpcomingSection() {
             >
               <Link to={`/services/${service.id}`}>
                 <MediaCard
+                  title={service.title}
                   image={service.image}
                   buttonText={"Learn More"}
                 />
