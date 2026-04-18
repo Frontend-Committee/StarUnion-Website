@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import { PATHS } from "../../routes/paths";
 import facebook from "../../assets/icons/facebook.png";
 import insta from "../../assets/icons/insta.png";
@@ -24,9 +25,10 @@ export default function Footer() {
 
             <NavLink
               to={`/${PATHS.PUBLIC.ABOUT}`}
-              className="inline-flex text-sm font-medium text-[#B9A6FF] hover:text-[#E1D6FF] transition"
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-[#B9A6FF] hover:text-[#E1D6FF] transition-all duration-300"
             >
-              read more →
+              Read More
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </NavLink>
 
             <p className="pt-2 text-[10px] text-white/35">
