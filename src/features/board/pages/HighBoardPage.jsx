@@ -217,7 +217,7 @@ export default function HighBoardPage() {
             photo: m.user?.profile_photo
               ? m.user.profile_photo.startsWith("http")
                 ? m.user.profile_photo
-                : `https://staging.starunion.tech${m.user.profile_photo}`
+                : `https://starunion.tech${m.user.profile_photo}`
               : defaultAvatar,
             socials: {
               facebook: m.user?.facebook,

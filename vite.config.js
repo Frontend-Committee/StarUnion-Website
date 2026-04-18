@@ -16,11 +16,11 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://staging.starunion.tech",
+        target: "https://starunion.tech",
         changeOrigin: true, 
       },
       "/media": {
-        target: "https://staging.starunion.tech",
+        target: "https://starunion.tech",
         changeOrigin: true,
       },
     },

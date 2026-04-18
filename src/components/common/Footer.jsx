@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="space-y-3">
             <h2 className="text-lg font-semibold">
               <span className="bg-[linear-gradient(90deg,#7441FF_0%,#11EDA4_55%,#EFD830_100%)] bg-clip-text text-transparent">
-                Star Union.com
+                starunion.tech
               </span>
             </h2>
 
