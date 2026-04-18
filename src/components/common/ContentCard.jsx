@@ -9,7 +9,13 @@ export default function ContentCard({ item, delay, basePath }) {
       <Link to={`${basePath}/${item.id}`}>
         <div className="relative shrink-0 snap-start w-full h-[300px] rounded-2xl overflow-hidden group cursor-pointer border-2 border-transparent hover:border-[#3b82f6] transition-all duration-300 shadow-lg">
           <img
-            src={item.image}
+            src={
+              item.image
+                ? item.image.startsWith("http")
+                  ? item.image
+                  : `https://starunion.tech${item.image}`
+                : "https://via.placeholder.com/300" // fallback if no image
+            }
             alt={item.name}
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
