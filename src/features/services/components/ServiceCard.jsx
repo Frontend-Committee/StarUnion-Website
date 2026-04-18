@@ -39,9 +39,9 @@ export default function ServiceCard({
               </svg>
             </div>
             <div className="absolute top-6 left-0 right-0 px-4 text-center">
-              <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
+              {/* <h4 className="text-white font-black text-xl uppercase tracking-wider drop-shadow-md">
                 {title}
-              </h4>
+              </h4> */}
             </div>
           </div>
           <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">

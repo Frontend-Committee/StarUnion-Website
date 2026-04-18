@@ -151,7 +151,7 @@ export default function ServicesPage() {
 
         <Motion.div
           layout
-          className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-center  lg:grid-cols-3 xl:grid-cols-4 place-items-center "
         >
           <AnimatePresence mode="popLayout">
             {services.map((service, index) => (
