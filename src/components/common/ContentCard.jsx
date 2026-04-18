@@ -13,7 +13,7 @@ export default function ContentCard({ item, delay, basePath }) {
               item.image
                 ? item.image.startsWith("http")
                   ? item.image
-                  : `https://starunion.tech${item.image}`
+                  : `${import.meta.env.VITE_API_URL}${item.image}`
                 : "https://via.placeholder.com/300" // fallback if no image
             }
             alt={item.name}

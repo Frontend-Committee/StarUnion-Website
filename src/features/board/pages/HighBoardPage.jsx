@@ -217,7 +217,7 @@ export default function HighBoardPage() {
             photo: m.user?.profile_photo
               ? m.user.profile_photo.startsWith("http")
                 ? m.user.profile_photo
-                : `https://starunion.tech${m.user.profile_photo}`
+                : `${import.meta.env.VITE_API_URL}${m.user.profile_photo}`
               : defaultAvatar,
             socials: {
               facebook: m.user?.facebook,

@@ -69,9 +69,9 @@ export default function ProjectDetailsPage() {
                 <img
                   src={
                     member.image
-                      ? (member.image.startsWith("http") ? member.image : `https://starunion.tech${member.image}`)
+                      ? (member.image.startsWith("http") ? member.image : `${import.meta.env.VITE_API_URL}${member.image}`)
                       : member.user?.profile_photo
-                        ? (member.user.profile_photo.startsWith("http") ? member.user.profile_photo : `https://starunion.tech${member.user.profile_photo}`)
+                        ? (member.user.profile_photo.startsWith("http") ? member.user.profile_photo : `${import.meta.env.VITE_API_URL}${member.user.profile_photo}`)
                         : defaultAvatar
                   }
                   alt={member.user?.full_name || "Team Member"}
@@ -142,7 +142,7 @@ export default function ProjectDetailsPage() {
                   src={
                     img.image?.startsWith("http")
                       ? img.image
-                      : `https://starunion.tech${img.image}`
+                      : `${import.meta.env.VITE_API_URL}${img.image}`
                   }
                   alt={img.caption || "Project Gallery Image"}
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
