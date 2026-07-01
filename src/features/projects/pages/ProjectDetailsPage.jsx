@@ -1,11 +1,10 @@
-import React from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import ScrollAnimation from "@/components/ui/ScrollAnimation";
-import { useProjectDetails } from "../hooks/useProjectDetails";
+import defaultAvatar from "@/assets/images/ProfilePage/defaultImg.png";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
-import defaultAvatar from "@/assets/images/ProfilePage/defaultImg.png";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { ArrowRight } from "lucide-react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useProjectDetails } from "../hooks/useProjectDetails";
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
@@ -69,9 +68,13 @@ export default function ProjectDetailsPage() {
                 <img
                   src={
                     member.image
-                      ? (member.image.startsWith("http") ? member.image : `${import.meta.env.VITE_API_URL}${member.image}`)
+                      ? member.image.startsWith("http")
+                        ? member.image
+                        : `${import.meta.env.VITE_API_URL}${member.image}`
                       : member.user?.profile_photo
-                        ? (member.user.profile_photo.startsWith("http") ? member.user.profile_photo : `${import.meta.env.VITE_API_URL}${member.user.profile_photo}`)
+                        ? member.user.profile_photo.startsWith("http")
+                          ? member.user.profile_photo
+                          : `${import.meta.env.VITE_API_URL}${member.user.profile_photo}`
                         : defaultAvatar
                   }
                   alt={member.user?.full_name || "Team Member"}
@@ -124,12 +127,14 @@ export default function ProjectDetailsPage() {
       <ScrollAnimation variant="fade-up" delay={300}>
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-bold text-h3 text-tertiary">Project Gallery</h3>
-          <Link
-            to="#"
-            className="flex items-center gap-2 text-white transition-colors hover:text-tertiary"
-          >
-            See live project <ArrowRight className="w-4 h-4" />
-          </Link>
+          {project.data.link && (
+            <Link
+              to={project.data.link}
+              className="flex items-center gap-2 text-white transition-colors hover:text-tertiary"
+            >
+              See live project <ArrowRight className="w-4 h-4" />
+            </Link>
+          )}
         </div>
         <div className="mb-10">
           <HorizontalScrollSection>
