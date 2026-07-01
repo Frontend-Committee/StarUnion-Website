@@ -1,17 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  FileText,
-  Check,
-  Calendar,
-  MapPin,
-  Clock,
-  ArrowRight,
-} from "lucide-react";
-import ScrollAnimation from "@/components/ui/ScrollAnimation";
-import { Button } from "@/components/ui/button";
-import { useWorkshopDetails } from "../hooks/useWorkshopDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Calendar, Clock, MapPin } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useWorkshopDetails } from "../hooks/useWorkshopDetails";
 
 export default function WorkShopDetailsPage() {
   const { id } = useParams();
@@ -168,28 +161,14 @@ export default function WorkShopDetailsPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-              <div className="flex items-start gap-4">
-                <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white">
-                  <FileText className="w-6 h-6" />
-                </div>
-
-                <div>
-                  <h3 className="text-[#FFE738] text-xl font-bold mb-2">
-                    Digital Resources
-                  </h3>
-                  <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                    Comprehensive documentation and guides to support your
-                    learning journey.
-                  </p>
-                  <ul className="space-y-1">
-                    {workshop.data.learning_materials.map((item) => (
-                      <li className="flex items-center gap-2 text-sm text-gray-200">
-                        <Check className="w-4 h-4 text-white" /> 50+ Page
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div>
+                <ul className="space-y-1">
+                  {workshop.data.learning_materials.map((item) => (
+                    <li className="flex items-center gap-2 text-sm text-gray-200">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>

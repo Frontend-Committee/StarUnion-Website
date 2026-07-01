@@ -1,19 +1,17 @@
+import ContentGrid from "@/components/common/ContentGrid";
+import SearchBar from "@/components/common/SearchBar";
+import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import { useState } from "react";
-import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import { useProjects } from "../hooks/useProjects";
-import SearchBar from "@/components/common/SearchBar";
-import FilterTabs from "@/components/common/FilterTabs";
-import ContentGrid from "@/components/common/ContentGrid";
 
 const FILTER_TABS = ["All", "2026", "2025", "2024"];
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
+  // const [activeFilter, setActiveFilter] = useState("All");
 
   const { data: projects = [], isLoading } = useProjects();
-
   if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
   const filteredProjects =
@@ -23,7 +21,7 @@ export default function ProjectsPage() {
         .includes(search.toLowerCase());
       // const matchesTab =
       //   activeFilter === "All" || project.year === activeFilter;
-      return matchesSearch ;
+      return matchesSearch;
     }) || [];
 
   return (
@@ -46,13 +44,13 @@ export default function ProjectsPage() {
         </ScrollAnimation>
 
         {/* Filter Tabs */}
-        <ScrollAnimation variant="fade-up" delay={200}>
+        {/* <ScrollAnimation variant="fade-up" delay={200}>
           <FilterTabs
             tabs={FILTER_TABS}
             activeTab={activeFilter}
             onTabChange={setActiveFilter}
           />
-        </ScrollAnimation>
+        </ScrollAnimation> */}
 
         <ContentGrid
           items={filteredProjects}
