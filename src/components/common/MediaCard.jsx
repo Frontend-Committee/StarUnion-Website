@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 
 export default function MediaCard({ image, title, buttonText, date }) {
@@ -22,9 +21,15 @@ export default function MediaCard({ image, title, buttonText, date }) {
 
           {date && (
             <div className="bg-white border border-[#7441FF] text-black rounded-xl flex flex-col items-center justify-center w-10 h-10 shrink-0 shadow-sm leading-none">
-              <span className="text-[10px] font-bold text-center text-[#452798]">
-                {date}
-              </span>
+              {date === "None" ? (
+                <span className="text-[8px] font-bold text-center text-[#452798]">
+                  Upcoming
+                </span>
+              ) : (
+                <span className="text-[10px] font-bold text-center text-[#452798]">
+                  {date}
+                </span>
+              )}
             </div>
           )}
         </div>

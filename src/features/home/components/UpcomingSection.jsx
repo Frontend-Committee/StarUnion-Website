@@ -1,15 +1,14 @@
-import React from "react";
-import MediaCard from "@/components/common/MediaCard";
-import ScrollAnimation from "@/components/ui/ScrollAnimation";
-import { useQuery } from "@tanstack/react-query";
-import { listServices } from "@/features/services/api/servicesService";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
-import { Link } from "react-router-dom";
-import { useEvents } from "@/features/events/hooks/useEvents";
-import { useWorkshop } from "@/features/workshops/hooks/useWorkshop";
-import { useProjects } from "@/features/projects/hooks/useProjects";
+import MediaCard from "@/components/common/MediaCard";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
+import ScrollAnimation from "@/components/ui/ScrollAnimation";
+import { useEvents } from "@/features/events/hooks/useEvents";
+import { useProjects } from "@/features/projects/hooks/useProjects";
+import { listServices } from "@/features/services/api/servicesService";
+import { useWorkshop } from "@/features/workshops/hooks/useWorkshop";
+import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const SeeMoreLink = ({ to }) => (
   <Link
@@ -34,11 +33,14 @@ export default function UpcomingSection() {
     queryKey: ["services"],
     queryFn: () => listServices(),
   });
-  
+  console.log(workshops);
   const services = servicesResp?.results || [];
 
   const isAnySectionLoading =
-    isEventsLoading || isWorkshopsLoading || isProjectsLoading || isServicesLoading;
+    isEventsLoading ||
+    isWorkshopsLoading ||
+    isProjectsLoading ||
+    isServicesLoading;
 
   if (isAnySectionLoading) return <LoadingSpinner fullScreen={true} />;
 
