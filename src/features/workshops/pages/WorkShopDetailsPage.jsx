@@ -20,7 +20,7 @@ export default function WorkShopDetailsPage() {
           className="flex items-center gap-2 mb-12 text-white transition-colors cursor-pointer hover:text-tertiary group"
           id="back-to-committees"
         >
-          <div className="p-2 rounded-full border border-white/20 group-hover:bg-white/10 transition-colors">
+          <div className="p-2 transition-colors border rounded-full border-white/20 group-hover:bg-white/10">
             <svg
               className="w-6 h-6 transition-transform group-hover:-translate-x-1"
               viewBox="0 0 24 24"
@@ -33,7 +33,7 @@ export default function WorkShopDetailsPage() {
               <path d="M15 19l-7-7 7-7" />
             </svg>
           </div>
-          <span className="font-semibold uppercase tracking-widest text-xs">
+          <span className="text-xs font-semibold tracking-widest uppercase">
             Back to Workshops
           </span>
         </button>
@@ -55,12 +55,12 @@ export default function WorkShopDetailsPage() {
             environment.
           </p>
         </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10 w-full max-w-4xl py-6 border-b border-white/10 mb-8 mt-4">
+        <div className="flex flex-col items-start justify-between w-full max-w-4xl gap-6 py-6 mt-4 mb-8 border-b md:flex-row md:items-center md:gap-10 border-white/10">
           <div className="flex items-center gap-4">
             <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
               <Calendar className="w-6 h-6" />
             </div>
-            <span className="text-white font-medium text-base md:text-lg">
+            <span className="text-base font-medium text-white md:text-lg">
               {workshop.data.date}
             </span>
           </div>
@@ -68,7 +68,7 @@ export default function WorkShopDetailsPage() {
             <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
               <MapPin className="w-6 h-6" />
             </div>
-            <span className="text-white font-medium text-base md:text-lg">
+            <span className="text-base font-medium text-white md:text-lg">
               {workshop.data.location}
             </span>
           </div>
@@ -76,7 +76,7 @@ export default function WorkShopDetailsPage() {
             <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
               <Clock className="w-6 h-6" />
             </div>
-            <span className="text-white font-medium text-base md:text-lg">
+            <span className="text-base font-medium text-white md:text-lg">
               {workshop.data.time}
             </span>
           </div>
@@ -84,7 +84,7 @@ export default function WorkShopDetailsPage() {
       </ScrollAnimation>
 
       <ScrollAnimation variant="fade-up" delay={100}>
-        <h1 className="text-h2 text-tertiary mt-6">Featured Instructors</h1>
+        <h1 className="mt-6 text-h2 text-tertiary">Featured Instructors</h1>
         <div className="my-10">
           <HorizontalScrollSection>
             {workshop.instructors.map((member) => (
@@ -111,12 +111,12 @@ export default function WorkShopDetailsPage() {
         </div>
       </ScrollAnimation>
       <ScrollAnimation variant="fade-up" delay={100}>
-        <h1 className="text-h2 text-tertiary mt-6">Top Members</h1>
-        <div className="grid grid-cols-1 gap-6 mb-10 mt-6 sm:grid-cols-2 lg:grid-cols-4">
+        <h1 className="mt-6 text-h2 text-tertiary">Top Members</h1>
+        <div className="grid grid-cols-1 gap-6 mt-6 mb-10 sm:grid-cols-2 lg:grid-cols-4">
           {workshop.top_members.map((member) => (
             <div
               key={member.id}
-              className="overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+              className="overflow-hidden transition-all duration-300 shadow-md rounded-xl bg-white/5 hover:-translate-y-2 hover:shadow-xl"
             >
               <img
                 src={member.image}
@@ -134,7 +134,7 @@ export default function WorkShopDetailsPage() {
         </div>
       </ScrollAnimation>
       <ScrollAnimation variant="fade-up" delay={100}>
-        <div className="flex flex-col gap-12 w-full max-w-5xl my-16 text-white">
+        <div className="flex flex-col w-full max-w-5xl gap-12 my-16 text-white">
           <div>
             <div className="mb-6">
               <h2 className="text-2xl md:text-3xl font-bold text-[#FFE738] mb-1">
@@ -143,8 +143,8 @@ export default function WorkShopDetailsPage() {
               <div className="w-48 h-1 bg-[#FFE738]"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20 text-lg">
-              <ol className="list-decimal list-inside space-y-2">
+            <div className="grid grid-cols-1 gap-8 text-lg md:grid-cols-2 md:gap-20">
+              <ol className="space-y-2 list-decimal list-inside">
                 {workshop.data.what_we_will_build.map((item) => (
                   <li>{item}</li>
                 ))}
@@ -160,7 +160,7 @@ export default function WorkShopDetailsPage() {
               <div className="w-60 h-1 bg-[#FFE738]"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
               <div>
                 <ul className="space-y-1">
                   {workshop.data.learning_materials.map((item) => (
@@ -175,10 +175,19 @@ export default function WorkShopDetailsPage() {
         </div>
       </ScrollAnimation>
 
-      <div className="text-center my-5">
-        <Button className="p-5" onClick={() => navigate("/")}>
-          Register Now <ArrowRight />
-        </Button>
+      <div className="my-5 text-center">
+        {workshop.registration_form != null && (
+          <div className="my-5 text-center">
+            <Button
+              className="p-5"
+              onClick={() =>
+                navigate(`/registration/${workshop.registration_form}`)
+              }
+            >
+              Register Now <ArrowRight />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

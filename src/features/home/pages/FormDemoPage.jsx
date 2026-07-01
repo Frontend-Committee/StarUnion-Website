@@ -112,7 +112,7 @@ export default function FormDemoPage() {
               ))}
             </div>
 
-            <div className="min-h-[400px] relative">
+            <div className="min-h-[400px] relative flex justify-center">
               {isFetchingSchema && (
                 <div className="absolute inset-0 z-10 flex items-center justify-center bg-gradientBg3/50 backdrop-blur-sm rounded-3xl">
                   <LoadingSpinner />
