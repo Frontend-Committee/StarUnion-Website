@@ -153,15 +153,47 @@ const BoardSection = ({ label, members, sectionDelay = 0 }) => (
   </ScrollAnimation>
 );
 
-const YEARS = [2025, 2023];
+const extractYear = (dateString) => {
+  if (!dateString) return null;
+  const year = parseInt(dateString.split("-")[0], 10);
+  return isNaN(year) ? null : year;
+};
 
 export default function HighBoardPage() {
-  const [activeYear, setActiveYear] = useState(2025);
+  const [availableYears, setAvailableYears] = useState([]);
+  const [activeYear, setActiveYear] = useState(null);
   const [featured, setFeatured] = useState([]);
   const [sections, setSections] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch all high-board memberships once to discover available years
   useEffect(() => {
+    const fetchAvailableYears = async () => {
+      try {
+        const res = await authApi.getMemberships({
+          is_highboard: true,
+          page_size: 100,
+        });
+        const results = res.results || (Array.isArray(res) ? res : []);
+        const years = Array.from(
+          new Set(results.map((m) => extractYear(m.year)).filter(Boolean)),
+        ).sort((a, b) => b - a);
+
+        setAvailableYears(years);
+        if (years.length > 0 && !activeYear) {
+          setActiveYear(years[0]);
+        }
+      } catch (err) {
+        console.error("Error loading available years:", err);
+      }
+    };
+
+    fetchAvailableYears();
+  }, []);
+
+  useEffect(() => {
+    if (!activeYear) return;
+
     const fetchBoard = async () => {
       setLoading(true);
       try {
@@ -185,24 +217,7 @@ export default function HighBoardPage() {
           }
         }
 
-        // Fetch full profiles for each member to get social links
-        const enrichedMembers = await Promise.all(
-          allMembersRaw.map(async (m) => {
-            try {
-              if (m.user?.id) {
-                const fullUser = await authApi.getUserProfileById(m.user.id);
-                return { ...m, user: { ...m.user, ...fullUser } };
-              }
-            } catch {
-              console.warn(
-                `Could not fetch full profile for user ${m.user?.id}`,
-              );
-            }
-            return m;
-          }),
-        );
-
-        const formatted = enrichedMembers.map((m) => {
+        const formatted = allMembersRaw.map((m) => {
           let description = m.committee || "High Board Member";
           if (m.data && typeof m.data === "object" && m.data.description) {
             description = m.data.description;
@@ -290,7 +305,7 @@ export default function HighBoardPage() {
     <section className="container py-6 md:py-10 px-4 md:px-8 min-h-[600px]">
       <ScrollAnimation variant="fade-down">
         <div className="flex flex-wrap items-center justify-center w-full gap-2 mx-auto mb-10 md:w-fit">
-          {YEARS.map((year) => {
+          {availableYears.map((year) => {
             const isActive = year === activeYear;
             return (
               <Motion.button
