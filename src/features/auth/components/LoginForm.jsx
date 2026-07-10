@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import { useState } from "react";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { loginUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -31,7 +32,8 @@ function LoginForm() {
       loginUser(response.access);
       
       localStorage.setItem("user" , JSON.stringify(await authApi.getCurrentUser()));
-      navigate("/", { replace: true });
+      const redirectTo = location.state?.from || "/";
+      navigate(redirectTo, { replace: true });
     } catch (error) {
       
       

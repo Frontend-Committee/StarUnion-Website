@@ -9,10 +9,13 @@ import {
   EyeOff,
   Info,
   Loader2,
+  Lock,
   Upload,
   X,
 } from "lucide-react";
 import { useCallback, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 // ─── Validation Engine ───────────────────────────────────────────────────────
 
@@ -920,6 +923,7 @@ export default function DynamicFormBuilder({
   onSubmit,
   onCancel,
   className = "",
+  requireAuth = false,
 }) {
   const [values, setValues] = useState(() => {
     const defaults = {};
@@ -946,6 +950,9 @@ export default function DynamicFormBuilder({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+
+  const { loggedIn } = useAuth();
+  const location = useLocation();
 
   const onChange = useCallback((name, value) => {
     setValues((prev) => ({ ...prev, [name]: value }));
@@ -1023,6 +1030,8 @@ export default function DynamicFormBuilder({
       : cols === 2
         ? "md:grid-cols-2"
         : "grid-cols-1";
+
+  const showAuthGate = requireAuth && !loggedIn;
   return (
     <div className="flex justify-center w-full p-4 md:p-8">
       <div
@@ -1045,7 +1054,34 @@ export default function DynamicFormBuilder({
 
         <div className="p-6 md:p-10">
           <AnimatePresence mode="wait">
-            {isSuccess ? (
+            {showAuthGate ? (
+              <Motion.div
+                key="auth-gate"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                className="flex flex-col items-center justify-center gap-6 py-12 text-center"
+              >
+                <div className="w-20 h-20 rounded-full bg-[#452798]/10 border border-[#452798]/25 flex items-center justify-center shadow-[0_0_30px_rgba(69,39,152,0.18)]">
+                  <Lock className="w-10 h-10 text-[#452798]" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-[#452798] mb-2">
+                    Login Required
+                  </h3>
+                  <p className="text-[#452798]/70 text-sm max-w-sm mx-auto mb-6">
+                    Please sign in to your account before you can fill out and submit this form.
+                  </p>
+                  <Link
+                    to="/auth/login"
+                    state={{ from: location.pathname }}
+                    className="inline-flex items-center justify-center px-8 h-11 rounded-lg bg-[#7441FF] hover:bg-[#683CE3] text-white text-base font-bold transition-all duration-200 shadow-lg shadow-[#7441FF]/30"
+                  >
+                    Sign In
+                  </Link>
+                </div>
+              </Motion.div>
+            ) : isSuccess ? (
               <SuccessScreen key="success" schema={schema} />
             ) : (
               <Motion.form

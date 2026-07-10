@@ -3,7 +3,6 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import DynamicFormBuilder from "@/components/common/DynamicFormBuilder";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import { getFormDetail, submitForm } from "@/lib/api/endpoints";
-import { motion } from "framer-motion";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 
 export default function RegisterForm() {
@@ -60,11 +59,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="max-w-[1100px] mx-auto px-4 py-5 md:px-1 md:py-3"
-    >
+    <section className="max-w-[1100px] mx-auto px-4 py-5 md:px-1 md:py-3">
       <ScrollAnimation variant="fade-down">
         <h1 className="mb-5 font-semibold text-h2 text-tertiary">
           Registration
@@ -79,6 +74,7 @@ export default function RegisterForm() {
           <DynamicFormBuilder
             schema={formSchema}
             onSubmit={handleSubmit}
+            requireAuth
           />
         ) : (
           <p className="mt-3 text-center text-gray-400">
@@ -86,6 +82,6 @@ export default function RegisterForm() {
           </p>
         )}
       </ScrollAnimation>
-    </motion.section>
+    </section>
   );
 }
