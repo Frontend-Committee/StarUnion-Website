@@ -42,6 +42,8 @@ import WorkShopsPage from "../features/workshops/pages/WorkShopsPage";
 import ErrorFallback from "../components/ui/ErrorFallback";
 import NotFoundPage from "@/components/ui/NotFoundPage";
 
+import RegisterForm from "@/features/register/pages/RegisterForm";
+
 // const NotFound = () => <div>404 - Not Found</div>;
 
 export const router = createBrowserRouter([
@@ -53,7 +55,10 @@ export const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: PATHS.PUBLIC.ABOUT, element: <AboutUsPage /> },
       { path: PATHS.PUBLIC.COMMITTEES, element: <CommitteesPage /> },
-      { path: PATHS.PUBLIC.COMMITTEE_DETAILS, element: <CommitteeDetailsPage /> },
+      {
+        path: PATHS.PUBLIC.COMMITTEE_DETAILS,
+        element: <CommitteeDetailsPage />,
+      },
       { path: PATHS.PUBLIC.EVENTS, element: <EventsPage /> },
       { path: PATHS.PUBLIC.EVENT_DETAILS, element: <EventDetailsPage /> },
       { path: PATHS.PUBLIC.PROJECTS, element: <ProjectsPage /> },
@@ -65,6 +70,10 @@ export const router = createBrowserRouter([
       { path: PATHS.PUBLIC.CONTACT, element: <ContactUsPage /> },
       { path: PATHS.PUBLIC.BOARD_HIGH, element: <HighBoardPage /> },
       { path: PATHS.PUBLIC.FORM_DEMO, element: <FormDemoPage /> },
+      {
+        path: PATHS.PUBLIC.REGISTRATION_FORM,
+        element: <RegisterForm />,
+      },
     ],
   },
   {
@@ -77,7 +86,10 @@ export const router = createBrowserRouter([
         children: [
           { path: PATHS.AUTH_PAGES.LOGIN, element: <LoginPage /> },
           { path: PATHS.AUTH_PAGES.REGISTER, element: <RegisterPage /> },
-          { path: PATHS.AUTH_PAGES.FORGOT_PASSWORD, element: <ForgotPasswordPage /> },
+          {
+            path: PATHS.AUTH_PAGES.FORGOT_PASSWORD,
+            element: <ForgotPasswordPage />,
+          },
           { path: PATHS.AUTH_PAGES.NEW_PASSWORD, element: <NewPasswordPage /> },
           { path: PATHS.AUTH_PAGES.OTP, element: <OTPVerificationPage /> },
         ],

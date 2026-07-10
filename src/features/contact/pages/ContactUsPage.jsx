@@ -101,7 +101,6 @@ export default function ContactUsPage() {
           Contact us 24 hours a day and speak with specialized Members
         </p>
       </ScrollAnimation>
-
       <ScrollAnimation variant="fade-up" delay={100}>
         {contactSchema ? (
           <DynamicFormBuilder schema={contactSchema} onSubmit={handleSubmit} />

@@ -17,6 +17,8 @@ export const PATHS = {
     CONTACT: "contact",
     BOARD_HIGH: "board/high",
     FORM_DEMO: "form-demo",
+    REGISTRATION_FORM: "registration/:formId",
+    
   },
 
   AUTH_PAGES: {
@@ -26,6 +28,7 @@ export const PATHS = {
     NEW_PASSWORD: "new-password",
     OTP: "otp",
   },
+  
 
   PROFILE: "/profile",
   PROFILE_VIEW: "/profile/:id",

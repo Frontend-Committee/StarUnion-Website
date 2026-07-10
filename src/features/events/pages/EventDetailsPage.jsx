@@ -7,13 +7,12 @@ import { useEventDetails } from "../hooks/useEventDetails";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 
-
 export default function EventDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { data: event, isLoading } = useEventDetails(id);
-  console.log(event)
+  console.log(event);
   if (isLoading) return <LoadingSpinner fullScreen={true} />;
 
   return (
@@ -24,7 +23,7 @@ export default function EventDetailsPage() {
           className="flex items-center gap-2 mb-12 text-white transition-colors cursor-pointer hover:text-tertiary group"
           id="back-to-committees"
         >
-          <div className="p-2 rounded-full border border-white/20 group-hover:bg-white/10 transition-colors">
+          <div className="p-2 transition-colors border rounded-full border-white/20 group-hover:bg-white/10">
             <svg
               className="w-6 h-6 transition-transform group-hover:-translate-x-1"
               viewBox="0 0 24 24"
@@ -37,7 +36,7 @@ export default function EventDetailsPage() {
               <path d="M15 19l-7-7 7-7" />
             </svg>
           </div>
-          <span className="font-semibold uppercase tracking-widest text-xs">
+          <span className="text-xs font-semibold tracking-widest uppercase">
             Back to Events
           </span>
         </button>
@@ -52,12 +51,12 @@ export default function EventDetailsPage() {
         </div>
       </ScrollAnimation>
 
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10 w-full max-w-4xl py-6 border-b border-white/10 mb-8 mt-4">
+      <div className="flex flex-col items-start justify-between w-full max-w-4xl gap-6 py-6 mt-4 mb-8 border-b md:flex-row md:items-center md:gap-10 border-white/10">
         <div className="flex items-center gap-4">
           <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
             <Calendar className="w-6 h-6" />
           </div>
-          <span className="text-white font-medium text-base md:text-lg">
+          <span className="text-base font-medium text-white md:text-lg">
             {event.data.date}
           </span>
         </div>
@@ -65,7 +64,7 @@ export default function EventDetailsPage() {
           <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
             <MapPin className="w-6 h-6" />
           </div>
-          <span className="text-white font-medium text-base md:text-lg">
+          <span className="text-base font-medium text-white md:text-lg">
             {event.data.location}
           </span>
         </div>
@@ -73,14 +72,14 @@ export default function EventDetailsPage() {
           <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
             <Clock className="w-6 h-6" />
           </div>
-          <span className="text-white font-medium text-base md:text-lg">
+          <span className="text-base font-medium text-white md:text-lg">
             {event.data.time}
           </span>
         </div>
       </div>
 
       <ScrollAnimation variant="fade-up" delay={100}>
-        <h1 className="text-h2 text-tertiary mt-6">Featured Speakers</h1>
+        <h1 className="mt-6 text-h2 text-tertiary">Featured Speakers</h1>
         <div className="my-10">
           <HorizontalScrollSection>
             {event.speakers.map((member) => (
@@ -107,10 +106,19 @@ export default function EventDetailsPage() {
         </div>
       </ScrollAnimation>
       <Sponsors />
-      <div className="text-center my-5">
-        <Button className="p-5" onClick={() => navigate("/")}>
-          Register Now <ArrowRight />
-        </Button>
+      <div className="my-5 text-center">
+        {event.registration_form != null && (
+          <div className="my-5 text-center">
+            <Button
+              className="p-5"
+              onClick={() =>
+                navigate(`/registration/${event.registration_form}`)
+              }
+            >
+              Register Now <ArrowRight />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

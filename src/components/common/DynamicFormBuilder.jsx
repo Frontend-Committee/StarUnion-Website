@@ -949,7 +949,6 @@ export default function DynamicFormBuilder({
 
   const onChange = useCallback((name, value) => {
     setValues((prev) => ({ ...prev, [name]: value }));
-    // Clear error on change
     setErrors((prev) => {
       if (!prev[name]) return prev;
       const next = { ...prev };
@@ -1024,105 +1023,105 @@ export default function DynamicFormBuilder({
       : cols === 2
         ? "md:grid-cols-2"
         : "grid-cols-1";
-
   return (
-    <div
-      className={`w-full bg-white/60 backdrop-blur-xs border border-white/50 rounded-3xl shadow-2xl overflow-hidden ${className}`}
-    >
-      {/* Header */}
-      {(schema?.title || schema?.description) && (
-        <div className="px-6 md:px-10 pt-6 md:pt-10 pb-4 md:pb-6 border-b border-[#452798]/15">
-          {schema.title && (
-            <h2 className="text-2xl md:text-3xl font-extrabold text-[#452798] mb-2 text-center tracking-tight">
-              {schema.title}
-            </h2>
-          )}
-          {schema.description && (
-            <p className="text-[#452798]/70 text-center text-sm md:text-base font-medium">
-              {schema.description}
-            </p>
-          )}
-        </div>
-      )}
+    <div className="flex justify-center w-full p-4 md:p-8">
+      <div
+        className={`w-full max-w-2xl bg-white/60 backdrop-blur-md border border-white/50 rounded-3xl shadow-2xl overflow-hidden ${className}`}
+      >
+        {(schema?.title || schema?.description) && (
+          <div className="px-6 md:px-10 pt-6 md:pt-10 pb-4 md:pb-6 border-b border-[#452798]/15">
+            {schema.title && (
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#452798] mb-2 text-center tracking-tight">
+                {schema.title}
+              </h2>
+            )}
+            {schema.description && (
+              <p className="text-[#452798]/70 text-center text-sm md:text-base font-medium">
+                {schema.description}
+              </p>
+            )}
+          </div>
+        )}
 
-      <div className="p-6 md:p-10">
-        <AnimatePresence mode="wait">
-          {isSuccess ? (
-            <SuccessScreen key="success" schema={schema} />
-          ) : (
-            <Motion.form
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onSubmit={handleSubmit}
-              className="max-w-lg mx-auto"
-              noValidate
-            >
-              <div className={`grid gap-x-5 gap-y-6 grid-cols-1 ${gridClass}`}>
-                {schema?.fields?.map((field) =>
-                  renderField({
-                    field,
-                    values,
-                    errors,
-                    touched,
-                    onChange,
-                    onBlur,
-                  }),
-                )}
-              </div>
-
-              {/* Submit error */}
-              <AnimatePresence>
-                {submitError && (
-                  <Motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center gap-2 p-3 mt-5 border rounded-xl bg-rose-50 border-rose-200"
-                  >
-                    <AlertCircle className="w-4 h-4 text-[#FF6B6B] flex-shrink-0" />
-                    <span className="text-sm font-medium text-rose-600">
-                      {submitError}
-                    </span>
-                  </Motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Actions */}
-              <div
-                className={`mt-8 flex gap-3 ${onCancel ? "justify-between" : "justify-center"}`}
+        <div className="p-6 md:p-10">
+          <AnimatePresence mode="wait">
+            {isSuccess ? (
+              <SuccessScreen key="success" schema={schema} />
+            ) : (
+              <Motion.form
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onSubmit={handleSubmit}
+                className="w-full mx-auto"
+                noValidate
               >
-                {onCancel && (
-                  <button
-                    type="button"
-                    onClick={onCancel}
-                    disabled={isSubmitting}
-                    className="px-6 h-11 rounded-lg border border-[#452798]/30 text-[#452798] text-sm font-semibold hover:bg-[#452798]/10 transition-all disabled:opacity-40"
-                  >
-                    {schema?.cancelLabel || "Cancel"}
-                  </button>
-                )}
-
-                <Motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileTap={{ scale: 0.97 }}
-                  className="min-w-[200px] h-11 rounded-lg bg-[#7441FF] hover:bg-[#683CE3] text-white text-base font-bold transition-all duration-200 shadow-lg shadow-[#7441FF]/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
+                <div
+                  className={`grid gap-x-5 gap-y-6 grid-cols-1 ${gridClass}`}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Submitting...
-                    </>
-                  ) : (
-                    schema?.submitLabel || "Submit Form"
+                  {schema?.fields?.map((field) =>
+                    renderField({
+                      field,
+                      values,
+                      errors,
+                      touched,
+                      onChange,
+                      onBlur,
+                    }),
                   )}
-                </Motion.button>
-              </div>
-            </Motion.form>
-          )}
-        </AnimatePresence>
+                </div>
+
+                <AnimatePresence>
+                  {submitError && (
+                    <Motion.div
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="flex items-center gap-2 p-3 mt-5 border rounded-xl bg-rose-50 border-rose-200"
+                    >
+                      <AlertCircle className="w-4 h-4 text-[#FF6B6B] flex-shrink-0" />
+                      <span className="text-sm font-medium text-rose-600">
+                        {submitError}
+                      </span>
+                    </Motion.div>
+                  )}
+                </AnimatePresence>
+
+                <div
+                  className={`mt-8 flex gap-3 ${onCancel ? "justify-between" : "justify-center"}`}
+                >
+                  {onCancel && (
+                    <button
+                      type="button"
+                      onClick={onCancel}
+                      disabled={isSubmitting}
+                      className="px-6 h-11 rounded-lg border border-[#452798]/30 text-[#452798] text-sm font-semibold hover:bg-[#452798]/10 transition-all disabled:opacity-40"
+                    >
+                      {schema?.cancelLabel || "Cancel"}
+                    </button>
+                  )}
+
+                  <Motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full md:w-auto min-w-[200px] h-11 rounded-lg bg-[#7441FF] hover:bg-[#683CE3] text-white text-base font-bold transition-all duration-200 shadow-lg shadow-[#7441FF]/30 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 active:scale-[0.98]"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Submitting...
+                      </>
+                    ) : (
+                      schema?.submitLabel || "Submit Form"
+                    )}
+                  </Motion.button>
+                </div>
+              </Motion.form>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
