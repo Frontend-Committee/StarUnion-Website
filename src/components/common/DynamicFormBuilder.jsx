@@ -306,7 +306,7 @@ function SelectField({ field, value, onChange, onBlur, error }) {
               exit={{ opacity: 0, y: -8, scaleY: 0.9 }}
               transition={{ duration: 0.15 }}
               style={{ transformOrigin: "top" }}
-              className="absolute z-50 w-full mt-1 overflow-hidden overflow-y-auto bg-white border shadow-2xl rounded-xl border-white/70 max-h-52 scrollbar-hide"
+              className="absolute z-50 w-full mt-1 overflow-y-auto bg-white border shadow-2xl rounded-xl border-white/70 max-h-52"
             >
               {field.options?.map((option, idx) => {
                 const optVal =
