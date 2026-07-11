@@ -48,52 +48,87 @@ export default function WorkShopDetailsPage() {
           <h2 className="mb-3 font-bold text-h4 text-tertiary">
             {workshop.name}
           </h2>
-          <p className="mb-4 text-white/90">
-            Our workshops are designed to bridge the gap between theoretical
-            knowledge and practical application, ensuring you gain actionable
-            insights that can be immediately applied in your professional
-            environment.
+          <p className="mb-4 text-white/90 whitespace-pre-line">
+            {workshop.overview?.trim() ||
+              "Our workshops are designed to bridge the gap between theoretical knowledge and practical application, ensuring you gain actionable insights that can be immediately applied in your professional environment."}
           </p>
         </div>
-        <div className="flex flex-col items-start justify-between w-full max-w-4xl gap-6 py-6 mt-4 mb-8 border-b md:flex-row md:items-center md:gap-10 border-white/10">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
-              <Calendar className="w-6 h-6" />
-            </div>
-            <span className="text-base font-medium text-white md:text-lg">
-              {workshop.data.date}
-            </span>
+        {(workshop.data.date || workshop.data.location || workshop.data.time) && (
+          <div className="flex flex-col items-start justify-between w-full max-w-4xl gap-6 py-6 mt-4 mb-8 border-b md:flex-row md:items-center md:gap-10 border-white/10">
+            {workshop.data.date && (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <span className="text-base font-medium text-white md:text-lg">
+                  {workshop.data.date}
+                </span>
+              </div>
+            )}
+            {workshop.data.location && (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
+                  <MapPin className="w-6 h-6" />
+                </div>
+                <span className="text-base font-medium text-white md:text-lg">
+                  {workshop.data.location}
+                </span>
+              </div>
+            )}
+            {workshop.data.time && (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <span className="text-base font-medium text-white md:text-lg">
+                  {workshop.data.time}
+                </span>
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
-              <MapPin className="w-6 h-6" />
-            </div>
-            <span className="text-base font-medium text-white md:text-lg">
-              {workshop.data.location}
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-12 h-12 shrink-0 rounded-xl bg-[#7A4BFF] text-white shadow-sm transition-transform hover:scale-105">
-              <Clock className="w-6 h-6" />
-            </div>
-            <span className="text-base font-medium text-white md:text-lg">
-              {workshop.data.time}
-            </span>
-          </div>
-        </div>
+        )}
       </ScrollAnimation>
 
-      <ScrollAnimation variant="fade-up" delay={100}>
-        <h1 className="mt-6 text-h2 text-tertiary">Featured Instructors</h1>
-        <div className="my-10">
-          <HorizontalScrollSection>
-            {workshop.instructors.map((member) => (
+      {workshop.instructors?.length > 0 && (
+        <ScrollAnimation variant="fade-up" delay={100}>
+          <h1 className="mt-6 text-h2 text-tertiary">Featured Instructors</h1>
+          <div className="my-10">
+            <HorizontalScrollSection>
+              {workshop.instructors.map((member) => (
+                <div
+                  key={member.id}
+                  className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                >
+                  <img
+                    src={member.user.profile_photo}
+                    alt={member.user.full_name}
+                    className="object-cover w-full h-[220px]"
+                  />
+                  <div className="p-4 bg-white">
+                    <p className="font-bold text-lg text-[#452798]">
+                      {member.user.full_name}
+                    </p>
+                    <p className="text-sm font-medium text-black">
+                      {member.role}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </HorizontalScrollSection>
+          </div>
+        </ScrollAnimation>
+      )}
+      {workshop.top_members?.length > 0 && (
+        <ScrollAnimation variant="fade-up" delay={100}>
+          <h1 className="mt-6 text-h2 text-tertiary">Top Members</h1>
+          <div className="grid grid-cols-1 gap-6 mt-6 mb-10 sm:grid-cols-2 lg:grid-cols-4">
+            {workshop.top_members.map((member) => (
               <div
                 key={member.id}
-                className="shrink-0 w-[200px] md:w-[200px] overflow-hidden shadow-md rounded-xl bg-white/5 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
+                className="overflow-hidden transition-all duration-300 shadow-md rounded-xl bg-white/5 hover:-translate-y-2 hover:shadow-xl"
               >
                 <img
-                  src={member.user.profile_photo}
+                  src={member.image}
                   alt={member.user.full_name}
                   className="object-cover w-full h-[220px]"
                 />
@@ -101,38 +136,13 @@ export default function WorkShopDetailsPage() {
                   <p className="font-bold text-lg text-[#452798]">
                     {member.user.full_name}
                   </p>
-                  <p className="text-sm font-medium text-black">
-                    {member.role}
-                  </p>
+                  <p className="text-sm font-medium text-black">{member.role}</p>
                 </div>
               </div>
             ))}
-          </HorizontalScrollSection>
-        </div>
-      </ScrollAnimation>
-      <ScrollAnimation variant="fade-up" delay={100}>
-        <h1 className="mt-6 text-h2 text-tertiary">Top Members</h1>
-        <div className="grid grid-cols-1 gap-6 mt-6 mb-10 sm:grid-cols-2 lg:grid-cols-4">
-          {workshop.top_members.map((member) => (
-            <div
-              key={member.id}
-              className="overflow-hidden transition-all duration-300 shadow-md rounded-xl bg-white/5 hover:-translate-y-2 hover:shadow-xl"
-            >
-              <img
-                src={member.image}
-                alt={member.user.full_name}
-                className="object-cover w-full h-[220px]"
-              />
-              <div className="p-4 bg-white">
-                <p className="font-bold text-lg text-[#452798]">
-                  {member.user.full_name}
-                </p>
-                <p className="text-sm font-medium text-black">{member.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </ScrollAnimation>
+          </div>
+        </ScrollAnimation>
+      )}
       <ScrollAnimation variant="fade-up" delay={100}>
         <div className="flex flex-col w-full max-w-5xl gap-12 my-16 text-white">
           <div>
@@ -143,13 +153,25 @@ export default function WorkShopDetailsPage() {
               <div className="w-48 h-1 bg-[#FFE738]"></div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 text-lg md:grid-cols-2 md:gap-20">
-              <ol className="space-y-2 list-decimal list-inside">
-                {workshop.data.what_we_will_build.map((item) => (
-                  <li>{item}</li>
+            {workshop.data.what_we_will_build.length >= 8 ? (
+              <ul className="space-y-2 text-lg md:columns-2 md:gap-20">
+                {workshop.data.what_we_will_build.map((item, index) => (
+                  <li key={`build-${index}`} className="flex items-start gap-3 break-inside-avoid">
+                    <span className="mt-2.5 w-2.5 h-2.5 shrink-0 rounded-full bg-current" />
+                    {item}
+                  </li>
                 ))}
-              </ol>
-            </div>
+              </ul>
+            ) : (
+              <ul className="space-y-2 text-lg">
+                {workshop.data.what_we_will_build.map((item, index) => (
+                  <li key={`build-${index}`} className="flex items-start gap-3">
+                    <span className="mt-2.5 w-2.5 h-2.5 shrink-0 rounded-full bg-current" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div>
@@ -160,17 +182,25 @@ export default function WorkShopDetailsPage() {
               <div className="w-60 h-1 bg-[#FFE738]"></div>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
-              <div>
-                <ul className="space-y-1">
-                  {workshop.data.learning_materials.map((item) => (
-                    <li className="flex items-center gap-2 text-sm text-gray-200">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            {workshop.data.learning_materials.length >= 8 ? (
+              <ul className="space-y-2 text-lg md:columns-2 md:gap-12">
+                {workshop.data.learning_materials.map((item, index) => (
+                  <li key={`material-${index}`} className="flex items-start gap-3 break-inside-avoid">
+                    <span className="mt-2.5 w-2.5 h-2.5 shrink-0 rounded-full bg-current" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ul className="space-y-2 text-lg">
+                {workshop.data.learning_materials.map((item, index) => (
+                  <li key={`material-${index}`} className="flex items-start gap-3">
+                    <span className="mt-2.5 w-2.5 h-2.5 shrink-0 rounded-full bg-current" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </ScrollAnimation>
