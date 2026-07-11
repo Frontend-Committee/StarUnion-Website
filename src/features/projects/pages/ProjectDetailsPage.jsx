@@ -1,14 +1,17 @@
 import defaultAvatar from "@/assets/images/ProfilePage/defaultImg.png";
 import HorizontalScrollSection from "@/components/common/HorizontalScrollSection";
+import ImageLightbox from "@/components/common/ImageLightbox";
 import LoadingSpinner from "@/components/ui/LoadingSpinneer";
 import ScrollAnimation from "@/components/ui/ScrollAnimation";
 import { ArrowRight } from "lucide-react";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useProjectDetails } from "../hooks/useProjectDetails";
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   const { data: project, isLoading } = useProjectDetails(id);
   if (isLoading) return <LoadingSpinner fullScreen={true} />;
@@ -138,10 +141,12 @@ export default function ProjectDetailsPage() {
         </div>
         <div className="mb-10">
           <HorizontalScrollSection>
-            {project.gallery.map((img) => (
-              <div
+            {project.gallery.map((img, index) => (
+              <button
                 key={img.id}
-                className="shrink-0 w-[300px] md:w-[350px] overflow-hidden rounded-xl h-[300px] border border-white/10"
+                type="button"
+                onClick={() => setLightboxIndex(index)}
+                className="shrink-0 w-[300px] md:w-[350px] overflow-hidden rounded-xl h-[300px] border border-white/10 cursor-pointer text-left"
               >
                 <img
                   src={
@@ -152,11 +157,19 @@ export default function ProjectDetailsPage() {
                   alt={img.caption || "Project Gallery Image"}
                   className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
                 />
-              </div>
+              </button>
             ))}
           </HorizontalScrollSection>
         </div>
       </ScrollAnimation>
+
+      {lightboxIndex !== null && (
+        <ImageLightbox
+          images={project.gallery}
+          initialIndex={lightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </div>
   );
 }
