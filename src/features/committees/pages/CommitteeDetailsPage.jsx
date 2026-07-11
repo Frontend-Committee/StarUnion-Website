@@ -39,17 +39,19 @@ const ProjectCard = ({ project, delay = 0 }) => (
           </h4>
         </div>
       </div>
-      <div className="px-4 py-4 bg-[#0d0820]">
-        <p className="text-sm leading-relaxed text-white/80 line-clamp-3 min-h-[60px]">
+      <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
+        <p className="text-sm leading-relaxed text-center text-white/80 line-clamp-3 min-h-[60px]">
           {project.description ||
             "Explore this committee project in more detail."}
         </p>
-        <Link
-          to={`/projects/${project.id}`}
-          className="inline-block px-4 py-[6px] mt-4 text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200"
-        >
-          View Details
-        </Link>
+        <div className="px-3 pt-1 pb-4 mx-auto">
+          <Link
+            to={`/projects/${project.id}`}
+            className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200"
+          >
+            View Details
+          </Link>
+        </div>
       </div>
     </Motion.div>
   </ScrollAnimation>

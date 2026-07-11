@@ -121,8 +121,8 @@ const getServiceOfferings = (service) => {
   });
 };
 
-const ProjectServiceCard = ({ project, delay = 0 }) => (
-  <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
+const ProjectServiceCard = ({ project, delay = 0 }) => {
+  const cardContent = (
     <Motion.div
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -151,23 +151,26 @@ const ProjectServiceCard = ({ project, delay = 0 }) => (
       </div>
       <div className="px-3 py-[10px] flex flex-col items-center gap-2 bg-[#0d0820] relative z-10">
         <div className="px-3 pt-1 pb-4 mx-auto">
-          {/* {project.id ? (
-            <Link
-              to={`/projects/${project.id}`}
-              className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200"
-            >
-              View Details
-            </Link>
-          ) : (
-            <span className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium">
-              View Details
-            </span>
-          )} */}
+          <span className="inline-block px-4 py-[6px] text-[13px] bg-white text-primary border border-primary rounded-md font-medium hover:bg-white/70 hover:text-primary transition duration-200">
+            View Details
+          </span>
         </div>
       </div>
     </Motion.div>
-  </ScrollAnimation>
-);
+  );
+
+  return (
+    <ScrollAnimation variant="fade-up" delay={delay} className="flex-shrink-0">
+      {project.id ? (
+        <Link to={`/projects/${project.id}`} className="block group">
+          {cardContent}
+        </Link>
+      ) : (
+        cardContent
+      )}
+    </ScrollAnimation>
+  );
+};
 
 export default function ServiceDetailsPage() {
   const { id } = useParams();
@@ -259,12 +262,11 @@ export default function ServiceDetailsPage() {
                     ? "Technical Service"
                     : "Non-Technical Service"}
                 </span>
-                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
-                  {service.committee.length} Committees
-                </span>
-                <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
-                  {service.projects.length} Related Projects
-                </span>
+                {service.committee.length > 0 && (
+                  <span className="px-4 py-2 text-sm font-semibold text-white border rounded-full bg-white/10 border-white/10">
+                    {service.committee.map((c) => c.name).join(", ")}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -284,34 +286,6 @@ export default function ServiceDetailsPage() {
           </div>
         </ScrollAnimation>
 
-        <ScrollAnimation variant="fade-up" delay={100}>
-          <div className="grid gap-5 mt-12 md:grid-cols-3">
-            <div className="p-6 border rounded-3xl border-white/10 bg-white/5">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-tertiary/80">
-                Service ID
-              </p>
-              <p className="mt-3 text-lg font-semibold text-white">
-                {service.id}
-              </p>
-            </div>
-            <div className="p-6 border rounded-3xl border-white/10 bg-white/5">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-tertiary/80">
-                Committees
-              </p>
-              <p className="mt-3 text-lg font-semibold text-white">
-                {service.committee.length}
-              </p>
-            </div>
-            <div className="p-6 border rounded-3xl border-white/10 bg-white/5">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-tertiary/80">
-                Related Projects
-              </p>
-              <p className="mt-3 text-lg font-semibold text-white">
-                {service.projects.length}
-              </p>
-            </div>
-          </div>
-        </ScrollAnimation>
 
         {service.committee.length > 0 && (
           <ScrollAnimation variant="fade-up" delay={150}>
